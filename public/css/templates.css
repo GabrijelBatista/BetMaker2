@@ -1,0 +1,37 @@
+#template_card1{
+    width: 40vh;
+    height:40vh;
+    margin:auto;
+    margin-top: 10px;
+}
+#confirm_dialog_text{
+    font-size: xx-large;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+#template_card2{
+    width: 27vh;
+    height:48vh;
+    margin:auto;
+    margin-top: 10px
+}
+#template_card3{
+    width: 48vh;
+    height:27vh;
+    margin:auto;
+    margin-top: 10px
+}
+#templates_list{
+    padding:10px;
+
+}
+#scrollable_list{
+    overflow: auto;
+}
+#dialog_box{
+    padding: 5px;
+}
+.selected{
+    border: blue 4px solid !important
+}

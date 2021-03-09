@@ -1,0 +1,19 @@
+#sidebar{
+    position:fixed;
+    background-color: rgb(22, 21, 21);
+}
+.v-list-item{
+    text-align:center;
+    background-color: rgba(64, 70, 66, 0.582);
+}
+.v-list-item-group{
+   top: 30px;
+}
+#logo{
+    font-weight: bolder;
+    font-size: larger;
+    border: 1px white solid;
+    border-radius: 15px;
+    height:40px;
+    padding:7px;
+}

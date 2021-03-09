@@ -1,0 +1,6 @@
+#main_content{
+    background-color: rgb(207, 223, 138);
+}
+html{
+    overflow-y: auto !important
+}
