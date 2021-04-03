@@ -4,3 +4,6 @@
 html{
     overflow-y: auto !important
 }
+.card-icon{
+    float:right;
+}

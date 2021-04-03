@@ -20,4 +20,7 @@ mix.styles(['public/css/login.css',
             'public/css/navbar.css',
             'public/css/templates.css',
             'public/css/backgrounds.css',
+            'public/css/competitions.css',
+            'public/css/teams.css',
+            'public/css/matches.css',
 ], 'public/css/app.css');

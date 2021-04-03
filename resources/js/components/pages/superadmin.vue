@@ -175,6 +175,10 @@ export default{
             this.$refs.form.reset()
         },
     },
+
+    mounted(){
+        this.$store.dispatch('superadmin/getSuperadminResources');
+    },
 }
 
 </script>

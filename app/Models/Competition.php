@@ -15,8 +15,8 @@ class Competition extends Model
      * @var array
      */
     protected $fillable = [
+        'title',
         'name',
-        'sport',
         'user_id',
         'logo',
     ];

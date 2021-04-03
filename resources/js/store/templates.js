@@ -1,12 +1,30 @@
 import router from '../router'
 
 const state={
-    myTemplates: null,
-    otherTemplates: null,
+    selectedTemplatesWatcher: "my",
+    selectedTemplates: null,
+    myTemplates: [],
+    otherTemplates: [],
     currentTemplate: null
 };
 const actions={
-    addTemplate({commit}, template_form){
+    getTemplates({commit}){
+        axios.get("/api/getTemplates")
+        .then(response=>{
+            commit("superadmin/setAspects", response.data.aspects_list, { root: true });
+            commit("superadmin/setUsersList", response.data.users_list, { root: true });
+            commit("backgrounds/setBackgroundsList", response.data.backgrounds_list, { root: true });
+            commit("setMyTemplates", response.data.my_templates);
+            commit("setOtherTemplates", response.data.other_templates);
+            commit("setSelectedTemplates", response.data.my_templates);
+            commit("setCurrentTemplate", response.data.current_template);
+        })
+    },
+
+    selectTemplates({commit}, templates){
+            commit("setSelectedTemplates", templates);
+    },
+    addTemplate({commit, state}, template_form){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addTemplate", {
@@ -19,13 +37,22 @@ const actions={
             commit("setMyTemplates", response.data.my_templates);
             commit("setOtherTemplates", response.data.other_templates);
             commit("errors/setSuccess", "Predložak uspješno dodan.", { root: true });
+            if(state.selectedTemplatesWatcher=="other"){
+                commit("setSelectedTemplates", response.data.other_templates);
+            }
+            else{
+                commit("setSelectedTemplates", response.data.my_templates);
+            }
+            if(state.currentTemplate==null){
+                commit("setCurrentTemplate", response.data.current_template);
+            }
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
     },
 
-    deleteTemplate({commit}, template){
+    deleteTemplate({commit, state}, template){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteTemplate", {
@@ -35,13 +62,19 @@ const actions={
             commit("setMyTemplates", response.data.my_templates);
             commit("setOtherTemplates", response.data.other_templates);
             commit("errors/setSuccess", "Predložak izbrisan.", { root: true });
+            if(state.selectedTemplatesWatcher=="other"){
+                commit("setSelectedTemplates", response.data.other_templates);
+            }
+            else{
+                commit("setSelectedTemplates", response.data.my_templates);
+            }
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
     },
 
-    editTemplate({commit}, edit_form){
+    editTemplate({commit, state}, edit_form){
         let form = new FormData();
         form.append('id', edit_form.id);
         form.append('name', edit_form.name);
@@ -61,7 +94,12 @@ const actions={
             commit("setMyTemplates", response.data.my_templates);
             commit("setOtherTemplates", response.data.other_templates);
             commit("errors/setSuccess", "Predložak uređen.", { root: true });
-            console.log(response.data.template);
+            if(state.selectedTemplatesWatcher=="other"){
+                commit("setSelectedTemplates", response.data.other_templates);
+            }
+            else{
+                commit("setSelectedTemplates", response.data.my_templates);
+            }
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -70,18 +108,28 @@ const actions={
 
     currentTemplate({commit}, template){
         commit("setCurrentTemplate", template);
-        router.push({path: template.url});
+        router.push({path: "/template"+template.id});
     },
 
 };
 const getters={
+    selectedTemplates: state => state.selectedTemplates,
     myTemplates: state => state.myTemplates,
     otherTemplates: state => state.otherTemplates,
     currentTemplate: state => state.currentTemplate,
 };
 const mutations={
+    setSelectedTemplates(state, data) {
+        state.selectedTemplates=data;
+        if(state.selectedTemplates==state.otherTemplates){
+            state.selectedTemplatesWatcher="other";
+        }
+        else{
+            state.selectedTemplatesWatcher="my";
+        }
+    },
     setMyTemplates(state, data) {
-        state.myTemplates=data
+        state.myTemplates=data;
     },
     setOtherTemplates(state, data) {
         state.otherTemplates=data

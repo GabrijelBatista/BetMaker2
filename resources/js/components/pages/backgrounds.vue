@@ -39,6 +39,7 @@
                                     label="Odaberi korisnika"
                                     v-model="background_form.user"
                                     outlined
+                                    menu-props="auto"
                                     item-text="email"
                                 ></v-select>
                             </v-col>
@@ -64,16 +65,32 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap >
-    <v-flex id="backgrounds_list" v-for="background in selected_backgrounds" :key="background.id">
+    <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds" :key="background.id">
         <v-card active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
             <v-img
-              :src="background.path"
+              :src="'storage/backgrounds/'+background.name"
+              lazy-src="storage/lazy_image.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               height="100%"
             >
+            <template v-slot:placeholder>
+                <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+                >
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+            </template>
             <div v-if="selected_backgrounds===my_backgrounds">
-                <v-icon color="red" class="card-icon">{{ icons.mdiDelete }}</v-icon>
+                <v-icon
+                color="red"
+                class="card-icon"
+                v-on:click.stop
+                @click="delete_background(background.id)">
+                    {{ icons.mdiDelete }}
+                </v-icon>
             </div>
             </v-img>
 
@@ -97,44 +114,49 @@ export default{
             image: null,
         },
         icons: {
-            mdiPencil,
             mdiDelete
         },
-        selected_backgrounds: null,
         dialog: false,
         show_icons:true,
     }),
     computed: {
         ...mapGetters({
+            selected_backgrounds: 'backgrounds/selectedBackgrounds',
             my_backgrounds: 'backgrounds/myBackgrounds',
             other_backgrounds: 'backgrounds/otherBackgrounds',
             current_background: 'backgrounds/currentBackground',
             failedLogin: 'errors/errors',
             admin: 'currentUser/admin',
             superadmin: 'currentUser/superadmin',
-            aspects: 'superadmin/aspects',
-            users_list: 'currentUser/usersList',
+            users_list: 'superadmin/usersList',
             current_template: 'templates/currentTemplate',
         }),
     },
     methods: {
         select_my_backgrounds(){
-            return this.selected_backgrounds=this.my_backgrounds;
+            this.$store.dispatch('backgrounds/selectBackgrounds', this.my_backgrounds);
         },
         select_other_backgrounds(){
-            return(this.selected_backgrounds=this.other_backgrounds, this.show_icons=false);
+            this.$store.dispatch('backgrounds/selectBackgrounds', this.other_backgrounds);
         },
         add_background(){
             this.$store.dispatch('backgrounds/addBackground', this.background_form);
-            this.$refs.form.reset()
+            this.$refs.form.reset();
         },
         select_current_background(background){
-            background.url=this.current_template.url;
+            background.url=this.current_template.id;
             this.$store.dispatch('backgrounds/currentBackground', background);
         },
+        delete_background(background){
+            let response=confirm("Da li ste sigurni?");
+            if(response){
+            this.$store.dispatch('backgrounds/deleteBackground', background);
+            }
+        },
     },
+
     mounted(){
-       return this.selected_backgrounds=this.my_backgrounds
+       this.$store.dispatch('backgrounds/getBackgrounds');
     }
 }
 

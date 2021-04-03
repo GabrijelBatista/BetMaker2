@@ -46,6 +46,7 @@
                                     label="Choose user"
                                     v-model="template_form.user"
                                     outlined
+                                    menu-props="auto"
                                     item-text="email"
                                 ></v-select>
                             </v-col>
@@ -55,6 +56,7 @@
                                     label="Choose aspect"
                                     v-model="template_form.aspect"
                                     outlined
+                                    menu-props="auto"
                                     item-text="name"
                                 ></v-select>
                             </v-col>
@@ -80,36 +82,55 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
-    <v-layout wrap >
-    <v-flex id="templates_list" v-for="template in selected_templates" :key="template.id">
+    <v-layout wrap>
+    <v-flex id="templates_list" v-for="template in this.selected_templates" :key="template.id">
         <v-card active-class="selected" :class="current_template.id === template.id ? 'selected' : ''" @click="select_current_template(template)" :id="'template_card'+template.aspect_id">
             <v-img
-              :src="template.example_image"
+              :src="'storage/example_images/'+template.example_image"
+              lazy-src="storage/lazy_image.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               height="100%"
             >
-                <v-card-title v-text="template.name">
+                    <v-icon color="red"
+                    v-if="superadmin"
+                    v-on:click.stop
+                    @click="delete_template(template.id)"
+                    class="card-icon">
+                        {{ icons.mdiDelete }}
+                    </v-icon>
+                    <v-icon
+                    color="orange"
+                    v-if="superadmin"
+                    @click.stop="edit_dialog(template)"
+                    class="card-icon">
+                        {{ icons.mdiPencil }}
+                    </v-icon>
+            <template v-slot:placeholder>
+                <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+                >
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+            </template>
+                <v-card-title
+                class="card_text"
+                v-text="template.name">
                 </v-card-title>
-                <v-dialog
+            </v-img>
+        </v-card>
+    </v-flex>
+    <v-dialog
                 transition="dialog-top-transition"
                 max-width="600"
                 overlay-opacity="0.8"
                 v-model="dialog3"
                 >
-                    <template v-slot:activator="{ on, attrs }">
-                    <v-icon
-                    color="orange"
-                    v-bind="attrs"
-                    v-on="on"
-                    v-if="superadmin"
-                    class="card-icon">
-                        {{ icons.mdiPencil }}
-                    </v-icon>
-                    </template>
                     <v-card id="dialog_box">
                         <v-card-title class="headline grey lighten-2">
-                            EDIT {{template.name}}
+                            EDIT {{this.dialog_template_name}}
                         </v-card-title>
                         <v-form @submit.prevent="edit_template" ref="form">
                             <v-text-field
@@ -129,6 +150,7 @@
                                     v-model="edit_form.user"
                                     outlined
                                     item-text="email"
+                                    menu-props="auto"
                                 ></v-select>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
@@ -138,18 +160,23 @@
                                     v-model="edit_form.aspect"
                                     outlined
                                     item-text="name"
+                                    menu-props="auto"
+                                ></v-select>
+                            </v-col>
+                            <v-col class="d-flex" cols="12" sm="6">
+                                <v-select
+                                    :items="backgrounds"
+                                    label="Choose default background"
+                                    v-model="edit_form.default_background"
+                                    outlined
+                                    item-text="name"
+                                    menu-props="auto"
                                 ></v-select>
                             </v-col>
                             <v-file-input
                                 label="Dodaj sliku(primjer):"
                                 filled
                                 v-model="edit_form.example_image"
-                                prepend-icon="mdi-camera"
-                            ></v-file-input>
-                            <v-file-input
-                                label="Dodaj pozadinu(default):"
-                                filled
-                                v-model="edit_form.default_background"
                                 prepend-icon="mdi-camera"
                             ></v-file-input>
                             <v-card-actions>
@@ -173,45 +200,6 @@
                         </v-form>
                     </v-card>
                 </v-dialog>
-                <v-dialog
-                transition="dialog-top-transition"
-                max-width="300"
-                overlay-opacity="0.8"
-                v-model="dialog2"
-                >
-                    <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="red"
-                    v-bind="attrs"
-                    v-on="on"
-                    v-if="superadmin"
-                    class="card-icon">
-                        {{ icons.mdiDelete }}
-                    </v-icon>
-                    </template>
-                    <v-card id="dialog_box">
-                        <v-card-text id="confirm_dialog_text">Da li ste sigurni?</v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                            <v-btn
-                            id="login-button"
-                            class="mr-4"
-                            @click="delete_template(template.id)"
-                            >
-                            Potvrdi
-                            </v-btn>
-                            <v-btn
-                            id="login-button"
-                            class="mr-4"
-                            @click="dialog2=false"
-                            >
-                            Odustani
-                            </v-btn>
-                            </v-card-actions>
-                    </v-card>
-                </v-dialog>
-            </v-img>
-        </v-card>
-    </v-flex>
     </v-layout>
 </v-card>
 </template>
@@ -224,11 +212,12 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        dialog_template_name: null,
+        dialog_template_id: null,
         icons: {
             mdiPencil,
             mdiDelete
         },
-        selected_templates: null,
         template_form: {
             name: null,
             user: null,
@@ -245,11 +234,12 @@ export default{
             default_background: null
         },
         dialog: false,
-        dialog2: false,
         dialog3: false,
     }),
+
     computed: {
         ...mapGetters({
+            selected_templates: 'templates/selectedTemplates',
             my_templates: 'templates/myTemplates',
             other_templates: 'templates/otherTemplates',
             current_template: 'templates/currentTemplate',
@@ -257,37 +247,45 @@ export default{
             admin: 'currentUser/admin',
             superadmin: 'currentUser/superadmin',
             aspects: 'superadmin/aspects',
-            users_list: 'currentUser/usersList',
+            backgrounds: 'backgrounds/backgroundsList',
+            users_list: 'superadmin/usersList',
         }),
     },
     methods: {
         select_my_templates(){
-            return this.selected_templates=this.my_templates;
+           this.$store.dispatch('templates/selectTemplates', this.my_templates);
         },
         select_other_templates(){
-            return this.selected_templates=this.other_templates;
+            this.$store.dispatch('templates/selectTemplates', this.other_templates);
         },
         add_template(){
             this.$store.dispatch('templates/addTemplate', this.template_form);
-            this.$refs.form.reset()
+            this.$refs.form.reset();
         },
         select_current_template(template){
             this.$store.dispatch('templates/currentTemplate', template);
         },
-        edit_template(id){
-            this.edit_form.id=id;
+        edit_template(){
+            this.edit_form.id=this.dialog_template_id;
             this.$store.dispatch('templates/editTemplate', this.edit_form);
-            this.$refs.form[0].reset()
+            this.$refs.form.reset()
         },
         delete_template(template){
+            let response=confirm("Da li ste sigurni?");
+            if(response){
             this.$store.dispatch('templates/deleteTemplate', template);
-            return this.dialog2=false;
+            }
         },
+        edit_dialog(template) {
+            this.dialog_template_name = template.name;
+            this.dialog_template_id = template.id;
+            this.dialog3 = true;
+        }
     },
     mounted(){
-       return this.selected_templates=this.my_templates
-    }
+        this.$store.dispatch('templates/getTemplates');
+    },
+
 }
 
 </script>
-

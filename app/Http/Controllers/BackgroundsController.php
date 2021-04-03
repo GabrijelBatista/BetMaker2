@@ -8,9 +8,32 @@ use App\Models\Aspect;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use File;
 
 class BackgroundsController extends Controller
 {
+    public function get_backgrounds(){
+        $user=Auth::user();
+        $my_backgrounds = Background::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
+        if($user->role_id===3){
+            $other_backgrounds = Background::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->get()->all();
+        }
+        else{
+            $other_backgrounds = Background::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
+        }
+        $current_background=null;
+        if($my_backgrounds!=null){
+                $current_background=$my_backgrounds[0];
+        }
+        elseif($other_backgrounds!=null){
+            $current_background=$other_backgrounds[0];
+        }
+
+
+        return response()->json(['current_background'=>$current_background, 'my_backgrounds'=>$my_backgrounds, 'other_backgrounds'=>$other_backgrounds], 200);
+
+    }
+
     public function add_background(Request $request){
         $request->validate([
             'name'=>'required',
@@ -56,22 +79,59 @@ class BackgroundsController extends Controller
                 'user_id'=>$user_id,
             ]);
 
-            $backgrounds = Background::orderBy('id', 'asc')->get()->all();
-            $my_backgrounds = [];
-            $other_backgrounds = [];
             $user=Auth::user();
-            foreach($backgrounds as $background){
-                $background->path="storage/backgrounds/".$background->name;
-                if($background->user_id===$user->id){
-                    array_push($my_backgrounds, $background);
-                }
-                else if($background->user_id===1){
-                    array_push($other_backgrounds, $background);
-                }
+            $my_backgrounds = Background::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
+            if($user->role_id===3){
+                $other_backgrounds = Background::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->get()->all();
+            }
+            else{
+                $other_backgrounds = Background::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
+            }
+
+            if($my_backgrounds!=null){
+                $current_background=$my_backgrounds[0];
+            }
+            else{
+                $current_background=$other_backgrounds[0];
             }
 
 
-            return response()->json(['my_backgrounds'=>$my_backgrounds, 'other_backgrounds'=>$other_backgrounds], 200);
+            return response()->json(['current_background'=>$current_background, 'my_backgrounds'=>$my_backgrounds, 'other_backgrounds'=>$other_backgrounds], 200);
         }
+    }
+
+    public function delete_background(Request $request){
+        $request->validate([
+            'background_id'=>'required',
+        ]);
+
+        $background=Background::where('id', $request->background_id)->first();
+
+        $path = public_path().'/storage/backgrounds/'.$background->name;
+        if(File::exists($path)) {
+            $file_path=$path;
+            unlink($file_path);
+        }
+
+        Background::where('id', $request->background_id)->delete();
+
+        $backgrounds = Background::orderBy('created_at', 'desc')->get()->all();
+        $my_backgrounds = [];
+        $other_backgrounds = [];
+        $user=Auth::user();
+        foreach($backgrounds as $background){
+            if($background->user_id===$user->id){
+                array_push($my_backgrounds, $background);
+            }
+            else if($user->role_id===3){
+                array_push($other_backgrounds, $background);
+            }
+            else if($background->user_id===1){
+                array_push($other_backgrounds, $background);
+            }
+        }
+
+
+        return response()->json(['my_backgrounds'=>$my_backgrounds, 'other_backgrounds'=>$other_backgrounds], 200);
     }
 }
