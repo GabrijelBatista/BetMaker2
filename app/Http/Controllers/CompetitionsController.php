@@ -13,7 +13,6 @@ class CompetitionsController extends Controller
 {
 
     public function get_competitions(){
-
         $user=Auth::user();
         $my_competitions = Competition::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
         if($user->role_id===3){
@@ -23,7 +22,7 @@ class CompetitionsController extends Controller
             $other_competitions = Competition::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
         }
 
-        return response()->json(['my_competitions'=>$my_competitions, 'other_backgrounds'=>$other_competitions], 200);
+        return response()->json(['my_competitions'=>$my_competitions, 'other_competitions'=>$other_competitions], 200);
 
     }
 

@@ -4,7 +4,6 @@
             background-color="light grey"
             dark
             app
-            v-if="admin"
             >
                 <v-tab @click="select_my_templates()">Moji predlošci</v-tab>
                 <v-tab @click="select_other_templates()">Ostali predlošci</v-tab>
@@ -14,6 +13,7 @@
                 max-width="600"
                 overlay-opacity="0.8"
                 v-model="dialog"
+                v-if="admin"
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -41,24 +41,24 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="users_list"
                                     label="Choose user"
                                     v-model="template_form.user"
                                     outlined
                                     menu-props="auto"
                                     item-text="email"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="aspects"
                                     label="Choose aspect"
                                     v-model="template_form.aspect"
                                     outlined
                                     menu-props="auto"
                                     item-text="name"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -144,34 +144,34 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="users_list"
                                     label="Choose user"
                                     v-model="edit_form.user"
                                     outlined
                                     item-text="email"
                                     menu-props="auto"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="aspects"
                                     label="Choose aspect"
                                     v-model="edit_form.aspect"
                                     outlined
                                     item-text="name"
                                     menu-props="auto"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="backgrounds"
                                     label="Choose default background"
                                     v-model="edit_form.default_background"
                                     outlined
                                     item-text="name"
                                     menu-props="auto"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-file-input
                                 label="Dodaj sliku(primjer):"
@@ -282,8 +282,9 @@ export default{
             this.dialog3 = true;
         }
     },
-    mounted(){
+    created(){
         this.$store.dispatch('templates/getTemplates');
+        this.$store.dispatch('backgrounds/getBackgrounds');
     },
 
 }

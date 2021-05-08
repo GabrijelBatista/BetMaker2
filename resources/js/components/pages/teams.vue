@@ -4,7 +4,6 @@
             background-color="light grey"
             dark
             app
-            v-if="admin"
             >
                 <v-tab @click="select_my_teams()">Moji timovi/igrači</v-tab>
                 <v-tab @click="select_other_teams()">Ostali timovi/igrači</v-tab>
@@ -14,6 +13,7 @@
                 max-width="600"
                 overlay-opacity="0.8"
                 v-model="dialog"
+                v-if="admin"
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -40,13 +40,13 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-col v-if="superadmin" class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="users_list"
                                     label="Odaberi korisnika"
                                     v-model="team_form.user"
                                     outlined
                                     item-text="email"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-file-input
                                 label="Dodaj sliku:"
@@ -107,7 +107,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
-    mdiPencil,
     mdiDelete,
   } from '@mdi/js'
 export default{
@@ -154,7 +153,7 @@ export default{
         },
     },
 
-    mounted(){
+    created(){
        this.$store.dispatch('teams/getTeams');
     }
 }

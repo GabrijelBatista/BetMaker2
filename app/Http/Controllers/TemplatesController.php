@@ -36,8 +36,8 @@ class TemplatesController extends Controller
 
             if($user->role_id==3){
                 $backgrounds_list=Background::get()->all();
-                $aspects_list=Background::get()->all();
-                $users_list=Background::get()->all();
+                $aspects_list=Aspect::get()->all();
+                $users_list=User::get()->all();
                 return response()->json(['aspects_list'=>$aspects_list, 'users_list'=>$users_list, 'backgrounds_list'=>$backgrounds_list, 'current_template'=>$current_template, 'my_templates'=>$my_templates, 'other_templates'=>$other_templates], 200);
             }
             else{

@@ -2,13 +2,13 @@ import router from '../router'
 
 const state={
     selectedTemplatesWatcher: "my",
-    selectedTemplates: null,
+    selectedTemplates:[],
     myTemplates: [],
     otherTemplates: [],
     currentTemplate: null
 };
 const actions={
-    getTemplates({commit}){
+    getTemplates({commit, state}){
         axios.get("/api/getTemplates")
         .then(response=>{
             commit("superadmin/setAspects", response.data.aspects_list, { root: true });
@@ -17,7 +17,9 @@ const actions={
             commit("setMyTemplates", response.data.my_templates);
             commit("setOtherTemplates", response.data.other_templates);
             commit("setSelectedTemplates", response.data.my_templates);
-            commit("setCurrentTemplate", response.data.current_template);
+            if(state.currentTemplate==null){
+                commit("setCurrentTemplate", response.data.current_template);
+            }
         })
     },
 

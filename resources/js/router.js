@@ -4,18 +4,28 @@ import store from './store/index'
 
 Vue.use(Router)
 
-import login from './components/pages/login'
-import register from './components/pages/register'
-import templates from './components/pages/templates'
-import backgrounds from './components/pages/backgrounds'
-import teams from './components/pages/teams'
-import competitions from './components/pages/competitions'
-import matches from './components/pages/matches'
-import superadmin from './components/pages/superadmin'
+//authentication
+import login from './components/pages/login.vue'
+import register from './components/pages/register.vue'
+
+//basic
+import templates from './components/pages/templates.vue'
+import backgrounds from './components/pages/backgrounds.vue'
+import teams from './components/pages/teams.vue'
+import competitions from './components/pages/competitions.vue'
+import matches from './components/pages/matches.vue'
+
+//superadmin
+import superadmin from './components/pages/superadmin.vue'
+
+//BetLive
+import votestory from './components/BetLive/votestory.vue'
 
 
 
 const routes =[
+
+    //basic
     {
         path: '/',
         component: templates,
@@ -23,13 +33,6 @@ const routes =[
             requiresAuth: true
           }
 
-    },
-    {
-        path: '/superadmin',
-        component: superadmin,
-        meta: {
-            requiresSuperadmin: true
-          }
     },
     {
         path: '/backgrounds',
@@ -59,6 +62,17 @@ const routes =[
             requiresAuth: true
           }
     },
+
+    //superadmin
+    {
+        path: '/superadmin',
+        component: superadmin,
+        meta: {
+            requiresSuperadmin: true
+          }
+    },
+
+    //authentication
     {
         path: '/login',
         component: login,
@@ -74,6 +88,14 @@ const routes =[
           }
     },
 
+    //BetLive
+    {
+        path: '/template114',
+        component: votestory,
+        meta: {
+            BetLive: true
+          }
+    },
 ]
 
 const router = new Router({
@@ -82,37 +104,51 @@ const router = new Router({
     routes
   })
 
+  //basic
   router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      // this route requires auth, check if logged in
-      // if not, redirect to login page.
-      if (!store.getters['currentUser/admin']) {
+      if (!store.getters['currentUser/user']) {
         next({ path: '/login' })
-      } else {
-        next() // go to wherever I'm going
+      }
+      else {
+        next()
       }
     }
-    if (to.matched.some(record => record.meta.requiresSuperadmin)) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
+
+    //superadmin
+    else if (to.matched.some(record => record.meta.requiresSuperadmin)) {
         if (!store.getters['currentUser/superadmin']) {
           next({ path: '/login' })
-        } else {
-          next() // go to wherever I'm going
+        }
+        else {
+          next()
         }
     }
-    if (to.matched.some(record => record.meta.loggedIn)) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
+
+    //authentication
+    else if (to.matched.some(record => record.meta.loggedIn)) {
         if (store.getters['currentUser/user']) {
           next({ path: '/' })
-        } else {
-          next() // go to wherever I'm going
+        }
+        else {
+          next()
         }
     }
-    else {
-      next() // does not require auth, make sure to always call next()!
+
+    //BetLive
+    else if (to.matched.some(record => record.meta.BetLive)) {
+        if (store.getters['currentUser/user'].id!=1 && store.getters['currentUser/user'].id!=3) {
+          next({ path: '/' })
+        }
+        else {
+          next()
+        }
     }
+
+    else {
+        next()
+      }
+
   })
 
 

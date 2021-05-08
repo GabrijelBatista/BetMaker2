@@ -18,8 +18,8 @@ const actions={
             password: form.password,
         }))
         .then(response=>{
-            commit("setUser", response.data.user['email']);
-            if(response.data.user['email']){
+            commit("setUser", response.data.user);
+            if(response.data.user){
                 commit("errors/setErrors", null, { root: true });
                 commit("errors/setSuccess", "Uspješna prijava.", { root: true });
             }
@@ -95,19 +95,8 @@ const actions={
             commit("setSuperadmin", false);
             router.push({path: '/login'});
     },
-
-    checkUser({commit}){
-        axios.get('api/user')
-        .then(response=>{
-            commit("setUser", response.data);
-        })
-        .catch((error) => {
-            commit("setUser", null);
-            commit("setAdmin", false);
-            commit("setSuperadmin", false);
-        })
-    },
 };
+
 const getters={
     user: state => state.user,
     admin: state => state.admin,

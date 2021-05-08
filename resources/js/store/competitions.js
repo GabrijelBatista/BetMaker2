@@ -2,10 +2,9 @@
 
 const state={
     selectedCompetitionsWatcher: "my",
-    selectedCompetitions: null,
-    myCompetitions: null,
-    otherCompetitions: null,
-    currentCompetition: null,
+    selectedCompetitions: [],
+    myCompetitions: [],
+    otherCompetitions: [],
     competitionsList: [],
 };
 const actions={
@@ -36,8 +35,6 @@ const actions={
               },
         })
         .then(response=>{
-            let competions_list=null;
-            competitions_list.push(...response.data.my_competitions, ...response.data.other_competitions);
             commit("setMyCompetitions", response.data.my_competitions);
             commit("setOtherCompetitions", response.data.other_competitions);
             commit("setCompetitionsList", response.data.competitions_list);
@@ -81,7 +78,6 @@ const getters={
     selectedCompetitions: state => state.selectedCompetitions,
     myCompetitions: state => state.myCompetitions,
     otherCompetitions: state => state.otherCompetitions,
-    currentCompetition: state => state.currentCompetition,
     competitionsList: state => state.competitionsList,
 };
 const mutations={

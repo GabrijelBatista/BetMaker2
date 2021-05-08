@@ -2,3 +2,10 @@
     width: 90%;
     margin: auto !important;
 }
+.elevation-1{
+    margin: auto;
+    margin-top: 20px;
+    background-color: rgba(23, 24, 24, 0.116) !important;
+    overflow-y: auto;
+    max-height: 80%;
+}

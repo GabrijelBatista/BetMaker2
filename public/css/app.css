@@ -20,13 +20,29 @@
 #main_content{
     background-color: rgb(207, 223, 138);
 }
+#main_body{
+    background-color: rgb(207, 223, 138);
+}
 html{
     overflow-y: auto !important
 }
 .card-icon{
     float:right;
 }
-
+#div_to_capture {
+    border:1px black solid;
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#div_to_capture2 {
+    display:none;
+}
 #sidebar{
     position:fixed;
     background-color: rgb(22, 21, 21);
@@ -45,6 +61,9 @@ html{
     border-radius: 15px;
     height:40px;
     padding:7px;
+}
+.current_template_tab{
+    background-color: rgb(53, 18, 9);
 }
 
 #navbar{
@@ -97,8 +116,8 @@ html{
 }
 
 .competition_logo{
-    max-width:40vh !important ;
-    max-height:40vh !important ;
+    max-width:20vh !important ;
+    max-height:20vh !important ;
     margin:auto;
     margin-top: 10px;
 }
@@ -108,3 +127,11 @@ html{
     width: 90%;
     margin: auto !important;
 }
+.elevation-1{
+    margin: auto;
+    margin-top: 20px;
+    background-color: rgba(23, 24, 24, 0.116) !important;
+    overflow-y: auto;
+    max-height: 80%;
+}
+

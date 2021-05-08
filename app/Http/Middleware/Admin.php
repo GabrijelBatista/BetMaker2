@@ -16,8 +16,9 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role_id != 3){
-            abort(403);
+
+        if(!in_array(auth()->user()->role_id, [2,3])){
+            return redirect()->back();
         }
 
         return $next($request);

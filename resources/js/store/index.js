@@ -29,7 +29,8 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-          paths: ['currentUser', 'templates', 'superadmin', 'backgrounds', 'competitions', 'teams', 'matches'],
+            storage: window.sessionStorage,
+            paths: ['currentUser', 'templates', 'superadmin', 'backgrounds', 'competitions', 'teams', 'matches'],
         }),
       ],
 })

@@ -4,7 +4,6 @@ const state={
     selectedTeams: null,
     myTeams: [],
     otherTeams: [],
-    currentTeam: null,
     teamsList: [],
 };
 const actions={
@@ -35,8 +34,6 @@ const actions={
               },
         })
         .then(response=>{
-            let teams_list=null;
-            teams_list.push(...response.data.my_teams, ...response.data.other_teams);
             commit("setMyTeams", response.data.my_teams);
             commit("setOtherTeams", response.data.other_teams);
             commit("setTeamsList", response.data.teams_list);
@@ -80,7 +77,6 @@ const getters={
     selectedTeams: state => state.selectedTeams,
     myTeams: state => state.myTeams,
     otherTeams: state => state.otherTeams,
-    currentTeam: state => state.currentTeam,
     teamsList: state => state.teamsList,
 };
 const mutations={
@@ -98,7 +94,7 @@ const mutations={
 
     },
     setOtherTeams(state, data) {
-        state.otherTeams=data
+        state.otherTeams=data;
     },
     setTeamsList(state, data){
         state.teamsList=data;

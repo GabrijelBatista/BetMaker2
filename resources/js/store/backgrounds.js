@@ -2,21 +2,23 @@ import router from '../router'
 
 const state={
     selectedBackgroundsWatcher: "my",
-    selectedBackgrounds: null,
-    myBackgrounds: null,
-    otherBackgrounds: null,
+    selectedBackgrounds: [],
+    myBackgrounds: [],
+    otherBackgrounds: [],
     currentBackground: null,
     backgroundsList: [],
 };
 const actions={
 
-    getBackgrounds({commit}){
+    getBackgrounds({commit, state}){
         axios.get("/api/getBackgrounds")
         .then(response=>{
             commit("setMyBackgrounds", response.data.my_backgrounds);
             commit("setOtherBackgrounds", response.data.other_backgrounds);
             commit("setSelectedBackgrounds", response.data.my_backgrounds);
-            commit("setCurrentBackground", response.data.current_background);
+            if(state.currentBackground==null){
+                commit("setCurrentBackground", response.data.current_background);
+            }
         })
     },
 
@@ -104,13 +106,13 @@ const mutations={
         }
     },
     setMyBackgrounds(state, data) {
-        state.myBackgrounds=data
+        state.myBackgrounds=data;
     },
     setOtherBackgrounds(state, data) {
-        state.otherBackgrounds=data
+        state.otherBackgrounds=data;
     },
     setCurrentBackground(state, data) {
-        state.currentBackground=data
+        state.currentBackground=data;
     },
 };
 

@@ -30,9 +30,6 @@ import { mapGetters } from 'vuex'
             this.$store.dispatch('currentUser/logoutUser')
         },
     },
-    mounted() {
-        this.$store.dispatch('currentUser/checkUser');
-    },
     computed: {
         ...mapGetters({
             isLoggedIn: 'currentUser/user',

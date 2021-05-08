@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js');
+mix.js('resources/js/app.js', 'public/js').vue({ version: 2 });
 
 mix.styles(['public/css/login.css',
             'public/css/register.css',
@@ -23,4 +23,5 @@ mix.styles(['public/css/login.css',
             'public/css/competitions.css',
             'public/css/teams.css',
             'public/css/matches.css',
+            'public/css/BetLive/votestory.css',
 ], 'public/css/app.css');

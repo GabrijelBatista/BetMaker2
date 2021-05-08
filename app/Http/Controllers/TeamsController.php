@@ -12,7 +12,6 @@ use File;
 class TeamsController extends Controller
 {
     public function get_teams(){
-
         $user=Auth::user();
         $my_teams = Team::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
         if($user->role_id===3){
@@ -22,7 +21,7 @@ class TeamsController extends Controller
             $other_teams = Team::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
         }
 
-        return response()->json(['my_teams'=>$my_teams, 'other_backgrounds'=>$other_teams], 200);
+        return response()->json(['my_teams'=>$my_teams, 'other_teams'=>$other_teams], 200);
 
     }
 

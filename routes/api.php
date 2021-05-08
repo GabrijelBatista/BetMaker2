@@ -24,32 +24,42 @@ Route::get('logoutUser', 'App\Http\Controllers\AuthenticationController@logout')
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
+    //templates
+    Route::get('getTemplates', 'App\Http\Controllers\TemplatesController@get_templates');
+
+    //backgrounds
+    Route::get('getBackgrounds', 'App\Http\Controllers\BackgroundsController@get_backgrounds');
+
+    //competitions
+    Route::get('getCompetitions', 'App\Http\Controllers\CompetitionsController@get_competitions');
+
+    //teams
+    Route::get('getTeams', 'App\Http\Controllers\TeamsController@get_teams');
+
+    //matches
+    Route::get('getMatchesResources', 'App\Http\Controllers\MatchesController@get_matches_resources');
+    Route::post('addMatch', 'App\Http\Controllers\MatchesController@add_match');
+    Route::post('deleteMatch', 'App\Http\Controllers\MatchesController@delete_match');
+
     Route::group(['middleware' => ['admin']], function () {
 
         //backgrounds
-        Route::get('getBackgrounds', 'App\Http\Controllers\BackgroundsController@get_backgrounds');
         Route::post('addBackground', 'App\Http\Controllers\BackgroundsController@add_background');
         Route::post('deleteBackground', 'App\Http\Controllers\BackgroundsController@delete_background');
 
         //competitions
-        Route::get('getCompetitions', 'App\Http\Controllers\CompetitionsController@get_competitions');
         Route::post('addCompetition', 'App\Http\Controllers\CompetitionsController@add_competition');
         Route::post('deleteCompetition', 'App\Http\Controllers\CompetitionsController@delete_competition');
 
         //teams
-        Route::get('getTeams', 'App\Http\Controllers\TeamsController@get_teams');
         Route::post('addTeam', 'App\Http\Controllers\TeamsController@add_team');
         Route::post('deleteTeam', 'App\Http\Controllers\TeamsController@delete_team');
 
-        //matches
-        Route::get('getMatchesResources', 'App\Http\Controllers\MatchesController@get_matches_resources');
-        Route::post('addMatch', 'App\Http\Controllers\MatchesController@add_match');
     });
 
     Route::group(['middleware' => ['superadmin']], function () {
 
         //templates
-        Route::get('getTemplates', 'App\Http\Controllers\TemplatesController@get_templates');
         Route::post('addTemplate', 'App\Http\Controllers\TemplatesController@add_template');
         Route::post('deleteTemplate', 'App\Http\Controllers\TemplatesController@delete_template');
         Route::post('editTemplate', 'App\Http\Controllers\TemplatesController@edit_template');

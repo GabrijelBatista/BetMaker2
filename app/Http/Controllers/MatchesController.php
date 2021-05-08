@@ -34,11 +34,11 @@ class MatchesController extends Controller
 
         $new_match = new \stdClass();
 
-        $count=0;
+        $count=1;
         if($request->all_matches!=null){
             $matches_list=$request->get('all_matches');
             foreach($matches_list as $match){
-                $match->id=$count;
+                $match['id']=$count;
                 $count++;
             }
         }
@@ -59,6 +59,26 @@ class MatchesController extends Controller
 
 
 
+    }
+
+    public function delete_match(Request $request){
+        $request->validate([
+            'match_id'=>'required',
+            'matches'=>'required',
+        ]);
+
+        $matches=$request->get('matches');
+        $id=$request->get('match_id');
+
+        $new_matches=[];
+        foreach($matches as $match){
+            if($match['id']!=$id){
+                array_push($new_matches, $match);
+            }
+        }
+
+
+        return response()->json(['matches'=>$new_matches], 200);
     }
 
 }

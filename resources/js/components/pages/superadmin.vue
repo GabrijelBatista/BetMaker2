@@ -176,7 +176,7 @@ export default{
         },
     },
 
-    mounted(){
+    created(){
         this.$store.dispatch('superadmin/getSuperadminResources');
     },
 }

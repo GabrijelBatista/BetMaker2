@@ -5,7 +5,7 @@
  */
 
 require('./bootstrap');
-window.Vue = require('vue');
+import Vue from 'vue';
 window.axios = require('axios')
 
 import router from './router'
@@ -23,7 +23,7 @@ import store from './store/index'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('main-component', require('./components/main.vue').default);
+Vue.component('main-component', require('./components/main').default);
 Vue.component('navbar', require('./components/navbar.vue').default);
 Vue.component('sidebar', require('./components/sidebar.vue').default);
 Vue.component('register', require('./components/pages/register.vue').default);

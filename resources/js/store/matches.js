@@ -11,11 +11,8 @@ const actions={
         })
     },
 
-    selectMatches({commit}, matches){
-        commit("setSelectedMatches", matches)
-        .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
-        })
+    selectMatches({commit}, selected_matches){
+        commit("setSelectedMatches", selected_matches)
     },
     addMatch({commit, state}, match_form){
         commit("errors/setErrors", null, { root: true });
@@ -32,35 +29,29 @@ const actions={
             commit("errors/setErrors", null, { root: true });
             commit("errors/setSuccess", null, { root: true });
             commit("setMatches", response.data.matches_list);
-            if(state.selectedMatches==null){
-                commit("setSelectedMatches", reponse.data.matches_list[0]);
-            }
             commit("errors/setSuccess", "Meč uspješn dodan.", { root: true })
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            console.log(error);
         })
     },
 
-    deleteCompetition({commit, state}, competition){
+    deleteMatch({commit, state}, match){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
-        axios.post("/api/deleteCompetition", {
-            competition_id: competition,
+        axios.post("/api/deleteMatch", {
+            match_id: match,
+            matches: state.matches,
         })
         .then(response=>{
-            commit("setMyCompetitions", response.data.my_competitions);
-            commit("setOtherCompetitions", response.data.other_competitions);
-            commit("errors/setSuccess", "Pozadina izbrisana.", { root: true });
-            if(state.selectedCompetitionsWatcher=="other"){
-                commit("setSelectedCompetitions", response.data.other_competitions);
-            }
-            else{
-                commit("setSelectedCompetitions", response.data.my_competitions);
-            }
+            console.log(response.data.matches);
+            commit("setMatches", response.data.matches);
+            commit("errors/setSuccess", "Meč izbrisan.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            console.log(error);
         })
     },
 

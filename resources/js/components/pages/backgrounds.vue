@@ -4,7 +4,6 @@
             background-color="light grey"
             dark
             app
-            v-if="admin"
             >
                 <v-tab @click="select_my_backgrounds()">Moje pozadine</v-tab>
                 <v-tab @click="select_other_backgrounds()">Ostale pozadine</v-tab>
@@ -14,6 +13,7 @@
                 max-width="600"
                 overlay-opacity="0.8"
                 v-model="dialog"
+                v-if="admin"
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -34,14 +34,14 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-col v-if="superadmin" class="d-flex" cols="12" sm="6">
-                                <v-select
+                                <v-autocomplete
                                     :items="users_list"
                                     label="Odaberi korisnika"
                                     v-model="background_form.user"
                                     outlined
                                     menu-props="auto"
                                     item-text="email"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-file-input
                                 label="Dodaj sliku:"
@@ -155,7 +155,7 @@ export default{
         },
     },
 
-    mounted(){
+    created(){
        this.$store.dispatch('backgrounds/getBackgrounds');
     }
 }

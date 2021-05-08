@@ -1,9 +1,26 @@
 #main_content{
     background-color: rgb(207, 223, 138);
 }
+#main_body{
+    background-color: rgb(207, 223, 138);
+}
 html{
     overflow-y: auto !important
 }
 .card-icon{
     float:right;
+}
+#div_to_capture {
+    border:1px black solid;
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#div_to_capture2 {
+    display:none;
 }
