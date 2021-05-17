@@ -16,6 +16,7 @@ class CreateBackgroundsTable extends Migration
         Schema::create('backgrounds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->string('url')->unique();
             $table->string('name')->unique();
             $table->timestamps();
         });

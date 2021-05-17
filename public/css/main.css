@@ -24,3 +24,7 @@ html{
 #div_to_capture2 {
     display:none;
 }
+#pagination_buttons{
+    position:absolute;
+    bottom:0;
+}

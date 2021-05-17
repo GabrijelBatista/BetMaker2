@@ -7,25 +7,38 @@ const state={
     otherBackgrounds: [],
     currentBackground: null,
     backgroundsList: [],
+    paginationDetails: {
+        lenght: 0,
+        page: 0
+    }
 };
 const actions={
 
-    getBackgrounds({commit, state}){
-        axios.get("/api/getBackgrounds")
+    getBackgrounds({commit, state, dispatch}){
+        axios.get("/api/getBackgrounds?page=" + state.paginationDetails.page)
         .then(response=>{
             commit("setMyBackgrounds", response.data.my_backgrounds);
             commit("setOtherBackgrounds", response.data.other_backgrounds);
-            commit("setSelectedBackgrounds", response.data.my_backgrounds);
+            if(state.selectedBackgroundsWatcher=="my"){
+                commit("setSelectedBackgrounds", response.data.my_backgrounds);
+            }
+            else if(state.selectedBackgroundsWatcher=="other"){
+                commit("setSelectedBackgrounds", response.data.other_backgrounds);
+            }
             if(state.currentBackground==null){
                 commit("setCurrentBackground", response.data.current_background);
             }
         })
+        .catch(function(error) {
+            if (error.response || error.response.status === 401) {
+                dispatch('currentUser/logoutUser', null, { root: true });
+        }})
     },
 
     selectBackgrounds({commit}, backgrounds){
         commit("setSelectedBackgrounds", backgrounds);
     },
-    addBackground({commit, state}, background_form){
+    addBackground({commit, dispatch}, background_form){
         let form = new FormData();
         form.append('name', background_form.name);
         form.append('user', background_form.user);
@@ -38,40 +51,21 @@ const actions={
               },
         })
         .then(response=>{
-            commit("setMyBackgrounds", response.data.my_backgrounds);
-            commit("setOtherBackgrounds", response.data.other_backgrounds);
-            commit("errors/setSuccess", "Pozadina uspješno dodana.", { root: true });
-            if(state.selectedBackgroundsWatcher=="other"){
-                commit("setSelectedBackgrounds", response.data.other_backgrounds);
-            }
-            else{
-                commit("setSelectedBackgrounds", response.data.my_backgrounds);
-            }
-            if(state.currentBackground==null){
-                commit("setCurrentBackground", response.data.current_background);
-            }
+            dispatch("getBackgrounds");
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
     },
 
-    deleteBackground({commit, state}, background){
+    deleteBackground({commit, dispatch}, background){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteBackground", {
             background_id: background,
         })
         .then(response=>{
-            commit("setMyBackgrounds", response.data.my_backgrounds);
-            commit("setOtherBackgrounds", response.data.other_backgrounds);
-            commit("errors/setSuccess", "Pozadina izbrisana.", { root: true });
-            if(state.selectedBackgroundsWatcher=="other"){
-                commit("setSelectedBackgrounds", response.data.other_backgrounds);
-            }
-            else{
-                commit("setSelectedBackgrounds", response.data.my_backgrounds);
-            }
+            dispatch("getBackgrounds");
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -80,7 +74,7 @@ const actions={
 
     currentBackground({commit}, background){
         commit("setCurrentBackground", background);
-        router.push({path: "/template"+background.url});
+        router.push({path: "/"+background.template_url});
     },
 
 };
@@ -90,6 +84,7 @@ const getters={
     otherBackgrounds: state => state.otherBackgrounds,
     currentBackground: state => state.currentBackground,
     backgroundsList: state => state.backgroundsList,
+    paginationDetails: state => state.paginationDetails,
 };
 const mutations={
 
@@ -104,6 +99,8 @@ const mutations={
         else{
             state.selectedBackgroundsWatcher="my";
         }
+        state.paginationDetails.page=data.current_page;
+        state.paginationDetails.lenght=data.last_page;
     },
     setMyBackgrounds(state, data) {
         state.myBackgrounds=data;

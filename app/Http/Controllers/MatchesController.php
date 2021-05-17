@@ -27,9 +27,6 @@ class MatchesController extends Controller
         $request->validate([
             'home_team'=>'required',
             'away_team'=>'required',
-            'competition'=>'required',
-            'date'=>'required',
-            'time'=>'required',
         ]);
 
         $new_match = new \stdClass();
@@ -49,10 +46,24 @@ class MatchesController extends Controller
         $new_match->id=$count;
         $new_match->home_team=$request->get('home_team');
         $new_match->away_team=$request->get('away_team');
-        $new_match->competition=$request->get('competition');
-        $new_match->date=$request->get('date');
-        $new_match->time=$request->get('time');
-
+        if($request->get('competition')!=null){
+            $new_match->competition=$request->get('competition');
+        }
+        else{
+            $new_match->competition['name']="-";
+        }
+        if($request->get('date')!=null){
+            $new_match->date=$request->get('date');
+        }
+        else{
+            $new_match->date="-";
+        }
+        if($request->get('time')!=null){
+            $new_match->time=$request->get('time');
+        }
+        else{
+            $new_match->time="-";
+        }
         array_push($matches_list, $new_match);
 
         return response()->json(['matches_list'=>$matches_list], 200);

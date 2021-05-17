@@ -5,28 +5,41 @@ const state={
     selectedTemplates:[],
     myTemplates: [],
     otherTemplates: [],
-    currentTemplate: null
+    currentTemplate: null,
+    paginationDetails: {
+        lenght: 0,
+        page: 0
+    }
 };
 const actions={
-    getTemplates({commit, state}){
-        axios.get("/api/getTemplates")
+    getTemplates({commit, state, dispatch}){
+        axios.get("/api/getTemplates?page=" + state.paginationDetails.page)
         .then(response=>{
             commit("superadmin/setAspects", response.data.aspects_list, { root: true });
             commit("superadmin/setUsersList", response.data.users_list, { root: true });
             commit("backgrounds/setBackgroundsList", response.data.backgrounds_list, { root: true });
             commit("setMyTemplates", response.data.my_templates);
             commit("setOtherTemplates", response.data.other_templates);
-            commit("setSelectedTemplates", response.data.my_templates);
+            if(state.selectedTemplatesWatcher=="my"){
+                commit("setSelectedTemplates", response.data.my_templates);
+            }
+            else if(state.selectedTemplatesWatcher=="other"){
+                commit("setSelectedTemplates", response.data.other_templates);
+            }
             if(state.currentTemplate==null){
                 commit("setCurrentTemplate", response.data.current_template);
             }
         })
+        .catch(function(error) {
+            if (error.response || error.response.status === 401) {
+                dispatch('currentUser/logoutUser', null, { root: true });
+        }})
     },
 
     selectTemplates({commit}, templates){
             commit("setSelectedTemplates", templates);
     },
-    addTemplate({commit, state}, template_form){
+    addTemplate({commit, dispatch}, template_form){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addTemplate", {
@@ -36,47 +49,28 @@ const actions={
             aspect: template_form.aspect,
         })
         .then(response=>{
-            commit("setMyTemplates", response.data.my_templates);
-            commit("setOtherTemplates", response.data.other_templates);
-            commit("errors/setSuccess", "Predložak uspješno dodan.", { root: true });
-            if(state.selectedTemplatesWatcher=="other"){
-                commit("setSelectedTemplates", response.data.other_templates);
-            }
-            else{
-                commit("setSelectedTemplates", response.data.my_templates);
-            }
-            if(state.currentTemplate==null){
-                commit("setCurrentTemplate", response.data.current_template);
-            }
+            dispatch("getTemplates");
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
     },
 
-    deleteTemplate({commit, state}, template){
+    deleteTemplate({commit, dispatch}, template){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteTemplate", {
             template_id: template,
         })
         .then(response=>{
-            commit("setMyTemplates", response.data.my_templates);
-            commit("setOtherTemplates", response.data.other_templates);
-            commit("errors/setSuccess", "Predložak izbrisan.", { root: true });
-            if(state.selectedTemplatesWatcher=="other"){
-                commit("setSelectedTemplates", response.data.other_templates);
-            }
-            else{
-                commit("setSelectedTemplates", response.data.my_templates);
-            }
+            dispatch("getTemplates");
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
     },
 
-    editTemplate({commit, state}, edit_form){
+    editTemplate({commit, dispatch}, edit_form){
         let form = new FormData();
         form.append('id', edit_form.id);
         form.append('name', edit_form.name);
@@ -93,15 +87,7 @@ const actions={
               },
         })
         .then(response=>{
-            commit("setMyTemplates", response.data.my_templates);
-            commit("setOtherTemplates", response.data.other_templates);
-            commit("errors/setSuccess", "Predložak uređen.", { root: true });
-            if(state.selectedTemplatesWatcher=="other"){
-                commit("setSelectedTemplates", response.data.other_templates);
-            }
-            else{
-                commit("setSelectedTemplates", response.data.my_templates);
-            }
+            dispatch("getTemplates");
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -110,7 +96,7 @@ const actions={
 
     currentTemplate({commit}, template){
         commit("setCurrentTemplate", template);
-        router.push({path: "/template"+template.id});
+        router.push({path: template.url});
     },
 
 };
@@ -119,6 +105,7 @@ const getters={
     myTemplates: state => state.myTemplates,
     otherTemplates: state => state.otherTemplates,
     currentTemplate: state => state.currentTemplate,
+    paginationDetails: state => state.paginationDetails,
 };
 const mutations={
     setSelectedTemplates(state, data) {
@@ -129,6 +116,8 @@ const mutations={
         else{
             state.selectedTemplatesWatcher="my";
         }
+        state.paginationDetails.page=data.current_page;
+        state.paginationDetails.lenght=data.last_page;
     },
     setMyTemplates(state, data) {
         state.myTemplates=data;

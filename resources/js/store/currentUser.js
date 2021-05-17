@@ -31,7 +31,7 @@ const actions={
                 commit("setAdmin", true);
                 commit("setSuperadmin", false);
             }
-            else if(response.data.user['role_id']==3){
+            else if(response.data.user['role_id']==1){
                 commit("setAdmin", true);
                 commit("setSuperadmin", true);
             }
@@ -68,7 +68,10 @@ const actions={
         commit("errors/setSuccess", null, { root: true });
         axios.get("/api/logoutUser");
             commit("setUser", null);
+            commit("templateOptions/setResolution", null, { root: true });
+            commit("templateOptions/setTemplateResolutions", null, { root: true });
             commit("matches/setMatches", null, { root: true });
+            commit("matches/setSelectedMatches", null, { root: true });
             commit("superadmin/setUsersList", null, { root: true });
             commit("errors/setErrors", null, { root: true });
             commit("templates/setCurrentTemplate", null, { root: true });

@@ -39,6 +39,14 @@
                             v-model="team_form.name"
                             autocomplete="off"
                             ></v-text-field>
+                            <v-combobox multiple
+                            v-model="team_form.tags" 
+                            label="Oznake" 
+                            append-icon
+                            chips
+                            deletable-chips
+                            class="tag-input">
+                            </v-combobox>
                             <v-col v-if="superadmin" class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
                                     :items="users_list"
@@ -71,8 +79,9 @@
     </v-tabs>
     <v-layout wrap >
     <v-flex id="teams_list" v-for="team in this.selected_teams" :key="team.id">
+        <v-container id="competition_card">
             <v-img
-              :src="'storage/teams/'+team.logo"
+              :src="team.logo ? 'storage/teams/'+team.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
             >
@@ -95,10 +104,7 @@
                 </v-icon>
             </div>
             </v-img>
-            <v-card-title
-                class="justify-center"
-                v-text="team.title+' '+team.name">
-            </v-card-title>
+        </v-container>
     </v-flex>
     </v-layout>
 </v-card>
@@ -116,6 +122,7 @@ export default{
             name: "",
             user: "",
             logo: null,
+            tags: null,
         },
         icons: {
             mdiDelete

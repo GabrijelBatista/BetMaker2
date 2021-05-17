@@ -65,10 +65,10 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap >
-    <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds" :key="background.id">
+    <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-card active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
             <v-img
-              :src="'storage/backgrounds/'+background.name"
+              :src="background.url ? 'storage/backgrounds/'+background.url : ''"
               lazy-src="storage/lazy_image.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -97,6 +97,14 @@
         </v-card>
     </v-flex>
     </v-layout>
+    <v-pagination
+    id="pagination_buttons"
+      v-model="pagination_details.page"
+      :length="pagination_details.lenght"
+      :total-visible="7"
+      circle
+      @input="pagination"
+    ></v-pagination>
 </v-card>
 </template>
 
@@ -130,6 +138,7 @@ export default{
             superadmin: 'currentUser/superadmin',
             users_list: 'superadmin/usersList',
             current_template: 'templates/currentTemplate',
+            pagination_details: 'backgrounds/paginationDetails',
         }),
     },
     methods: {
@@ -144,7 +153,7 @@ export default{
             this.$refs.form.reset();
         },
         select_current_background(background){
-            background.url=this.current_template.id;
+            background.template_url=this.current_template.url;
             this.$store.dispatch('backgrounds/currentBackground', background);
         },
         delete_background(background){
@@ -153,6 +162,9 @@ export default{
             this.$store.dispatch('backgrounds/deleteBackground', background);
             }
         },
+        pagination(){
+            this.$store.dispatch('backgrounds/getBackgrounds');
+        }
     },
 
     created(){

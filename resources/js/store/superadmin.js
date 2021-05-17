@@ -14,6 +14,10 @@ const actions={
             commit("setResolutions", response.data.resolutions);
             commit("setUsersList", response.data.users_list);
         })
+        .catch(function(error) {
+            if (error.response || error.response.status === 401) {
+                dispatch('currentUser/logoutUser', null, { root: true });
+        }})
     },
     addRole({commit}, role_form){
         commit("errors/setErrors", null, { root: true });

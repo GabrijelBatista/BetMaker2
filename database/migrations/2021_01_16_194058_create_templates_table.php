@@ -20,6 +20,7 @@ class CreateTemplatesTable extends Migration
             $table->integer('max_matches');
             $table->foreignId('background_id')->nullable()->constrained('backgrounds');
             $table->string('example_image')->nullable();
+            $table->string('url');
             $table->foreignId('aspect_id')->constrained('aspects');
             $table->timestamps();
         });

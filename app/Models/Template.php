@@ -21,5 +21,6 @@ class Template extends Model
         'background_id',
         'example_image',
         'aspect_id',
+        'url'
     ];
 }

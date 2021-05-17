@@ -1,5 +1,5 @@
 const state={
-    selectedMatches: null,
+    selectedMatches: [],
     matches: [],
 };
 const actions={
@@ -9,6 +9,10 @@ const actions={
             commit("teams/setTeamsList", response.data.teams_list, { root: true });
             commit("competitions/setCompetitionsList", response.data.competitions_list, { root: true });
         })
+        .catch(function(error) {
+            if (error.response || error.response.status === 401) {
+                dispatch('currentUser/logoutUser', null, { root: true });
+        }})
     },
 
     selectMatches({commit}, selected_matches){

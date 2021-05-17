@@ -43,6 +43,11 @@ html{
 #div_to_capture2 {
     display:none;
 }
+#pagination_buttons{
+    position:absolute;
+    bottom:0;
+}
+
 #sidebar{
     position:fixed;
     background-color: rgb(22, 21, 21);
@@ -71,29 +76,15 @@ html{
 }
 
 
-#template_card1{
-    width: 40vh;
-    height:40vh;
-    margin:auto;
-    margin-top: 10px;
-}
 #confirm_dialog_text{
     font-size: xx-large;
     margin-left: auto;
     margin-top: 20px;
     margin-bottom: 20px
 }
-#template_card2{
-    width: 27vh;
-    height:48vh;
+#template_card{
     margin:auto;
-    margin-top: 10px
-}
-#template_card3{
-    width: 48vh;
-    height:27vh;
-    margin:auto;
-    margin-top: 10px
+    margin-top: 10px;
 }
 #templates_list{
     padding:10px;
@@ -109,18 +100,23 @@ html{
 }
 
 #background_card{
-    width: 40vh;
-    height:40vh;
+    width: 20vh;
+    height:20vh;
     margin:auto;
     margin-top: 10px
 }
 
 .competition_logo{
-    max-width:20vh !important ;
-    max-height:20vh !important ;
+    max-width:150px !important ;
+    max-height:150px !important ;
+}
+#competition_card{
+    max-width:150px !important ;
+    max-height:150px !important ;
     margin:auto;
     margin-top: 10px;
 }
+
 
 
 .date_time_picker{
@@ -135,3 +131,7 @@ html{
     max-height: 80%;
 }
 
+@font-face {
+    src: url('/fonts/BetLive/PFDinTextCompPro-Medium_35390.ttf');
+    font-family: BetLiveMedium;
+}

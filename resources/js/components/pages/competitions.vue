@@ -70,21 +70,13 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap >
-    <v-flex id="competitions_list" v-for="competition in this.selected_competitions" :key="competition.id">
+    <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
+        <v-container id="competition_card">
             <v-img
-              :src="'storage/competitions/'+competition.logo"
+              :src="competition.logo ? 'storage/competitions/'+competition.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
             >
-            <template v-slot:placeholder>
-                <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-                >
-                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-row>
-            </template>
             <div v-if="selected_competitions===my_competitions">
                 <v-icon
                 color="red"
@@ -94,13 +86,27 @@
                     {{ icons.mdiDelete }}
                 </v-icon>
             </div>
+            <template v-slot:placeholder>
+                <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+                >
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+            </template>
             </v-img>
-            <v-card-title
-                class="justify-center"
-                v-text="competition.title+' '+competition.name">
-            </v-card-title>
+        </v-container>
     </v-flex>
     </v-layout>
+    <v-pagination
+    id="pagination_buttons"
+      v-model="pagination_details.page"
+      :length="pagination_details.lenght"
+      :total-visible="7"
+      circle
+      @input="pagination"
+    ></v-pagination>
 </v-card>
 </template>
 
@@ -133,6 +139,7 @@ export default{
             admin: 'currentUser/admin',
             superadmin: 'currentUser/superadmin',
             users_list: 'superadmin/usersList',
+            pagination_details: 'competitions/paginationDetails',
         }),
     },
     methods: {
@@ -152,6 +159,9 @@ export default{
             this.$store.dispatch('competitions/deleteCompetition', competition);
             }
         },
+        pagination(){
+            this.$store.dispatch('backgrounds/getBackgrounds');
+        }
     },
 
     created(){

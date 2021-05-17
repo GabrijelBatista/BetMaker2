@@ -17,7 +17,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
 
-        if(!in_array(auth()->user()->role_id, [2,3])){
+        if(!in_array(auth()->user()->role_id, [2,1])){
             return redirect()->back();
         }
 

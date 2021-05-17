@@ -27,12 +27,15 @@
                         <v-form @submit.prevent="add_match" ref="form">
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
-                                    :items="teams_list"
+                                    :items="results_home_team"
+                                    v-on:keyup="autocomplete_home_team"
                                     label="Domaćin:"
                                     v-model="match_form.home_team"
                                     outlined
                                     item-text="name"
-                                ></v-autocomplete>
+                                    return-object
+                                >
+                                </v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
@@ -41,6 +44,7 @@
                                     item-text="name"
                                     v-model="match_form.away_team"
                                     outlined
+                                    return-object
                                 ></v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
@@ -50,6 +54,7 @@
                                     item-text="name"
                                     v-model="match_form.competition"
                                     outlined
+                                    return-object
                                 ></v-autocomplete>
                             </v-col>
                             <v-menu
@@ -139,13 +144,13 @@
             }">
                 <template v-slot:item="{ item, isSelected, select }">
                     <tr id="matches_table" :class="isSelected?'cyan':''" @click="toggle(isSelected,select,$event)">
-                        <td>{{item.home_team}}</td>
-                        <td>{{item.away_team}}</td>
-                        <td>{{item.competition}}</td>
+                        <td>{{item.home_team.name}}</td>
+                        <td>{{item.away_team.name}}</td>
+                        <td>{{item.competition.name}}</td>
                         <td>{{item.date}}</td>
                         <td>{{item.time}}</td>
-                        <v-icon class="px-1" color="green" v-show="isSelected">{{ icons.mdiCheck }}</v-icon>
-                        <v-icon class="px-1" color="red" @click="delete_match(item.id)">{{ icons.mdiDelete }}</v-icon>
+                        <td v-show="isSelected"><v-icon class="px-1" color="green" v-show="isSelected">{{ icons.mdiCheck }}</v-icon></td>
+                        <td><v-icon class="px-1" color="red" v-on:click.stop @click="delete_match(item.id)">{{ icons.mdiDelete }}</v-icon></td>
                     </tr>
                 </template>
             </v-data-table>
@@ -155,6 +160,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 import {
     mdiCheck,
     mdiDelete,
@@ -167,21 +173,22 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        results_home_team: [],
         matches_send: [],
         headers: [
         { text: "Domaćin", value: "home_team" },
         { text: "Gost", value: "away_team" },
         { text: "Natjecanje", value: "competition" },
         { text: "Datum", value: "date" },
-        { text: "Vrijeme", value: "time" }
+        { text: "Vrijeme", value: "time" },
       ],
         menu2: false,
         menu3: false,
         match_form: {
-            home_team: null,
-            away_team: null,
-            competition: null,
-            date: new Date().toISOString().substr(0, 10),
+            home_team: "",
+            away_team: "",
+            competition: "",
+            date: null,
             time: null,
         },
         icons: {
@@ -213,6 +220,11 @@ export default{
             this.$store.dispatch('matches/selectMatches', this.matches);
         },
         add_match(){
+            if(this.match_form.date!=null){
+               // moment.locale('hr');
+                let new_date=moment(String(this.match_form.date)).format('DD/MM/YYYY.');
+                this.match_form.date=new_date;
+            }
             this.$store.dispatch('matches/addMatch', this.match_form);
             this.$refs.form.reset();
         },
@@ -225,11 +237,24 @@ export default{
         toggle(isSelected,select,e) {
             select(!isSelected);
         },
+        autocomplete_home_team(value){
+        this.results_home_team = [];
+        console.log(value);
+        if(value.key.length > 0){
+            axios.get('/api/autocomplete_teams/'+value.key)
+            .then(response => {
+            this.results_home_team = response.data.result;
+            console.log(response.data.result);
+            });
+        }
+   }
 
     },
 
     created(){
-        this.matches_send=this.selected_matches;
+        if(this.selected_matches!=null){
+            this.matches_send=this.selected_matches;
+        }
         this.$store.dispatch('matches/getMatchesResources');
     },
 
@@ -237,7 +262,7 @@ export default{
       matches_send: function() {
           this.$store.dispatch('matches/selectMatches', this.matches_send);
       }
-  }
+    }
 }
 
 </script>

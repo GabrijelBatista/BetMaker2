@@ -1,6 +1,11 @@
 .competition_logo{
-    max-width:20vh !important ;
-    max-height:20vh !important ;
+    max-width:150px !important ;
+    max-height:150px !important ;
+}
+#competition_card{
+    max-width:150px !important ;
+    max-height:150px !important ;
     margin:auto;
     margin-top: 10px;
 }
+

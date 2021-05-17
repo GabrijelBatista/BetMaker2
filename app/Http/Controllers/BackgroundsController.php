@@ -14,12 +14,12 @@ class BackgroundsController extends Controller
 {
     public function get_backgrounds(){
         $user=Auth::user();
-        $my_backgrounds = Background::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
-        if($user->role_id===3){
-            $other_backgrounds = Background::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->get()->all();
+        $my_backgrounds = Background::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(24);
+        if($user->role_id===1){
+            $other_backgrounds = Background::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->paginate(24);
         }
         else{
-            $other_backgrounds = Background::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
+            $other_backgrounds = Background::where('user_id', 1)->orderBy('created_at', 'desc')->paginate(24);
         }
         $current_background=null;
         if($my_backgrounds!=null){
@@ -75,28 +75,12 @@ class BackgroundsController extends Controller
             }
 
             Background::create([
-                'name'=>$nameStore,
+                'name'=>$request->name,
+                'url'=>$nameStore,
                 'user_id'=>$user_id,
             ]);
 
-            $user=Auth::user();
-            $my_backgrounds = Background::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
-            if($user->role_id===3){
-                $other_backgrounds = Background::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->get()->all();
-            }
-            else{
-                $other_backgrounds = Background::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
-            }
-
-            if($my_backgrounds!=null){
-                $current_background=$my_backgrounds[0];
-            }
-            else{
-                $current_background=$other_backgrounds[0];
-            }
-
-
-            return response()->json(['current_background'=>$current_background, 'my_backgrounds'=>$my_backgrounds, 'other_backgrounds'=>$other_backgrounds], 200);
+            return response()->json(200);
         }
     }
 
@@ -107,7 +91,7 @@ class BackgroundsController extends Controller
 
         $background=Background::where('id', $request->background_id)->first();
 
-        $path = public_path().'/storage/backgrounds/'.$background->name;
+        $path = public_path().'/storage/backgrounds/'.$background->url;
         if(File::exists($path)) {
             $file_path=$path;
             unlink($file_path);
@@ -115,23 +99,6 @@ class BackgroundsController extends Controller
 
         Background::where('id', $request->background_id)->delete();
 
-        $backgrounds = Background::orderBy('created_at', 'desc')->get()->all();
-        $my_backgrounds = [];
-        $other_backgrounds = [];
-        $user=Auth::user();
-        foreach($backgrounds as $background){
-            if($background->user_id===$user->id){
-                array_push($my_backgrounds, $background);
-            }
-            else if($user->role_id===3){
-                array_push($other_backgrounds, $background);
-            }
-            else if($background->user_id===1){
-                array_push($other_backgrounds, $background);
-            }
-        }
-
-
-        return response()->json(['my_backgrounds'=>$my_backgrounds, 'other_backgrounds'=>$other_backgrounds], 200);
+        return response()->json(200);
     }
 }

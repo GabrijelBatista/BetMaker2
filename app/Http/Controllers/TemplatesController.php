@@ -16,12 +16,12 @@ class TemplatesController extends Controller
     public function get_templates(){
 
         $user=Auth::user();
-            $my_templates = Template::where('user_id', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            if($user->role_id===3){
-                $other_templates = Template::where('user_id', '!=', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
+            $my_templates = Template::where('user_id', $user->id)->orderBy('aspect_id', 'asc')->paginate(21);
+            if($user->role_id===1){
+                $other_templates = Template::where('user_id', '!=', $user->id)->orderBy('aspect_id', 'asc')->paginate(21);
             }
             else{
-                $other_templates = Template::where('user_id', 1)->orderBy('aspect_id', 'asc')->get()->all();
+                $other_templates = Template::where('user_id', 1)->orderBy('aspect_id', 'asc')->paginate(21);
             }
 
             if($my_templates!=null){
@@ -34,7 +34,7 @@ class TemplatesController extends Controller
                 $current_template=null;
             }
 
-            if($user->role_id==3){
+            if($user->role_id==1){
                 $backgrounds_list=Background::get()->all();
                 $aspects_list=Aspect::get()->all();
                 $users_list=User::get()->all();
@@ -58,33 +58,16 @@ class TemplatesController extends Controller
 
         $user = User::select('id')->where('email', $request->user)->get()->first();
         $user_id = $user->id;
-
+        $name_trimed = str_replace(" ", "_", $request->name);
         Template::create([
             'name'=>$request->name,
             'user_id'=>$user_id,
             'max_matches'=>$request->max_matches,
             'aspect_id'=>$aspect_id,
+            'url'=>url($name_trimed),
         ]);
 
-
-        $user=Auth::user();
-            $my_templates = Template::where('user_id', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            if($user->role_id===3){
-                $other_templates = Template::where('user_id', '!=', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            }
-            else{
-                $other_templates = Template::where('user_id', 1)->orderBy('aspect_id', 'asc')->get()->all();
-            }
-
-            if($my_templates!=null){
-                $current_template=$my_templates[0];
-            }
-            else{
-                $current_template=$other_templates[0];
-            }
-
-
-        return response()->json(['current_template'=>$current_template,'my_templates'=>$my_templates, 'other_templates'=>$other_templates], 200);
+        return response()->json(200);
 
     }
 
@@ -128,18 +111,7 @@ class TemplatesController extends Controller
 
         $template->save();
 
-
-        $user=Auth::user();
-            $my_templates = Template::where('user_id', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            if($user->role_id===3){
-                $other_templates = Template::where('user_id', '!=', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            }
-            else{
-                $other_templates = Template::where('user_id', 1)->orderBy('aspect_id', 'asc')->get()->all();
-            }
-
-
-        return response()->json(['template'=>$template, 'my_templates'=>$my_templates, 'other_templates'=>$other_templates], 200);
+        return response()->json(200);
 
     }
 
@@ -158,16 +130,6 @@ class TemplatesController extends Controller
 
         Template::where('id', $request->template_id)->delete();
 
-        $user=Auth::user();
-            $my_templates = Template::where('user_id', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            if($user->role_id===3){
-                $other_templates = Template::where('user_id', '!=', $user->id)->orderBy('aspect_id', 'asc')->get()->all();
-            }
-            else{
-                $other_templates = Template::where('user_id', 1)->orderBy('aspect_id', 'asc')->get()->all();
-            }
-
-
-        return response()->json(['my_templates'=>$my_templates, 'other_templates'=>$other_templates], 200);
+        return response()->json(200);
     }
 }

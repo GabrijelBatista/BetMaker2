@@ -90,7 +90,7 @@ const routes =[
 
     //BetLive
     {
-        path: '/template114',
+        path: '/Vote_Story',
         component: votestory,
         meta: {
             BetLive: true
@@ -116,7 +116,7 @@ const router = new Router({
     }
 
     //superadmin
-    else if (to.matched.some(record => record.meta.requiresSuperadmin)) {
+    if (to.matched.some(record => record.meta.requiresSuperadmin)) {
         if (!store.getters['currentUser/superadmin']) {
           next({ path: '/login' })
         }
@@ -137,7 +137,7 @@ const router = new Router({
 
     //BetLive
     else if (to.matched.some(record => record.meta.BetLive)) {
-        if (store.getters['currentUser/user'].id!=1 && store.getters['currentUser/user'].id!=3) {
+        if (store.getters['currentUser/user'].role_id!=1 && store.getters['currentUser/user'].id!=1){
           next({ path: '/' })
         }
         else {

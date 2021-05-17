@@ -83,14 +83,20 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap>
-    <v-flex id="templates_list" v-for="template in this.selected_templates" :key="template.id">
-        <v-card active-class="selected" :class="current_template.id === template.id ? 'selected' : ''" @click="select_current_template(template)" :id="'template_card'+template.aspect_id">
+    <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
+        <v-card active-class="selected"
+        :class="current_template.id === template.id ? 'selected' : ''"
+        @click="select_current_template(template)"
+        :id="'template_card'"
+        :aspect-ratio="template.aspect_id==1 ? 9/16 : '' || template.aspect_id==2 ? 16/9 : '' || template.aspect_id==3 ? 1/1 : ''"
+        :width="template.aspect_id==1 ? 150 : '' || template.aspect_id==2 ? 267 : '' || template.aspect_id==3 ? 209 : ''"
+        >
             <v-img
-              :src="'storage/example_images/'+template.example_image"
+              :src="template.example_image ? 'storage/example_images/'+template.example_image : ''"
               lazy-src="storage/lazy_image.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="100%"
+              :height="template.aspect_id==1 ? 267 : '' || template.aspect_id==2 ? 150 : '' || template.aspect_id==3 ? 209 : ''"
             >
                     <v-icon color="red"
                     v-if="superadmin"
@@ -115,10 +121,6 @@
                     <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
             </template>
-                <v-card-title
-                class="card_text"
-                v-text="template.name">
-                </v-card-title>
             </v-img>
         </v-card>
     </v-flex>
@@ -201,6 +203,14 @@
                     </v-card>
                 </v-dialog>
     </v-layout>
+    <v-pagination
+    id="pagination_buttons"
+      v-model="pagination_details.page"
+      :length="pagination_details.lenght"
+      :total-visible="7"
+      circle
+      @input="pagination"
+    ></v-pagination>
 </v-card>
 </template>
 
@@ -211,6 +221,7 @@ import {
     mdiDelete,
   } from '@mdi/js'
 export default{
+    props: ['auth_user'],
     data: () => ({
         dialog_template_name: null,
         dialog_template_id: null,
@@ -249,6 +260,7 @@ export default{
             aspects: 'superadmin/aspects',
             backgrounds: 'backgrounds/backgroundsList',
             users_list: 'superadmin/usersList',
+            pagination_details: 'backgrounds/paginationDetails',
         }),
     },
     methods: {
@@ -280,6 +292,9 @@ export default{
             this.dialog_template_name = template.name;
             this.dialog_template_id = template.id;
             this.dialog3 = true;
+        },
+        pagination(){
+            this.$store.dispatch('backgrounds/getBackgrounds');
         }
     },
     created(){

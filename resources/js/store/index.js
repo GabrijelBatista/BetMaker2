@@ -8,6 +8,7 @@ import backgrounds from "./backgrounds"
 import competitions from "./competitions"
 import teams from "./teams"
 import matches from "./matches"
+import templateOptions from "./templateOptions"
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -26,11 +27,12 @@ export default new Vuex.Store({
         competitions,
         teams,
         matches,
+        templateOptions
     },
     plugins: [
         createPersistedState({
             storage: window.sessionStorage,
-            paths: ['currentUser', 'templates', 'superadmin', 'backgrounds', 'competitions', 'teams', 'matches'],
+            paths: ['templateOptions', 'currentUser', 'templates', 'superadmin', 'backgrounds', 'competitions', 'teams', 'matches'],
         }),
       ],
 })

@@ -14,12 +14,12 @@ class CompetitionsController extends Controller
 
     public function get_competitions(){
         $user=Auth::user();
-        $my_competitions = Competition::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
-        if($user->role_id===3){
-            $other_competitions = Competition::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->get()->all();
+        $my_competitions = Competition::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(24);
+        if($user->role_id===1){
+            $other_competitions = Competition::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->paginate(24);
         }
         else{
-            $other_competitions = Competition::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
+            $other_competitions = Competition::where('user_id', 1)->orderBy('created_at', 'desc')->paginate(24);
         }
 
         return response()->json(['my_competitions'=>$my_competitions, 'other_competitions'=>$other_competitions], 200);
@@ -62,17 +62,7 @@ class CompetitionsController extends Controller
             'logo'=>$nameStore,
         ]);
 
-        $user=Auth::user();
-        $my_competitions = Competition::where('user_id', $user->id)->orderBy('name', 'asc')->get()->all();
-        if($user->role_id===3){
-            $other_competitions = Competition::where('user_id', '!=', $user->id)->orderBy('name', 'asc')->get()->all();
-        }
-        else{
-            $other_competitions = Competition::where('user_id', 1)->orderBy('name', 'asc')->get()->all();
-        }
-
-
-        return response()->json(['my_competitions'=>$my_competitions, 'other_competitions'=>$other_competitions], 200);
+        return response()->json(200);
     }
 
     public function delete_competition(Request $request){
@@ -90,24 +80,8 @@ class CompetitionsController extends Controller
 
         Competition::where('id', $request->competition_id)->delete();
 
-        $competitions = Competition::orderBy('created_at', 'desc')->get()->all();
-        $my_competitions = [];
-        $other_competitions = [];
-        $user=Auth::user();
-        foreach($competitions as $competition){
-            if($competition->user_id===$user->id){
-                array_push($my_competitions, $competition);
-            }
-            else if($user->role_id===3){
-                array_push($other_competitions, $competition);
-            }
-            else if($competition->user_id===1){
-                array_push($other_competitions, $competition);
-            }
-        }
 
-
-        return response()->json(['my_competitions'=>$my_competitions, 'other_competitions'=>$other_competitions], 200);
+        return response()->json(200);
     }
 
 }

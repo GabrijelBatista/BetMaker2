@@ -15,6 +15,10 @@ const actions={
             commit("setOtherTeams", response.data.other_teams);
             commit("setSelectedTeams", response.data.my_teams);
         })
+        .catch(function(error) {
+            if (error.response || error.response.status === 401) {
+                dispatch('currentUser/logoutUser', null, { root: true });
+        }})
     },
 
     selectTeams({commit}, teams){
@@ -25,6 +29,7 @@ const actions={
         form.append('title', team_form.title);
         form.append('name', team_form.name);
         form.append('user', team_form.user);
+        form.append('tags', team_form.tags);
         form.append('logo', team_form.logo);
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });

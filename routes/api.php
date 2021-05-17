@@ -23,6 +23,9 @@ Route::post('registerUser', 'App\Http\Controllers\AuthenticationController@regis
 Route::get('logoutUser', 'App\Http\Controllers\AuthenticationController@logout');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    //options
+    Route::post('getTemplateResolutions', 'App\Http\Controllers\OptionsController@get_template_resolutions');
+    Route::post('changeResolution', 'App\Http\Controllers\OptionsController@change_resolution');
 
     //templates
     Route::get('getTemplates', 'App\Http\Controllers\TemplatesController@get_templates');
@@ -35,6 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //teams
     Route::get('getTeams', 'App\Http\Controllers\TeamsController@get_teams');
+    Route::get('autocomplete_teams/{team_data}', 'App\Http\Controllers\TeamsController@autocomplete_teams');
 
     //matches
     Route::get('getMatchesResources', 'App\Http\Controllers\MatchesController@get_matches_resources');

@@ -13,7 +13,4 @@
 
 export default{
 
-};
-
-
-</script>
+}

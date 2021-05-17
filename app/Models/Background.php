@@ -17,5 +17,6 @@ class Background extends Model
     protected $fillable = [
         'name',
         'user_id',
+        'url'
     ];
 }

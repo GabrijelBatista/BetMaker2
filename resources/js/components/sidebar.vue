@@ -37,7 +37,7 @@
         </v-list-item>
         <v-list-item
           class="current_template_tab"
-          :to="'/template'+this.current_template.id"
+          :to="this.current_template.url"
         >
             <v-list-item-content>
                 <v-list-item-title>ODABRANI PREDLOŽAK</v-list-item-title>
