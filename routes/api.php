@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //competitions
     Route::get('getCompetitions', 'App\Http\Controllers\CompetitionsController@get_competitions');
+    Route::get('autocomplete_competitions/{competition_data}', 'App\Http\Controllers\CompetitionsController@autocomplete_competitions');
 
     //teams
     Route::get('getTeams', 'App\Http\Controllers\TeamsController@get_teams');

@@ -84,4 +84,9 @@ class CompetitionsController extends Controller
         return response()->json(200);
     }
 
+    public function autocomplete_competitions($competition_data){
+        $data = Competition::where( 'name', 'LIKE', '%'.$competition_data.'%' )->orWhere( 'title', 'LIKE', '%'.$competition_data.'%' )->get();
+        return response()->json($data);
+    }
+
 }

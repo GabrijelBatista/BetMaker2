@@ -27,35 +27,45 @@
                         <v-form @submit.prevent="add_match" ref="form">
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
-                                    :items="results_home_team"
-                                    v-on:keyup="autocomplete_home_team"
+                                    :items="entries_home"
+                                    :filter="entries_home_filter"
+                                    :search-input.sync="search_home"
                                     label="Domaćin:"
                                     v-model="match_form.home_team"
                                     outlined
                                     item-text="name"
+                                    item-value="id"
                                     return-object
                                 >
                                 </v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
-                                    :items="teams_list"
-                                    label="Gost:"
-                                    item-text="name"
+                                    :items="entries_away"
+                                    :filter="entries_away_filter"
+                                    :search-input.sync="search_away"
+                                    label="Domaćin:"
                                     v-model="match_form.away_team"
                                     outlined
+                                    item-text="name"
+                                    item-value="id"
                                     return-object
-                                ></v-autocomplete>
+                                >
+                                </v-autocomplete>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
-                                    :items="competitions_list"
-                                    label="Natjecanje:"
-                                    item-text="name"
+                                    :items="entries_competition"
+                                    :filter="entries_competition_filter"
+                                    :search-input.sync="search_competition"
+                                    label="Domaćin:"
                                     v-model="match_form.competition"
                                     outlined
+                                    item-text="name"
+                                    item-value="id"
                                     return-object
-                                ></v-autocomplete>
+                                >
+                                </v-autocomplete>
                             </v-col>
                             <v-menu
                             v-model="menu2"
@@ -173,7 +183,12 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
-        results_home_team: [],
+        entries_home: [],
+        search_home: null,
+        entries_away: [],
+        search_away: null,
+        entries_competition: [],
+        search_competition: null,
         matches_send: [],
         headers: [
         { text: "Domaćin", value: "home_team" },
@@ -237,18 +252,15 @@ export default{
         toggle(isSelected,select,e) {
             select(!isSelected);
         },
-        autocomplete_home_team(value){
-        this.results_home_team = [];
-        console.log(value);
-        if(value.key.length > 0){
-            axios.get('/api/autocomplete_teams/'+value.key)
-            .then(response => {
-            this.results_home_team = response.data.result;
-            console.log(response.data.result);
-            });
+        entries_home_filter(){
+            return this.entries_home;
+        },
+        entries_away_filter(){
+            return this.entries_away;
+        },
+        entries_competition_filter(){
+            return this.entries_competition;
         }
-   }
-
     },
 
     created(){
@@ -261,8 +273,44 @@ export default{
     watch: {
       matches_send: function() {
           this.$store.dispatch('matches/selectMatches', this.matches_send);
-      }
+      },
+      search_home (val) {
+          this.entries_home = [];
+        if(!val) return;
+      axios.get('/api/autocomplete_teams/'+val)
+        .then(res => {
+            this.entries_home=null;
+            this.entries_home = res.data;
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    search_away (val) {
+          this.entries_away = [];
+        if(!val) return;
+      axios.get('/api/autocomplete_teams/'+val)
+        .then(res => {
+            this.entries_away=null;
+            this.entries_away = res.data;
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    search_competition (val) {
+          this.entries_competition = [];
+        if(!val) return;
+      axios.get('/api/autocomplete_competitions/'+val)
+        .then(res => {
+            this.entries_competition=null;
+            this.entries_competition = res.data;
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
+  }
 }
 
 </script>
