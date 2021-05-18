@@ -26,7 +26,7 @@
                         </v-card-title>
                         <v-form @submit.prevent="add_match" ref="form">
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-autocomplete
+                                <v-combobox
                                     :items="entries_home"
                                     :filter="entries_home_filter"
                                     :search-input.sync="search_home"
@@ -37,10 +37,10 @@
                                     item-value="id"
                                     return-object
                                 >
-                                </v-autocomplete>
+                                </v-combobox>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-autocomplete
+                                <v-combobox
                                     :items="entries_away"
                                     :filter="entries_away_filter"
                                     :search-input.sync="search_away"
@@ -51,10 +51,10 @@
                                     item-value="id"
                                     return-object
                                 >
-                                </v-autocomplete>
+                                </v-combobox>
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
-                                <v-autocomplete
+                                <v-combobox
                                     :items="entries_competition"
                                     :filter="entries_competition_filter"
                                     :search-input.sync="search_competition"
@@ -65,7 +65,7 @@
                                     item-value="id"
                                     return-object
                                 >
-                                </v-autocomplete>
+                                </v-combobox>
                             </v-col>
                             <v-menu
                             v-model="menu2"
@@ -274,10 +274,10 @@ export default{
       matches_send: function() {
           this.$store.dispatch('matches/selectMatches', this.matches_send);
       },
-      search_home (val) {
+      search_home (val1) {
           this.entries_home = [];
-          if(val.length<2) return;
-      axios.get('/api/autocomplete_teams/'+val)
+          if(val1.length<2) return;
+      axios.get('/api/autocomplete_teams/'+val1)
         .then(res => {
             this.entries_home=null;
             this.entries_home = res.data;
@@ -286,10 +286,10 @@ export default{
           console.log(err)
         })
     },
-    search_away (val) {
+    search_away (val2) {
           this.entries_away = [];
-        if(val.length<2) return;
-      axios.get('/api/autocomplete_teams/'+val)
+        if(val2.length<2) return;
+      axios.get('/api/autocomplete_teams/'+val2)
         .then(res => {
             this.entries_away=null;
             this.entries_away = res.data;
@@ -298,10 +298,10 @@ export default{
           console.log(err)
         })
     },
-    search_competition (val) {
+    search_competition (val3) {
           this.entries_competition = [];
-        if(val.length<2) return;
-      axios.get('/api/autocomplete_competitions/'+val)
+        if(val3.length<2) return;
+      axios.get('/api/autocomplete_competitions/'+val3)
         .then(res => {
             this.entries_competition=null;
             this.entries_competition = res.data;
