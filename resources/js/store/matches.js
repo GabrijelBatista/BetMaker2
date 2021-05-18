@@ -26,7 +26,6 @@ const actions={
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
-            console.log(error);
         })
     },
 
@@ -38,13 +37,11 @@ const actions={
             matches: state.matches,
         })
         .then(response=>{
-            console.log(response.data.matches);
             commit("setMatches", response.data.matches);
             commit("errors/setSuccess", "Meč izbrisan.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
-            console.log(error);
         })
     },
 

@@ -267,11 +267,12 @@ export default{
       },
       search_home (val1) {
           this.entries_home = [];
-          if(val1.length<2) return;
+          if(!val1) return;
+          if(val1.length<2 || val1==null) return;
       axios.get('/api/autocomplete_teams/'+val1)
         .then(res => {
             this.entries_home=null;
-            this.entries_home = res.data;
+            this.entries_home = res.data[0];
         })
         .catch(err => {
           console.log(err)
@@ -279,6 +280,7 @@ export default{
     },
     search_away (val2) {
           this.entries_away = [];
+        if(!val2) return;
         if(val2.length<2) return;
       axios.get('/api/autocomplete_teams/'+val2)
         .then(res => {
@@ -291,7 +293,8 @@ export default{
     },
     search_competition (val3) {
           this.entries_competition = [];
-        if(val3.length<2) return;
+        if(!val3) return;
+        if(val3.length<2 || val3==null) return;
       axios.get('/api/autocomplete_competitions/'+val3)
         .then(res => {
             this.entries_competition=null;
