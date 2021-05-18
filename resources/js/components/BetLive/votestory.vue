@@ -22,6 +22,8 @@
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-radio-group v-model="resolution_form">
                                     <v-radio
+                                        :off-icon="resolution.id==resolution_form.id ? '$radioOn' : '$radioOff'"
+                                        name="resolution_form"
                                         v-for="resolution in template_resolutions"
                                         :key="resolution.id"
                                         :label="`${resolution.width}x${resolution.height}`"
@@ -117,7 +119,7 @@ methods: {
         },
 
         change_resolution(){
-
+            this.$store.dispatch('templateOptions/changeResolution', this.resolution_form);
         },
 
         get_template_options(){
@@ -223,10 +225,7 @@ created(){
         this.$store.dispatch('templateOptions/changeResolution', this.resolution_form);
     }
     else{
-        this.resolution_form.width=this.resolution.width;
-        this.resolution_form.height=this.resolution.height;
-        this.resolution_form.aspect_id=this.current_template.aspect_id;
-        this.resolution_form.id=this.resolution.id;
+        this.resolution_form=this.resolution;
     }
     })
     if(this.current_background==null){
