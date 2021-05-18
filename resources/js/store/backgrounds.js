@@ -52,6 +52,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getBackgrounds");
+            commit("errors/setSuccess", "Pozadina uspješno dodana.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -66,6 +67,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getBackgrounds");
+            commit("errors/setSuccess", "Pozadina uspješno izbrisana.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });

@@ -168,7 +168,7 @@ export default{
             }
         },
         pagination(){
-            this.$store.dispatch('backgrounds/getBackgrounds');
+            this.$store.dispatch('teams/getTeams');
         }
     },
 

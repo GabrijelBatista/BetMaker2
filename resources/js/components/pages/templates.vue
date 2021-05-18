@@ -23,7 +23,7 @@
                         v-if="superadmin"
                     >Dodaj predložak</v-btn>
                     </template>
-                    <v-card id="dialog_box">
+                    <v-card class="dialog_box">
                         <v-card-title class="headline grey lighten-2">
                             Dodaj predložak
                         </v-card-title>
@@ -63,16 +63,14 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
-                            class="mr-4"
+                            class="login-button"
                             type="submit"
                             @click="dialog = false"
                             >
                             POTVRDI
                             </v-btn>
                             <v-btn
-                            id="login-button"
-                            class="mr-4"
+                            class="login-button"
                             @click="dialog = false"
                             >
                             Odustani
@@ -184,16 +182,14 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
-                            class="mr-4"
+                            class="login-button"
                             type="submit"
                             @click="dialog3=false"
                             >
                             Potvrdi
                             </v-btn>
                             <v-btn
-                            id="login-button"
-                            class="mr-4"
+                            class="login-button"
                             @click="dialog3=false"
                             >
                             Odustani

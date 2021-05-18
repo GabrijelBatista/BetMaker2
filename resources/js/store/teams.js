@@ -13,7 +13,7 @@ const state={
 const actions={
 
     getTeams({commit, state, dispatch}){
-        axios.get("/api/getTeams")
+        axios.get("/api/getTeams?page=" + state.paginationDetails.page)
         .then(response=>{
             commit("setMyTeams", response.data.my_teams);
             commit("setOtherTeams", response.data.other_teams);
@@ -33,7 +33,7 @@ const actions={
     selectTeams({commit}, teams){
         commit("setSelectedTeams", teams);
     },
-    addTeam({commit, state}, team_form){
+    addTeam({commit, dispatch}, team_form){
         let form = new FormData();
         form.append('title', team_form.title);
         form.append('name', team_form.name);
@@ -49,13 +49,14 @@ const actions={
         })
             .then(response=>{
                 dispatch("getTeams");
+                commit("errors/setSuccess", "Tim uspješno dodan.", { root: true });
             })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+           commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
     },
 
-    deleteTeam({commit, state}, team){
+    deleteTeam({commit, dispatch}, team){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteTeam", {
@@ -63,6 +64,7 @@ const actions={
         })
             .then(response=>{
                 dispatch("getTeams");
+                commit("errors/setSuccess", "Tim uspješno izbrisan.", { root: true });
             })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });

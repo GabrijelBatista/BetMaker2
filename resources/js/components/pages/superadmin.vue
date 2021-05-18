@@ -13,7 +13,7 @@
                         v-on="on"
                     >Dodaj role</v-btn>
                     </template>
-                    <v-card id="dialog_box">
+                    <v-card class="dialog_box">
                         <v-card-title class="headline grey lighten-2">
                             Dodaj role
                         </v-card-title>
@@ -27,8 +27,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
-                            class="mr-4"
+                            class="login-button"
                             type="submit"
                             @click="role_dialog = false"
                             >
@@ -53,7 +52,7 @@
                         v-on="on"
                     >Dodaj aspect</v-btn>
                     </template>
-                    <v-card id="dialog_box">
+                    <v-card class="dialog_box">
                         <v-card-title class="headline grey lighten-2">
                             Dodaj aspect
                         </v-card-title>
@@ -67,8 +66,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
-                            class="mr-4"
+                            class="login-button"
                             type="submit"
                             @click="aspect_dialog = false"
                             >
@@ -123,7 +121,6 @@
                                 <v-spacer></v-spacer>
                             <v-btn
                             id="login-button"
-                            class="mr-4"
                             type="submit"
                             @click="aspect_dialog = false"
                             >

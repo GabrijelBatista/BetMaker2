@@ -50,6 +50,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getTemplates");
+            commit("errors/setSuccess", "Predložak uspješno dodan.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -64,6 +65,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getTemplates");
+            commit("errors/setSuccess", "Predložak uspješno izbrisan.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -88,6 +90,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getTemplates");
+            commit("errors/setSuccess", "Predložak uspješno uređen.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });

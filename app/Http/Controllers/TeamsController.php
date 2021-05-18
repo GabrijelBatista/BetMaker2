@@ -86,6 +86,12 @@ class TeamsController extends Controller
             'team_id'=>'required',
         ]);
 
+        $tags=TeamTag::where('team_id', $request->team_id)->select('tag_id')->get();
+        TeamTag::where('team_id', $request->team_id)->delete();
+        foreach($tags as $tag) {
+            Tag::where('id', $tag->tag_id)->delete();
+        }
+
         $team=Team::where('id', $request->team_id)->first();
 
         $path = public_path().'/storage/teams/'.$team->logo;

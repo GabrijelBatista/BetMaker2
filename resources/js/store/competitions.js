@@ -49,6 +49,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getCompetitions");
+            commit("errors/setSuccess", "Natjecanje uspješno dodano.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -63,6 +64,7 @@ const actions={
         })
         .then(response=>{
             dispatch("getCompetitions");
+            commit("errors/setSuccess", "Natjecanje uspješno izbrisano.", { root: true });
         })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
