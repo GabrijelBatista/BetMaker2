@@ -147,7 +147,7 @@ export default{
             admin: 'currentUser/admin',
             superadmin: 'currentUser/superadmin',
             users_list: 'superadmin/usersList',
-            pagination_details: 'competitions/paginationDetails',
+            pagination_details: 'teams/paginationDetails',
         }),
     },
     methods: {
