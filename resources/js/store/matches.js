@@ -3,17 +3,6 @@ const state={
     matches: [],
 };
 const actions={
-    getMatchesResources({commit}){
-        axios.get("/api/getMatchesResources")
-        .then(response=>{
-            commit("teams/setTeamsList", response.data.teams_list, { root: true });
-            commit("competitions/setCompetitionsList", response.data.competitions_list, { root: true });
-        })
-        .catch(function(error) {
-            if (error.response || error.response.status === 401) {
-                dispatch('currentUser/logoutUser', null, { root: true });
-        }})
-    },
 
     selectMatches({commit}, selected_matches){
         commit("setSelectedMatches", selected_matches)

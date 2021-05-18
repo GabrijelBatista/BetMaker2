@@ -11,17 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class MatchesController extends Controller
 {
 
-    public function get_matches_resources(){
-
-        $user=Auth::user();
-
-        $teams_list = Team::where([['user_id', $user->id], ['user_id', 1]])->orderBy('name', 'desc')->get()->all();
-        $competitions_list = Competition::where([['user_id', $user->id], ['user_id', 1]])->orderBy('name', 'desc')->get()->all();
-
-        return response()->json(['teams_list'=>$teams_list, 'competitions_list'=>$competitions_list], 200);
-
-    }
-
     public function add_match(Request $request){
 
         $request->validate([

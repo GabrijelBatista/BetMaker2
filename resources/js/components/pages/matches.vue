@@ -226,8 +226,6 @@ export default{
             failedLogin: 'errors/errors',
             admin: 'currentUser/admin',
             superadmin: 'currentUser/superadmin',
-            competitions_list: 'competitions/competitionsList',
-            teams_list: 'teams/teamsList',
         }),
     },
     methods: {
@@ -261,13 +259,6 @@ export default{
         entries_competition_filter(){
             return this.entries_competition;
         }
-    },
-
-    created(){
-        if(this.selected_matches!=null){
-            this.matches_send=this.selected_matches;
-        }
-        this.$store.dispatch('matches/getMatchesResources');
     },
 
     watch: {
