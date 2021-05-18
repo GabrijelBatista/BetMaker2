@@ -15,12 +15,12 @@ class TeamsController extends Controller
 {
     public function get_teams(){
         $user=Auth::user();
-        $my_teams = Team::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->all();
+        $my_teams = Team::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(24);
         if($user->role_id===1){
-            $other_teams = Team::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->get()->all();
+            $other_teams = Team::where('user_id', '!=', $user->id)->orderBy('created_at', 'desc')->paginate(24);
         }
         else{
-            $other_teams = Team::where('user_id', 1)->orderBy('created_at', 'desc')->get()->all();
+            $other_teams = Team::where('user_id', 1)->orderBy('created_at', 'desc')->paginate(24);
         }
 
         return response()->json(['my_teams'=>$my_teams, 'other_teams'=>$other_teams], 200);
@@ -78,17 +78,7 @@ class TeamsController extends Controller
             }
         }
 
-        $user=Auth::user();
-        $my_teams = Team::where('user_id', $user->id)->orderBy('name', 'asc')->get()->all();
-        if($user->role_id===1){
-            $other_teams = Team::where('user_id', '!=', $user->id)->orderBy('name', 'asc')->get()->all();
-        }
-        else{
-            $other_teams = Team::where('user_id', 1)->orderBy('name', 'asc')->get()->all();
-        }
-
-
-        return response()->json(['my_teams'=>$my_teams, 'other_teams'=>$other_teams], 200);
+        return response()->json(200);
     }
 
     public function delete_team(Request $request){
@@ -106,24 +96,7 @@ class TeamsController extends Controller
 
         Team::where('id', $request->team_id)->delete();
 
-        $teams = Team::orderBy('created_at', 'desc')->get()->all();
-        $my_teams = [];
-        $other_teams = [];
-        $user=Auth::user();
-        foreach($teams as $team){
-            if($team->user_id===$user->id){
-                array_push($my_teams, $team);
-            }
-            else if($user->role_id===1){
-                array_push($other_teams, $team);
-            }
-            else if($team->user_id===1){
-                array_push($other_teams, $team);
-            }
-        }
-
-
-        return response()->json(['my_teams'=>$my_teams, 'other_teams'=>$other_teams], 200);
+        return response()->json(200);
     }
     public function autocomplete_teams($team_data){
         $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->get();

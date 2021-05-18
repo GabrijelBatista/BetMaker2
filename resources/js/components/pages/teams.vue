@@ -1,5 +1,5 @@
 <template>
-<v-card fluid class="fill-height" id="main_content">
+<v-card fluid class="fill-height" id="main_content" v-if="this.selected_teams">
     <v-tabs id="second_tabs"
             background-color="light grey"
             dark
@@ -40,8 +40,8 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-combobox multiple
-                            v-model="team_form.tags" 
-                            label="Oznake" 
+                            v-model="team_form.tags"
+                            label="Oznake"
                             append-icon
                             chips
                             deletable-chips
@@ -78,7 +78,7 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap >
-    <v-flex id="teams_list" v-for="team in this.selected_teams" :key="team.id">
+    <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
         <v-container id="competition_card">
             <v-img
               :src="team.logo ? 'storage/teams/'+team.logo : ''"
@@ -107,6 +107,14 @@
         </v-container>
     </v-flex>
     </v-layout>
+    <v-pagination
+        id="pagination_buttons"
+        v-model="pagination_details.page"
+        :length="pagination_details.lenght"
+        :total-visible="7"
+        circle
+        @input="pagination"
+    ></v-pagination>
 </v-card>
 </template>
 
@@ -139,6 +147,7 @@ export default{
             admin: 'currentUser/admin',
             superadmin: 'currentUser/superadmin',
             users_list: 'superadmin/usersList',
+            pagination_details: 'competitions/paginationDetails',
         }),
     },
     methods: {
@@ -158,6 +167,9 @@ export default{
             this.$store.dispatch('teams/deleteTeam', team);
             }
         },
+        pagination(){
+            this.$store.dispatch('backgrounds/getBackgrounds');
+        }
     },
 
     created(){

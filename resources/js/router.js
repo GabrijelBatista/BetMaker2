@@ -137,11 +137,15 @@ const router = new Router({
 
     //BetLive
     else if (to.matched.some(record => record.meta.BetLive)) {
-        if (store.getters['currentUser/user'].role_id!=1 && store.getters['currentUser/user'].id!=1){
-          next({ path: '/' })
+        if (store.getters['currentUser/user']) {
+            if (store.getters['currentUser/user'].role_id != 1 && store.getters['currentUser/user'].id != 1) {
+                next({path: '/login'})
+            } else {
+                next()
+            }
         }
-        else {
-          next()
+         else {
+            next({path: '/login'})
         }
     }
 

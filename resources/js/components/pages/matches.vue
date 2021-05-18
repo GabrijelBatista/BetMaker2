@@ -44,7 +44,7 @@
                                     :items="entries_away"
                                     :filter="entries_away_filter"
                                     :search-input.sync="search_away"
-                                    label="Domaćin:"
+                                    label="Gost:"
                                     v-model="match_form.away_team"
                                     outlined
                                     item-text="name"
@@ -58,7 +58,7 @@
                                     :items="entries_competition"
                                     :filter="entries_competition_filter"
                                     :search-input.sync="search_competition"
-                                    label="Domaćin:"
+                                    label="Natjecanje:"
                                     v-model="match_form.competition"
                                     outlined
                                     item-text="name"
@@ -276,7 +276,7 @@ export default{
       },
       search_home (val) {
           this.entries_home = [];
-        if(!val) return;
+          if(val.length<2) return;
       axios.get('/api/autocomplete_teams/'+val)
         .then(res => {
             this.entries_home=null;
@@ -288,7 +288,7 @@ export default{
     },
     search_away (val) {
           this.entries_away = [];
-        if(!val) return;
+        if(val.length<2) return;
       axios.get('/api/autocomplete_teams/'+val)
         .then(res => {
             this.entries_away=null;
@@ -300,7 +300,7 @@ export default{
     },
     search_competition (val) {
           this.entries_competition = [];
-        if(!val) return;
+        if(val.length<2) return;
       axios.get('/api/autocomplete_competitions/'+val)
         .then(res => {
             this.entries_competition=null;

@@ -116,8 +116,14 @@ const mutations={
         else{
             state.selectedTemplatesWatcher="my";
         }
-        state.paginationDetails.page=data.current_page;
-        state.paginationDetails.lenght=data.last_page;
+        if(data==null){
+            state.paginationDetails.page=0;
+            state.paginationDetails.lenght=0;
+        }
+        else{
+            state.paginationDetails.page=data.current_page;
+            state.paginationDetails.lenght=data.last_page;
+        }
     },
     setMyTemplates(state, data) {
         state.myTemplates=data;

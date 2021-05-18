@@ -99,8 +99,14 @@ const mutations={
         else{
             state.selectedBackgroundsWatcher="my";
         }
-        state.paginationDetails.page=data.current_page;
-        state.paginationDetails.lenght=data.last_page;
+        if(data==null){
+            state.paginationDetails.page=0;
+            state.paginationDetails.lenght=0;
+        }
+        else{
+            state.paginationDetails.page=data.current_page;
+            state.paginationDetails.lenght=data.last_page;
+        }
     },
     setMyBackgrounds(state, data) {
         state.myBackgrounds=data;

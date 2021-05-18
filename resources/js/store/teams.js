@@ -5,15 +5,24 @@ const state={
     myTeams: [],
     otherTeams: [],
     teamsList: [],
+    paginationDetails: {
+        lenght: 0,
+        page: 0
+    }
 };
 const actions={
 
-    getTeams({commit}){
+    getTeams({commit, state, dispatch}){
         axios.get("/api/getTeams")
         .then(response=>{
             commit("setMyTeams", response.data.my_teams);
             commit("setOtherTeams", response.data.other_teams);
-            commit("setSelectedTeams", response.data.my_teams);
+            if(state.selectedTeamsWatcher=="my"){
+                commit("setSelectedTeams", response.data.my_teams);
+            }
+            else if(state.selectedTeamsWatcher=="other"){
+                commit("setSelectedTeams", response.data.other_teams);
+            }
         })
         .catch(function(error) {
             if (error.response || error.response.status === 401) {
@@ -38,18 +47,9 @@ const actions={
                 "Content-Type": "multipart/form-data"
               },
         })
-        .then(response=>{
-            commit("setMyTeams", response.data.my_teams);
-            commit("setOtherTeams", response.data.other_teams);
-            commit("setTeamsList", response.data.teams_list);
-            commit("errors/setSuccess", "Pozadina uspješno dodana.", { root: true });
-            if(state.selectedTeamsWatcher=="other"){
-                commit("setSelectedTeams", response.data.other_teams);
-            }
-            else{
-                commit("setSelectedTeams", response.data.my_teams);
-            }
-        })
+            .then(response=>{
+                dispatch("getTeams");
+            })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
@@ -61,17 +61,9 @@ const actions={
         axios.post("/api/deleteTeam", {
             team_id: team,
         })
-        .then(response=>{
-            commit("setMyTeams", response.data.my_teams);
-            commit("setOtherTeams", response.data.other_teams);
-            commit("errors/setSuccess", "Tim/igrač izbrisan.", { root: true });
-            if(state.selectedTeamsWatcher=="other"){
-                commit("setSelectedTeams", response.data.other_teams);
-            }
-            else{
-                commit("setSelectedTeams", response.data.my_teams);
-            }
-        })
+            .then(response=>{
+                dispatch("getTeams");
+            })
         .catch((error) => {
             commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
         })
@@ -83,6 +75,7 @@ const getters={
     myTeams: state => state.myTeams,
     otherTeams: state => state.otherTeams,
     teamsList: state => state.teamsList,
+    paginationDetails: state => state.paginationDetails,
 };
 const mutations={
     setSelectedTeams(state, data) {
@@ -93,6 +86,15 @@ const mutations={
         else{
             state.selectedTeamsWatcher="my";
         }
+        if(data==null){
+            state.paginationDetails.page=0;
+            state.paginationDetails.lenght=0;
+        }
+        else{
+            state.paginationDetails.page=data.current_page;
+            state.paginationDetails.lenght=data.last_page;
+        }
+
     },
     setMyTeams(state, data) {
         state.myTeams=data;

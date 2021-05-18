@@ -85,7 +85,15 @@ class CompetitionsController extends Controller
     }
 
     public function autocomplete_competitions($competition_data){
-        $data = Competition::where( 'name', 'LIKE', '%'.$competition_data.'%' )->orWhere( 'title', 'LIKE', '%'.$competition_data.'%' )->get();
+        $data = Competition::where( 'name', 'LIKE', '%'.$competition_data.'%' )->get();
+        $title = Competition::where( 'title', 'LIKE', '%'.$competition_data.'%' )->get();
+            foreach($title as $t){
+                foreach($data as $d){
+                    if($t->id!=$d->id){
+                        array_push($data, $t);
+                    }
+                }
+            }
         return response()->json($data);
     }
 

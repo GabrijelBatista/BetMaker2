@@ -1,5 +1,5 @@
 <template>
-<v-card fluid class="fill-height" id="main_content">
+<v-card fluid class="fill-height" id="main_content" v-if="this.selected_backgrounds">
     <v-tabs id="second_tabs"
             background-color="light grey"
             dark
