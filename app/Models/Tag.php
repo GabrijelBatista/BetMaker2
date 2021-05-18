@@ -11,5 +11,6 @@ class Tag extends Model
 
     protected $fillable = [
         'name',
+        'team_id'
     ];
 }

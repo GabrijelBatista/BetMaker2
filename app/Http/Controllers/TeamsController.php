@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Tag;
-use App\Models\TeamTag;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use File;
@@ -68,12 +67,8 @@ class TeamsController extends Controller
             $tags=explode(",", $request->tags);
             foreach($tags as $tag){
                 Tag::create([
-                    'name'=>$tag
-                ]);
-                $tag=Tag::where('name', $tag)->select('id')->get()->first();
-                TeamTag::create([
-                    'team_id'=>$team->id,
-                    'tag_id'=>$tag->id
+                    'name'=>$tag,
+                    'team_id'=>$team->id
                 ]);
             }
         }
@@ -86,11 +81,7 @@ class TeamsController extends Controller
             'team_id'=>'required',
         ]);
 
-        $tags=TeamTag::where('team_id', $request->team_id)->select('tag_id')->get();
-        TeamTag::where('team_id', $request->team_id)->delete();
-        foreach($tags as $tag) {
-            Tag::where('id', $tag->tag_id)->delete();
-        }
+        Tag::where('team_id', $request->team_id)->delete();
 
         $team=Team::where('id', $request->team_id)->first();
 
@@ -105,24 +96,13 @@ class TeamsController extends Controller
         return response()->json(200);
     }
     public function autocomplete_teams($team_data){
-        $tags_array=[];
-        $teams_tagged=[];
         $teams_like= Team::where('name', 'LIKE', '%'.$team_data.'%' )->get();
         $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->get();
-        foreach($tags as $tag) {
-            $team_tags = TeamTag::where('tag_id', $tag->id)->get();
-            foreach($team_tags as $t) {
-                $tags_array[]=$t;
-            }
-        }
-        foreach($tags_array as $arr_tag){
-            $needed_team=Team::where('id', $arr_tag->team_id)->get();
-                $teams_tagged[] = $needed_team;
-        }
-        $collection=collect($teams_tagged);
+        $teams=Team::whereHas('id', $tag->id)->get();
 
-        $data = $collection->merge($teams_like)->unique();
 
-        return response()->json($data);
+        $data = $teams_final->merge($teams_like)->unique();
+
+        return response()->json($tags);
     }
 }
