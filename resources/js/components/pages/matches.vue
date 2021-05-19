@@ -261,6 +261,10 @@ export default{
         }
     },
 
+    created(){
+        this.matches_send=this.selected_matches;
+    },
+
     watch: {
       matches_send: function() {
           this.$store.dispatch('matches/selectMatches', this.matches_send);
