@@ -13,4 +13,5 @@ class Tag extends Model
         'name',
         'team_id'
     ];
+
 }

@@ -271,6 +271,7 @@ export default{
           if(val1.length<2 || val1==null) return;
       axios.get('/api/autocomplete_teams/'+val1)
         .then(res => {
+            console.log(res.data);
             this.entries_home=null;
             this.entries_home = res.data[0];
         })

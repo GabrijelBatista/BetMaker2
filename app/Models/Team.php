@@ -20,4 +20,5 @@ class Team extends Model
         'user_id',
         'logo',
     ];
+
 }

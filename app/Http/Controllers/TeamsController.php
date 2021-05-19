@@ -96,13 +96,20 @@ class TeamsController extends Controller
         return response()->json(200);
     }
     public function autocomplete_teams($team_data){
-        $teams_like= Team::where('name', 'LIKE', '%'.$team_data.'%' )->get();
-        $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->get();
-        $teams=Team::whereHas('id', $tag->id)->get();
+        $data_start= Team::where('name', 'LIKE', '%'.$team_data.'%' )->get();
+        $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->select('team_id')->get();
+        foreach($tags as $tag) {
+            $team = Team::where('id', $tag->team_id)->get();
+            $data_start->push($team);
+        }
+        $data=[];
+        if(is_object($data_start)){
+            $data[]=$data_start;
+        }
+        else{
+            $data=$data_start;
+        }
 
-
-        $data = $teams_final->merge($teams_like)->unique();
-
-        return response()->json($tags);
+        return response()->json($data);
     }
 }
