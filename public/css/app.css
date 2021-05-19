@@ -85,6 +85,7 @@ html{
 #template_card{
     margin:auto;
     margin-top: 10px;
+    filter: drop-shadow(4px 3px 1px grey);
 }
 #templates_list{
     padding:10px;
@@ -109,6 +110,7 @@ html{
 .competition_logo{
     max-width:150px !important ;
     max-height:150px !important ;
+    filter: drop-shadow(4px 3px 1px grey);
 }
 #competition_card{
     max-width:150px !important ;
@@ -134,4 +136,7 @@ html{
 @font-face {
     src: url('/fonts/BetLive/PFDinTextCompPro-Medium_35390.ttf');
     font-family: BetLiveMedium;
+}
+canvas {
+    filter: drop-shadow(6px 4px 3px grey);
 }

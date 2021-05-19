@@ -1,6 +1,7 @@
 .competition_logo{
     max-width:150px !important ;
     max-height:150px !important ;
+    filter: drop-shadow(4px 3px 1px grey);
 }
 #competition_card{
     max-width:150px !important ;

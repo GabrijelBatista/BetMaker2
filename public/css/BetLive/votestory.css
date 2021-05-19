@@ -2,3 +2,6 @@
     src: url('/fonts/BetLive/PFDinTextCompPro-Medium_35390.ttf');
     font-family: BetLiveMedium;
 }
+canvas {
+    filter: drop-shadow(6px 4px 3px grey);
+}
