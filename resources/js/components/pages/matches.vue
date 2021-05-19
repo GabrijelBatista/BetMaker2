@@ -286,7 +286,7 @@ export default{
       axios.get('/api/autocomplete_teams/'+val2)
         .then(res => {
             this.entries_away=null;
-            this.entries_away = res.data;
+            this.entries_away = res.data[0];
         })
         .catch(err => {
           console.log(err)
