@@ -19,5 +19,6 @@
     padding: 5px;
 }
 .selected{
-    border: blue 4px solid !important
+    border: 2px solid white!important;
+    filter: drop-shadow(7px 7px 7px 7px blue);
 }

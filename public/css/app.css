@@ -97,14 +97,16 @@ html{
     padding: 5px;
 }
 .selected{
-    border: blue 4px solid !important
+    border: 2px solid white!important;
+    filter: drop-shadow(7px 7px 7px 7px blue);
 }
 
 #background_card{
-    width: 20vh;
-    height:20vh;
     margin:auto;
-    margin-top: 10px
+    margin-top: 10px;
+    filter: drop-shadow(4px 3px 1px grey);
+    width: 150px;
+    height:150px
 }
 
 .competition_logo{
