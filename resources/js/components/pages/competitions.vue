@@ -76,6 +76,7 @@
               :src="competition.logo ? 'storage/competitions/'+competition.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
+              contain
             >
             <div v-if="selected_competitions===my_competitions">
                 <v-icon
