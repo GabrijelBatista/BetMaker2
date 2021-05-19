@@ -99,7 +99,8 @@ class TeamsController extends Controller
         $data_start= Team::where('name', 'LIKE', '%'.$team_data.'%' )->get();
         $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->select('team_id')->get();
         foreach($tags as $tag) {
-            $team = Team::where('id', $tag->team_id)->get();
+            $team = Team::where('id', $tag->team_id)->first();
+
             $data_start->push($team);
         }
         $data=[];
