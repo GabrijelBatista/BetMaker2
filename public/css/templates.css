@@ -20,5 +20,4 @@
 }
 .selected{
     border: 2px solid white!important;
-    filter: drop-shadow(7px 7px 7px 7px blue);
 }

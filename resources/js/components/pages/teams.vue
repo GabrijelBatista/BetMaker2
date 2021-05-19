@@ -84,6 +84,7 @@
               :src="team.logo ? 'storage/teams/'+team.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
+              contain
             >
             <template v-slot:placeholder>
                 <v-row

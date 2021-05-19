@@ -30,7 +30,7 @@ html{
     float:right;
 }
 #div_to_capture {
-    border:1px black solid;
+    border:1px white solid;
     padding: 0;
     margin: auto;
     display: block;
@@ -98,25 +98,23 @@ html{
 }
 .selected{
     border: 2px solid white!important;
-    filter: drop-shadow(7px 7px 7px 7px blue);
 }
 
 #background_card{
     margin:auto;
     margin-top: 10px;
     filter: drop-shadow(4px 3px 1px grey);
-    width: 150px;
-    height:150px
 }
 
 .competition_logo{
     max-width:150px !important ;
     max-height:150px !important ;
     filter: drop-shadow(4px 3px 1px grey);
+    margin:auto
 }
 #competition_card{
-    max-width:150px !important ;
-    max-height:150px !important ;
+    max-width:30vw !important ;
+    max-height:30vh !important ;
     margin:auto;
     margin-top: 10px;
 }

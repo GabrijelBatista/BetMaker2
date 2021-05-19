@@ -2,10 +2,11 @@
     max-width:150px !important ;
     max-height:150px !important ;
     filter: drop-shadow(4px 3px 1px grey);
+    margin:auto
 }
 #competition_card{
-    max-width:150px !important ;
-    max-height:150px !important ;
+    max-width:30vw !important ;
+    max-height:30vh !important ;
     margin:auto;
     margin-top: 10px;
 }

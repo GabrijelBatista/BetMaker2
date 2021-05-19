@@ -11,7 +11,7 @@ html{
     float:right;
 }
 #div_to_capture {
-    border:1px black solid;
+    border:1px white solid;
     padding: 0;
     margin: auto;
     display: block;
