@@ -79,13 +79,32 @@
     </v-tabs>
     <v-layout wrap >
     <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
-        <v-container id="competition_card">
+        <v-hover>
+            <template v-slot:default="{ hover }">
+        <v-container max-width="200px"  id="competition_card">
             <v-img
               :src="team.logo ? 'storage/teams/'+team.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
               contain
+              max-width="200px"
+              max-height="200px"
             >
+                <v-fade-transition>
+                    <v-overlay
+                        v-if="hover"
+                        absolute
+                        color="#036358"
+                    >
+                        <b>
+                            {{team.title}}
+                        </b>
+                        <br/>
+                        <b>
+                            {{team.name}}
+                        </b>
+                    </v-overlay>
+                </v-fade-transition>
             <template v-slot:placeholder>
                 <v-row
                 class="fill-height ma-0"
@@ -106,6 +125,8 @@
             </div>
             </v-img>
         </v-container>
+            </template>
+        </v-hover>
     </v-flex>
     </v-layout>
     <v-pagination
