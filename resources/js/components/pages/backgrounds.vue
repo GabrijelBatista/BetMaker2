@@ -68,7 +68,7 @@
     <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-hover>
             <template v-slot:default="{ hover }">
-        <v-card max-width="30vw" active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
+        <v-card max-width="200px" active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
             <v-fade-transition>
                 <v-overlay
                     v-if="hover"
@@ -81,12 +81,11 @@
                 </v-overlay>
             </v-fade-transition>
             <v-img
-              :src="background.url ? 'storage/backgrounds/'+background.url : ''"
+                :src="background.url ? 'storage/backgrounds/'+background.url : ''"
               lazy-src="storage/lazy_image.jpg"
-              class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              max-height="30vh"
-              contain
+                max-height="200px"
+                contain
             >
             <template v-slot:placeholder>
                 <v-row
@@ -184,8 +183,8 @@ export default{
         }
     },
 
-    created(){
-       this.$store.dispatch('backgrounds/getBackgrounds');
+    created() {
+        this.$store.dispatch('backgrounds/getBackgrounds');
     }
 }
 

@@ -71,13 +71,32 @@
     </v-tabs>
     <v-layout wrap >
     <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
-        <v-container id="competition_card">
+        <v-hover>
+            <template v-slot:default="{ hover }">
+        <v-container max-width="200px" id="competition_card">
             <v-img
               :src="competition.logo ? 'storage/competitions/'+competition.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
               contain
+              max-width="200px"
+              max-height="200px"
             >
+                <v-fade-transition>
+                    <v-overlay
+                        v-if="hover"
+                        absolute
+                        color="#036358"
+                    >
+                        <b>
+                            {{competition.title}}
+                        </b>
+                        <br/>
+                        <b>
+                            {{competition.name}}
+                        </b>
+                    </v-overlay>
+                </v-fade-transition>
             <div v-if="selected_competitions===my_competitions">
                 <v-icon
                 color="red"
@@ -98,6 +117,8 @@
             </template>
             </v-img>
         </v-container>
+            </template>
+        </v-hover>
     </v-flex>
     </v-layout>
     <v-pagination

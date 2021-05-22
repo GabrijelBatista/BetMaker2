@@ -82,20 +82,41 @@
     </v-tabs>
     <v-layout wrap>
     <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
+        <v-hover>
+            <template v-slot:default="{ hover }">
         <v-card active-class="selected"
         :class="current_template.id === template.id ? 'selected' : ''"
         @click="select_current_template(template)"
         :id="'template_card'"
         :aspect-ratio="template.aspect_id==1 ? 9/16 : '' || template.aspect_id==2 ? 1/1 : '' || template.aspect_id==3 ? 16/9 : ''"
+<<<<<<< HEAD
         :width="template.aspect_id==1 ? 150 : '' || template.aspect_id==2 ? 267 : '' || template.aspect_id==3 ? 209 : ''"
+=======
+        :width="template.aspect_id==1 ? 150 : '' || template.aspect_id==2 ? 209 : '' || template.aspect_id==3 ? 267 : ''"
+>>>>>>> c1eda4cd8fa6c34c6712286fe2ff072adc5f8615
         >
             <v-img
               :src="template.example_image ? 'storage/example_images/'+template.example_image : ''"
               lazy-src="storage/lazy_image.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              :height="template.aspect_id==1 ? 267 : '' || template.aspect_id==2 ? 150 : '' || template.aspect_id==3 ? 209 : ''"
+              :height="template.aspect_id==1 ? 267 : '' || template.aspect_id==2 ? 209 : '' || template.aspect_id==3 ? 150 : ''"
             >
+                <v-fade-transition>
+                    <v-overlay
+                        v-if="hover"
+                        absolute
+                        color="#036358"
+                    >
+                        <b>
+                            {{template.name}}
+                        </b>
+                        <br/>
+                        <small>
+                            Matches: ({{template.max_matches}})
+                        </small>
+                    </v-overlay>
+                </v-fade-transition>
                     <v-icon color="red"
                     v-if="superadmin"
                     v-on:click.stop
@@ -121,6 +142,8 @@
             </template>
             </v-img>
         </v-card>
+            </template>
+        </v-hover>
     </v-flex>
     <v-dialog
                 transition="dialog-top-transition"

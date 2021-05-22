@@ -122,12 +122,13 @@ class TemplatesController extends Controller
 
         $template=Template::where('id', $request->template_id)->first();
 
-        $path = public_path().'/storage/example_images/'.$template->example_image;
-        if(File::exists($path)) {
-            $file_path=$path;
-            unlink($file_path);
+        if($template->example_image) {
+            $path = public_path() . '/storage/example_images/' . $template->example_image;
+            if (File::exists($path)) {
+                $file_path = $path;
+                unlink($file_path);
+            }
         }
-
         Template::where('id', $request->template_id)->delete();
 
         return response()->json(200);
