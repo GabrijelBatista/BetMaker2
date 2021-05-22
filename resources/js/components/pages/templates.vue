@@ -86,7 +86,7 @@
         :class="current_template.id === template.id ? 'selected' : ''"
         @click="select_current_template(template)"
         :id="'template_card'"
-        :aspect-ratio="template.aspect_id==1 ? 9/16 : '' || template.aspect_id==2 ? 16/9 : '' || template.aspect_id==3 ? 1/1 : ''"
+        :aspect-ratio="template.aspect_id==1 ? 9/16 : '' || template.aspect_id==2 ? 1/1 : '' || template.aspect_id==3 ? 16/9 : ''"
         :width="template.aspect_id==1 ? 150 : '' || template.aspect_id==2 ? 267 : '' || template.aspect_id==3 ? 209 : ''"
         >
             <v-img
