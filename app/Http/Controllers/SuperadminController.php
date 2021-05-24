@@ -37,8 +37,7 @@ class SuperadminController extends Controller
             'name'=>$request->name,
         ]);
 
-        $roles = Role::orderBy('id', 'asc')->get()->only('name');;
-        return response()->json($roles, 200);
+        return response()->json(200);
 
     }
 
@@ -51,8 +50,7 @@ class SuperadminController extends Controller
             'name'=>$request->name,
         ]);
 
-        $aspects = Aspect::orderBy('id', 'asc')->get()->only('name');;
-        return response()->json($aspects, 200);
+        return response()->json(200);
 
     }
 
@@ -72,13 +70,7 @@ class SuperadminController extends Controller
             'aspect_id'=>$aspect_id,
         ]);
 
-        $resolutions = [];
-        $resolutions2 = Resolution::orderBy('id', 'asc')->select('width', 'height')->get();
-        foreach($resolutions2 as $resolution){
-            $res=$resolution->width."x".$resolution->height;
-            array_push($resolutions, $res);
-        }
-        return response()->json($resolutions, 200);
+        return response()->json(200);
 
     }
 }

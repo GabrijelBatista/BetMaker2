@@ -19,14 +19,14 @@ const actions={
                 dispatch('currentUser/logoutUser', null, { root: true });
         }})
     },
-    addRole({commit}, role_form){
+    addRole({commit,  dispatch}, role_form){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addRole", {
             name: role_form.name,
         })
         .then(response=>{
-            commit("setRoles", response.data.roles);
+            dispatch("getSuperadminResources");
             commit("errors/setSuccess", "Uspješno dodano.", { root: true });
             commit("errors/setErrors", null,{ root: true });
         })
@@ -35,14 +35,14 @@ const actions={
             commit("errors/setSuccess", false, { root: true });
         })
     },
-    addAspect({commit}, aspect_form){
+    addAspect({commit, dispatch}, aspect_form){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addAspect", {
             name: aspect_form.name,
         })
         .then(response=>{
-            commit("setAspects", response.data.aspects);
+            dispatch("getSuperadminResources");
             commit("errors/setSuccess", "Uspješno dodano.", { root: true });
             commit("errors/setErrors", null,{ root: true });
         })
@@ -51,7 +51,7 @@ const actions={
             commit("errors/setSuccess", false, { root: true });
         })
     },
-    addResolution({commit}, resolution_form){
+    addResolution({commit, dispatch}, resolution_form){
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addResolution", {
@@ -60,7 +60,7 @@ const actions={
             aspect: resolution_form.aspect,
         })
         .then(response=>{
-            commit("setResolutions", response.data.resolutions);
+            dispatch("getSuperadminResources");
             commit("errors/setSuccess", "Uspješno dodano.", { root: true });
             commit("errors/setErrors", null,{ root: true });
         })
