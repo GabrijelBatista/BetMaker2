@@ -20,3 +20,8 @@
 .current_template_tab{
     background-color: rgb(53, 18, 9);
 }
+@media screen and (max-width: 960px) {
+    .sidebar_list{
+        font-size: 11.7px !important;
+    }
+}

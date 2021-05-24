@@ -78,6 +78,16 @@
                     <b>
                         {{background.name}}
                     </b>
+                    <v-divider></v-divider>
+                    <div v-if="selected_backgrounds===my_backgrounds">
+                        <v-icon
+                            color="red"
+                            class="card-icon"
+                            v-on:click.stop
+                            @click="delete_background(background.id)">
+                            {{ icons.mdiDelete }}
+                        </v-icon>
+                    </div>
                 </v-overlay>
             </v-fade-transition>
             <v-img
@@ -96,15 +106,6 @@
                     <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
             </template>
-            <div v-if="selected_backgrounds===my_backgrounds">
-                <v-icon
-                color="red"
-                class="card-icon"
-                v-on:click.stop
-                @click="delete_background(background.id)">
-                    {{ icons.mdiDelete }}
-                </v-icon>
-            </div>
             </v-img>
         </v-card>
 

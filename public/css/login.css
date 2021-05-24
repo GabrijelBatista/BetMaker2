@@ -1,5 +1,6 @@
 #login_form{
     width:33%;
+    min-width: 210px;
     border: solid 2px black;
     background-color: rgba(23, 39, 23, 0.705);
     margin: auto;

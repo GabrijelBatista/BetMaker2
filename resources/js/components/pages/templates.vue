@@ -5,8 +5,8 @@
             dark
             app
             >
-                <v-tab @click="select_my_templates()">Moji predlošci</v-tab>
-                <v-tab @click="select_other_templates()">Ostali predlošci</v-tab>
+        <v-tab class="navbar_tabs" @click="select_my_templates()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
+        <v-tab class="navbar_tabs" @click="select_other_templates()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
                 <v-dialog
                 transition="dialog-top-transition"
@@ -17,11 +17,12 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
+                        class="navbar_tabs"
                         color="green"
                         v-bind="attrs"
                         v-on="on"
                         v-if="superadmin"
-                    >Dodaj predložak</v-btn>
+                    ><v-icon>{{ icons.mdiPlus }}</v-icon></v-btn>
                     </template>
                     <v-card class="dialog_box">
                         <v-card-title class="headline grey lighten-2">
@@ -111,22 +112,23 @@
                         <small>
                             Matches: ({{template.max_matches}})
                         </small>
+                        <v-divider></v-divider>
+                        <v-icon
+                            color="orange"
+                            v-if="superadmin"
+                            @click.stop="edit_dialog(template)"
+                            class="card-icon">
+                            {{ icons.mdiPencil }}
+                        </v-icon>
+                        <v-icon color="red"
+                                v-if="superadmin"
+                                v-on:click.stop
+                                @click="delete_template(template.id)"
+                                class="card-icon">
+                            {{ icons.mdiDelete }}
+                        </v-icon>
                     </v-overlay>
                 </v-fade-transition>
-                    <v-icon color="red"
-                    v-if="superadmin"
-                    v-on:click.stop
-                    @click="delete_template(template.id)"
-                    class="card-icon">
-                        {{ icons.mdiDelete }}
-                    </v-icon>
-                    <v-icon
-                    color="orange"
-                    v-if="superadmin"
-                    @click.stop="edit_dialog(template)"
-                    class="card-icon">
-                        {{ icons.mdiPencil }}
-                    </v-icon>
             <template v-slot:placeholder>
                 <v-row
                 class="fill-height ma-0"
@@ -234,6 +236,9 @@ import { mapGetters } from 'vuex'
 import {
     mdiPencil,
     mdiDelete,
+    mdiApps,
+    mdiStar,
+    mdiPlus
   } from '@mdi/js'
 export default{
     props: ['auth_user'],
@@ -242,7 +247,10 @@ export default{
         dialog_template_id: null,
         icons: {
             mdiPencil,
-            mdiDelete
+            mdiDelete,
+            mdiApps,
+            mdiStar,
+            mdiPlus
         },
         template_form: {
             name: null,
