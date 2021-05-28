@@ -27,6 +27,12 @@ const actions={
         .catch(function(error) {
             if (error.response || error.response.status === 401) {
                 dispatch('currentUser/logoutUser', null, { root: true });
+                if (error.response.status == 422){
+                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                 }
+                 else{
+                     commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+                 }
         }})
     },
 
@@ -52,7 +58,12 @@ const actions={
                 commit("errors/setSuccess", "Tim uspješno dodan.", { root: true });
             })
         .catch((error) => {
-           commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 
@@ -67,7 +78,12 @@ const actions={
                 commit("errors/setSuccess", "Tim uspješno izbrisan.", { root: true });
             })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 

@@ -13,6 +13,12 @@ const actions={
         .catch(function(error) {
             if (error.response || error.response.status === 401) {
                 dispatch('currentUser/logoutUser', null, { root: true });
+                if (error.response.status == 422){
+                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                 }
+                 else{
+                     commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+                 }
         }})
     },
     changeResolution({commit}, resolution_form){
@@ -31,7 +37,12 @@ const actions={
             commit("setResolution", response.data.current_resolution);
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 };

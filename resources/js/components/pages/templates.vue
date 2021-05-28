@@ -30,13 +30,13 @@
                         </v-card-title>
                         <v-form @submit.prevent="add_template" ref="form">
                             <v-text-field
-                            label="Naziv"
+                            label="* Naziv"
                             required
                             v-model="template_form.name"
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
-                            label="Maksimalan broj mečeva"
+                            label="* Maksimalan broj mečeva"
                             required
                             v-model="template_form.max_matches"
                             autocomplete="off"
@@ -44,7 +44,7 @@
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
                                     :items="users_list"
-                                    label="Choose user"
+                                    label="* Choose user"
                                     v-model="template_form.user"
                                     outlined
                                     menu-props="auto"
@@ -54,7 +54,7 @@
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
                                     :items="aspects"
-                                    label="Choose aspect"
+                                    label="* Choose aspect"
                                     v-model="template_form.aspect"
                                     outlined
                                     menu-props="auto"

@@ -27,7 +27,12 @@ const actions={
             commit("errors/setSuccess", "Meč uspješn dodan.", { root: true })
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 
@@ -43,7 +48,12 @@ const actions={
             commit("errors/setSuccess", "Meč izbrisan.", { root: true });
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 

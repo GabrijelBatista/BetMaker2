@@ -111,7 +111,7 @@
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-select
                                     :items="aspects"
-                                    label="Choose aspect"
+                                    label="* Choose aspect"
                                     v-model="resolution_form.aspect"
                                     outlined
                                     item-text="name"

@@ -29,7 +29,6 @@ class TeamsController extends Controller
     public function add_team(Request $request){
 
         $request->validate([
-            'title'=>'required',
             'name'=>'required',
             'logo'=>'required|file|image|max:2048'
         ]);

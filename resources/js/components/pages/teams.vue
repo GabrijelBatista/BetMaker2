@@ -34,7 +34,7 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
-                            label="Naziv"
+                            label="* Naziv"
                             required
                             v-model="team_form.name"
                             autocomplete="off"
@@ -57,7 +57,7 @@
                                 ></v-autocomplete>
                             </v-col>
                             <v-file-input
-                                label="Dodaj sliku:"
+                                label="* Logo:"
                                 filled
                                 v-model="team_form.logo"
                                 prepend-icon="mdi-camera"

@@ -30,7 +30,7 @@
                                     :items="entries_home"
                                     :filter="entries_home_filter"
                                     :search-input.sync="search_home"
-                                    label="Domaćin:"
+                                    label="* Domaćin:"
                                     v-model="match_form.home_team"
                                     outlined
                                     item-text="name"
@@ -44,7 +44,7 @@
                                     :items="entries_away"
                                     :filter="entries_away_filter"
                                     :search-input.sync="search_away"
-                                    label="Gost:"
+                                    label="* Gost:"
                                     v-model="match_form.away_team"
                                     outlined
                                     item-text="name"

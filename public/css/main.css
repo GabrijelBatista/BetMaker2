@@ -25,6 +25,10 @@ html{
     position:absolute;
     bottom:0;
 }
+form{
+    width: 80%;
+    margin:auto;
+}
 @media screen and (max-width: 350px) {
     #div_to_capture{
         transform: scale(0.8);

@@ -1,8 +1,8 @@
 <template>
 <nav>
     <v-app-bar app id="navbar" dark>
-        <v-snackbar v-model="error" transition="fade-transition" :timeout="2000" color="red">
-            <span>{{error}}</span>
+        <v-snackbar v-model="error" transition="fade-transition" :timeout="3000" color="red">
+            <div v-for="err in error" :key="err[0]"><span>{{err[0]}}</span></div>
         </v-snackbar>
         <v-snackbar v-model="success" transition="fade-transition" :timeout="2000" color="green">
             <span>{{success}}</span>

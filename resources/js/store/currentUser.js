@@ -42,8 +42,12 @@ const actions={
             router.push({path: '/'});
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške", { root: true });
-            commit("errors/setSuccess", false, { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 
@@ -60,7 +64,12 @@ const actions={
             router.push({path: '/login'});
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
     logoutUser({commit}){

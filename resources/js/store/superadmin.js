@@ -17,6 +17,12 @@ const actions={
         .catch(function(error) {
             if (error.response || error.response.status === 401) {
                 dispatch('currentUser/logoutUser', null, { root: true });
+                if (error.response.status == 422){
+                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                 }
+                 else{
+                     commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+                 }
         }})
     },
     addRole({commit,  dispatch}, role_form){
@@ -31,8 +37,12 @@ const actions={
             commit("errors/setErrors", null,{ root: true });
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
-            commit("errors/setSuccess", false, { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
     addAspect({commit, dispatch}, aspect_form){
@@ -47,8 +57,12 @@ const actions={
             commit("errors/setErrors", null,{ root: true });
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
-            commit("errors/setSuccess", false, { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
     addResolution({commit, dispatch}, resolution_form){
@@ -65,8 +79,12 @@ const actions={
             commit("errors/setErrors", null,{ root: true });
         })
         .catch((error) => {
-            commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
-            commit("errors/setSuccess", false, { root: true });
+            if (error.response.status == 422){
+                commit("errors/setErrors", error.response.data.errors, { root: true });
+             }
+             else{
+                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
+             }
         })
     },
 };
