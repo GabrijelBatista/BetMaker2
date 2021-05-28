@@ -1,5 +1,6 @@
 #login_form{
     width:33%;
+    min-width: 210px;
     border: solid 2px black;
     background-color: rgba(23, 39, 23, 0.705);
     margin: auto;
@@ -26,10 +27,7 @@
 html{
     overflow-y: auto !important
 }
-.card-icon{
-    float:right;
-}
-#div_to_capture {
+.div_to_capture{
     border:1px white solid;
     padding: 0;
     margin: auto;
@@ -47,6 +45,53 @@ html{
     position:absolute;
     bottom:0;
 }
+@media screen and (max-width: 350px) {
+    #div_to_capture{
+        transform: scale(0.8);
+        margin-left: -5px
+    }
+}
+@media screen and (max-width: 310px) {
+    #div_to_capture916{
+        transform: scale(0.7);
+        margin-left: -15px
+    }
+}
+@media screen and (max-width: 285px) {
+    #div_to_capture916{
+        transform: scale(0.6);
+        margin-left: -40px
+    }
+}
+@media screen and (max-height: 630px) {
+    #div_to_capture916{
+        transform: scale(0.8);
+    }
+}
+@media screen and (max-height: 535px) {
+    #div_to_capture916{
+        transform: scale(0.7);
+    }
+}
+@media screen and (max-height: 485px) {
+    #div_to_capture916{
+        transform: scale(0.6);
+        margin-bottom: -60px
+    }
+}
+@media screen and (max-height: 430px) {
+    #div_to_capture916{
+        transform: scale(0.5);
+        margin-bottom: -100px
+    }
+}
+@media screen and (max-height: 370px) {
+    #div_to_capture916{
+        transform: scale(0.4);
+        margin-bottom: -130px
+    }
+}
+
 
 #sidebar{
     position:fixed;
@@ -70,11 +115,15 @@ html{
 .current_template_tab{
     background-color: rgb(53, 18, 9);
 }
+@media screen and (max-width: 960px) {
+    .sidebar_list{
+        font-size: 11.7px !important;
+    }
+}
 
 #navbar{
     background-color: rgb(22, 21, 21);
 }
-
 
 #confirm_dialog_text{
     font-size: xx-large;

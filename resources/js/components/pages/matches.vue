@@ -137,7 +137,6 @@
     </v-tabs>
     <v-layout wrap >
             <v-data-table
-            v-if="matches_list"
             v-model="matches_send"
             :headers="headers"
             :items="matches_list"
@@ -263,6 +262,9 @@ export default{
 
     created(){
         this.matches_send=this.selected_matches;
+        if(this.matches_list==null) {
+            this.$store.dispatch('matches/getMatches');
+        }
     },
 
     watch: {
@@ -275,7 +277,6 @@ export default{
           if(val1.length<2 || val1==null) return;
       axios.get('/api/autocomplete_teams/'+val1)
         .then(res => {
-            console.log(res.data);
             this.entries_home=null;
             this.entries_home = res.data[0];
         })

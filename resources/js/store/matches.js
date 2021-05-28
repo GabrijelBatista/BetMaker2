@@ -3,7 +3,9 @@ const state={
     matches: [],
 };
 const actions={
-
+    getMatches({commit}){
+        commit("setMatches", []);
+    },
     selectMatches({commit}, selected_matches){
         commit("setSelectedMatches", selected_matches)
     },

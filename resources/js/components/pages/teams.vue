@@ -103,6 +103,16 @@
                         <b>
                             {{team.name}}
                         </b>
+                        <v-divider></v-divider>
+                        <div v-if="selected_teams===my_teams">
+                            <v-icon
+                                color="red"
+                                class="card-icon"
+                                v-on:click.stop
+                                @click="delete_team(team.id)">
+                                {{ icons.mdiDelete }}
+                            </v-icon>
+                        </div>
                     </v-overlay>
                 </v-fade-transition>
             <template v-slot:placeholder>
@@ -114,15 +124,6 @@
                     <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
             </template>
-            <div v-if="selected_teams===my_teams">
-                <v-icon
-                color="red"
-                class="card-icon"
-                v-on:click.stop
-                @click="delete_team(team.id)">
-                    {{ icons.mdiDelete }}
-                </v-icon>
-            </div>
             </v-img>
         </v-container>
             </template>

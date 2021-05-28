@@ -4,6 +4,7 @@
       permanent
       left
       dark
+ :expand-on-hover="$vuetify.breakpoint.smAndDown"
       id="sidebar"
     >
 
@@ -32,7 +33,7 @@
           :to="superadmin_link"
         >
             <v-list-item-content>
-                <v-list-item-title>ADMIN</v-list-item-title>
+                <v-list-item-title class="sidebar_list">ADMIN</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-list-item
@@ -40,7 +41,7 @@
           :to="this.current_template.url"
         >
             <v-list-item-content>
-                <v-list-item-title>ODABRANI PREDLOŽAK</v-list-item-title>
+                <v-list-item-title class="sidebar_list">ODABRANI PREDLOŽAK</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-list-item
@@ -49,7 +50,7 @@
           :to="item.link"
         >
           <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
+            <v-list-item-title class="sidebar_list" v-text="item.text"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>

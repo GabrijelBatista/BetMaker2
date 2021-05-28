@@ -95,17 +95,18 @@
                         <b>
                             {{competition.name}}
                         </b>
+                        <v-divider></v-divider>
+                        <div v-if="selected_competitions===my_competitions">
+                            <v-icon
+                                color="red"
+                                class="card-icon"
+                                v-on:click.stop
+                                @click="delete_competition(competition.id)">
+                                {{ icons.mdiDelete }}
+                            </v-icon>
+                        </div>
                     </v-overlay>
                 </v-fade-transition>
-            <div v-if="selected_competitions===my_competitions">
-                <v-icon
-                color="red"
-                class="card-icon"
-                v-on:click.stop
-                @click="delete_competition(competition.id)">
-                    {{ icons.mdiDelete }}
-                </v-icon>
-            </div>
             <template v-slot:placeholder>
                 <v-row
                 class="fill-height ma-0"
