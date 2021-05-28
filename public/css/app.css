@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-#login_form{width:33%;border:solid 2px #000;background-color:rgba(23,39,23,.705);margin:auto;top:10%;padding:8px 8px 8px 8px}#login-button{float:right;background-color:rgba(0,0,0,.733);color:#fff}.headline.grey.lighten-2{font-weight:bolder}#main_content{background-color:#cfdf8a}#main_body{background-color:#cfdf8a}html{overflow-y:auto!important}.card-icon{float:right}#div_to_capture{border:1px #fff solid;padding:0;margin:auto;display:block;position:absolute;top:0;bottom:0;left:0;right:0}#div_to_capture2{display:none}#pagination_buttons{position:absolute;bottom:0}#sidebar{position:fixed;background-color:#161515}.v-list-item{text-align:center;background-color:rgba(64,70,66,.582)}.v-list-item-group{top:30px}#logo{font-weight:bolder;font-size:larger;border:1px #fff solid;border-radius:15px;height:40px;padding:7px}.current_template_tab{background-color:#351209}#navbar{background-color:#161515}#confirm_dialog_text{font-size:xx-large;margin-left:auto;margin-top:20px;margin-bottom:20px}#template_card{margin:auto;margin-top:10px;filter:drop-shadow(4px 3px 1px grey)}#templates_list{padding:10px}#scrollable_list{overflow:auto}#dialog_box{padding:5px}.selected{border:2px solid #fff!important}#background_card{margin:auto;margin-top:10px;filter:drop-shadow(4px 3px 1px grey)}.competition_logo{max-width:150px!important;max-height:150px!important;filter:drop-shadow(4px 3px 1px grey);margin:auto}#competition_card{max-width:30vw!important;max-height:30vh!important;margin:auto;margin-top:10px}.date_time_picker{width:90%;margin:auto!important}.elevation-1{margin:auto;margin-top:20px;background-color:rgba(23,24,24,.116)!important;overflow-y:auto;max-height:80%}@font-face{src:url('/fonts/BetLive/PFDinTextCompPro-Medium_35390.ttf');font-family:BetLiveMedium}canvas{filter:drop-shadow(6px 4px 3px grey)}
-=======
 #login_form{
     width:33%;
     border: solid 2px black;
@@ -139,4 +136,3 @@ html{
 canvas {
     filter: drop-shadow(6px 4px 3px grey);
 }
->>>>>>> c1eda4cd8fa6c34c6712286fe2ff072adc5f8615

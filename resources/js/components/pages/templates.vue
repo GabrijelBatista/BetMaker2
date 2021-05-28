@@ -89,18 +89,14 @@
         @click="select_current_template(template)"
         :id="'template_card'"
         :aspect-ratio="template.aspect_id==1 ? 9/16 : '' || template.aspect_id==2 ? 1/1 : '' || template.aspect_id==3 ? 16/9 : ''"
-<<<<<<< HEAD
         :width="template.aspect_id==1 ? 150 : '' || template.aspect_id==2 ? 267 : '' || template.aspect_id==3 ? 209 : ''"
-=======
-        :width="template.aspect_id==1 ? 150 : '' || template.aspect_id==2 ? 209 : '' || template.aspect_id==3 ? 267 : ''"
->>>>>>> c1eda4cd8fa6c34c6712286fe2ff072adc5f8615
         >
             <v-img
               :src="template.example_image ? 'storage/example_images/'+template.example_image : ''"
               lazy-src="storage/lazy_image.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              :height="template.aspect_id==1 ? 267 : '' || template.aspect_id==2 ? 209 : '' || template.aspect_id==3 ? 150 : ''"
+              :height="template.aspect_id==1 ? 267 : '' || template.aspect_id==2 ? 150 : '' || template.aspect_id==3 ? 209 : ''"
             >
                 <v-fade-transition>
                     <v-overlay
