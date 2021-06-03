@@ -1,8 +1,8 @@
 <template>
 <v-card fluid class="fill-height" id="main_content" v-if="this.current_template">
     <v-tabs id="second_tabs"
-            background-color="light grey"
             dark
+            height="35px"
             app
             >
         <v-tab class="navbar_tabs" @click="select_my_templates()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
@@ -24,19 +24,21 @@
                         v-if="superadmin"
                     ><v-icon>{{ icons.mdiPlus }}</v-icon></v-btn>
                     </template>
-                    <v-card class="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                    <v-card id="dialog_box">
+                        <v-card-title class="card_title justify-center">
                             Dodaj predložak
                         </v-card-title>
                         <v-form @submit.prevent="add_template" ref="form">
                             <v-text-field
                             label="* Naziv"
+                            dark
                             required
                             v-model="template_form.name"
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
                             label="* Maksimalan broj mečeva"
+                            dark
                             required
                             v-model="template_form.max_matches"
                             autocomplete="off"
@@ -46,6 +48,7 @@
                                     :items="users_list"
                                     label="* Choose user"
                                     v-model="template_form.user"
+                                    dark
                                     outlined
                                     menu-props="auto"
                                     item-text="email"
@@ -55,6 +58,7 @@
                                 <v-autocomplete
                                     :items="aspects"
                                     label="* Choose aspect"
+                                    dark
                                     v-model="template_form.aspect"
                                     outlined
                                     menu-props="auto"
@@ -150,23 +154,26 @@
                 v-model="dialog3"
                 >
                     <v-card id="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                        <v-card-title class="card_title justify-center">
                             EDIT {{this.dialog_template_name}}
                         </v-card-title>
                         <v-form @submit.prevent="edit_template" ref="form">
                             <v-text-field
                             label="Naziv"
+                            dark
                             v-model="edit_form.name"
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
                             label="Maksimalan broj mečeva"
                             v-model="edit_form.max_matches"
+                            dark
                             autocomplete="off"
                             ></v-text-field>
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
                                     :items="users_list"
+                                    dark
                                     label="Choose user"
                                     v-model="edit_form.user"
                                     outlined
@@ -178,6 +185,7 @@
                                 <v-autocomplete
                                     :items="aspects"
                                     label="Choose aspect"
+                                    dark
                                     v-model="edit_form.aspect"
                                     outlined
                                     item-text="name"
@@ -188,6 +196,7 @@
                                 <v-autocomplete
                                     :items="backgrounds"
                                     label="Choose default background"
+                                    dark
                                     v-model="edit_form.default_background"
                                     outlined
                                     item-text="name"
@@ -196,6 +205,7 @@
                             </v-col>
                             <v-file-input
                                 label="Dodaj sliku(primjer):"
+                                dark
                                 filled
                                 v-model="edit_form.example_image"
                                 prepend-icon="mdi-camera"

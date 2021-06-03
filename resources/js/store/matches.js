@@ -10,6 +10,7 @@ const actions={
         commit("setSelectedMatches", selected_matches)
     },
     addMatch({commit, state}, match_form){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addMatch", {
@@ -25,6 +26,7 @@ const actions={
             commit("errors/setSuccess", null, { root: true });
             commit("setMatches", response.data.matches_list);
             commit("errors/setSuccess", "Meč uspješn dodan.", { root: true })
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -33,10 +35,12 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 
     deleteMatch({commit, state}, match){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteMatch", {
@@ -46,6 +50,7 @@ const actions={
         .then(response=>{
             commit("setMatches", response.data.matches);
             commit("errors/setSuccess", "Meč izbrisan.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -54,6 +59,7 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 

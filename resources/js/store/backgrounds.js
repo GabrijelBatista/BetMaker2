@@ -45,6 +45,7 @@ const actions={
         commit("setSelectedBackgrounds", backgrounds);
     },
     addBackground({commit, dispatch}, background_form){
+        commit("errors/setLoading", true, { root: true });
         let form = new FormData();
         form.append('name', background_form.name);
         form.append('user', background_form.user);
@@ -59,6 +60,7 @@ const actions={
         .then(response=>{
             dispatch("getBackgrounds");
             commit("errors/setSuccess", "Pozadina uspješno dodana.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -67,10 +69,12 @@ const actions={
             else{
                 commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
             }
+            commit("errors/setLoading", false, { root: true });
         })
     },
 
     deleteBackground({commit, dispatch}, background){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteBackground", {
@@ -79,6 +83,7 @@ const actions={
         .then(response=>{
             dispatch("getBackgrounds");
             commit("errors/setSuccess", "Pozadina uspješno izbrisana.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -87,6 +92,7 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 

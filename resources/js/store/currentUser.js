@@ -9,6 +9,7 @@ const state={
 const actions={
 
     loginUser({commit}, form){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.get('/sanctum/csrf-cookie')
@@ -39,6 +40,7 @@ const actions={
                 commit("setAdmin", false);
                 commit("setSuperadmin", false);
             }
+            commit("errors/setLoading", false, { root: true });
             router.push({path: '/'});
         })
         .catch((error) => {
@@ -48,10 +50,12 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 
     registerUser({commit}, form){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/registerUser", {
@@ -61,6 +65,7 @@ const actions={
         })
         .then(response=>{
             commit("errors/setSuccess", "Uspješna registracija.", { root: true });
+            commit("errors/setLoading", false, { root: true });
             router.push({path: '/login'});
         })
         .catch((error) => {
@@ -70,9 +75,11 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
     logoutUser({commit}){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.get("/api/logoutUser");
@@ -105,6 +112,7 @@ const actions={
             commit("errors/setSuccess", "Uspješno ste se odjavili.", { root: true });
             commit("setAdmin", false);
             commit("setSuperadmin", false);
+            commit("errors/setLoading", false, { root: true });
             router.push({path: '/login'});
     },
 };

@@ -46,6 +46,7 @@ const actions={
             commit("setSelectedTemplates", templates);
     },
     addTemplate({commit, dispatch}, template_form){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/addTemplate", {
@@ -57,6 +58,7 @@ const actions={
         .then(response=>{
             dispatch("getTemplates");
             commit("errors/setSuccess", "Predložak uspješno dodan.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -66,10 +68,12 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 
     deleteTemplate({commit, dispatch}, template){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteTemplate", {
@@ -78,6 +82,7 @@ const actions={
         .then(response=>{
             dispatch("getTemplates");
             commit("errors/setSuccess", "Predložak uspješno izbrisan.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -86,10 +91,12 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 
     editTemplate({commit, dispatch}, edit_form){
+        commit("errors/setLoading", true, { root: true });
         let form = new FormData();
         form.append('id', edit_form.id);
         form.append('name', edit_form.name);
@@ -108,6 +115,7 @@ const actions={
         .then(response=>{
             dispatch("getTemplates");
             commit("errors/setSuccess", "Predložak uspješno uređen.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -116,6 +124,7 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 

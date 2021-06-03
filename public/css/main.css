@@ -1,8 +1,16 @@
+canvas {
+    filter: drop-shadow(12px 8px 6px rgb(0, 0, 0));
+}
 #main_content{
-    background-color: rgb(207, 223, 138);
+    background-color:rgba(168, 166, 166, 0);
+}
+.v-card__title.card_title{
+    background-color: rgba(0, 0, 0, 0.644);
+    color: white;
 }
 #main_body{
-    background-color: rgb(207, 223, 138);
+    background-image:url('../storage/cover.jpg');
+    background-size: cover;
 }
 html{
     overflow-y: auto !important

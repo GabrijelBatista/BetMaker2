@@ -1,12 +1,12 @@
 <template>
 <v-card fluid class="fill-height" id="main_content" v-if="this.selected_teams">
     <v-tabs id="second_tabs"
-            background-color="light grey"
             dark
+            height="35px"
             app
             >
-                <v-tab @click="select_my_teams()">Moji timovi/igrači</v-tab>
-                <v-tab @click="select_other_teams()">Ostali timovi/igrači</v-tab>
+                <v-tab class="navbar_tabs" @click="select_my_teams()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
+                <v-tab class="navbar_tabs" @click="select_other_teams()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
                 <v-dialog
                 transition="dialog-top-transition"
@@ -17,31 +17,35 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
+                    class="navbar_tabs"
                         color="green"
                         v-bind="attrs"
                         v-on="on"
-                    >Dodaj tim/igrača</v-btn>
+                    ><v-icon>{{ icons.mdiPlus }}</v-icon></v-btn>
                     </template>
                     <v-card id="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                        <v-card-title class="card_title justify-center">
                             Dodaj tim/igrača
                         </v-card-title>
                         <v-form @submit.prevent="add_team" ref="form">
                             <v-text-field
                             label="Prilog"
                             required
+                            dark
                             v-model="team_form.title"
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
                             label="* Naziv"
                             required
+                            dark
                             v-model="team_form.name"
                             autocomplete="off"
                             ></v-text-field>
                             <v-combobox multiple
                             v-model="team_form.tags"
                             label="Oznake"
+                            dark
                             append-icon
                             chips
                             deletable-chips
@@ -51,6 +55,7 @@
                                 <v-autocomplete
                                     :items="users_list"
                                     label="Odaberi korisnika"
+                                    dark
                                     v-model="team_form.user"
                                     outlined
                                     item-text="email"
@@ -58,6 +63,7 @@
                             </v-col>
                             <v-file-input
                                 label="* Logo:"
+                                dark
                                 filled
                                 v-model="team_form.logo"
                                 prepend-icon="mdi-camera"
@@ -81,14 +87,14 @@
     <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
         <v-hover>
             <template v-slot:default="{ hover }">
-        <v-container max-width="200px"  id="competition_card">
+        <v-container max-width="150px"  id="competition_card">
             <v-img
               :src="team.logo ? 'storage/teams/'+team.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
               contain
-              max-width="200px"
-              max-height="200px"
+              max-width="150px"
+              max-height="150px"
             >
                 <v-fade-transition>
                     <v-overlay
@@ -145,6 +151,9 @@
 import { mapGetters } from 'vuex'
 import {
     mdiDelete,
+    mdiApps,
+    mdiStar,
+    mdiPlus
   } from '@mdi/js'
 export default{
     data: () => ({
@@ -156,7 +165,10 @@ export default{
             tags: null,
         },
         icons: {
-            mdiDelete
+            mdiDelete,
+            mdiApps,
+            mdiStar,
+            mdiPlus
         },
         dialog: false,
         show_icons:true,

@@ -40,6 +40,7 @@ const actions={
         commit("setSelectedTeams", teams);
     },
     addTeam({commit, dispatch}, team_form){
+        commit("errors/setLoading", true, { root: true });
         let form = new FormData();
         form.append('title', team_form.title);
         form.append('name', team_form.name);
@@ -56,6 +57,7 @@ const actions={
             .then(response=>{
                 dispatch("getTeams");
                 commit("errors/setSuccess", "Tim uspješno dodan.", { root: true });
+                commit("errors/setLoading", false, { root: true });
             })
         .catch((error) => {
             if (error.response.status == 422){
@@ -64,10 +66,12 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 
     deleteTeam({commit, dispatch}, team){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteTeam", {
@@ -76,6 +80,7 @@ const actions={
             .then(response=>{
                 dispatch("getTeams");
                 commit("errors/setSuccess", "Tim uspješno izbrisan.", { root: true });
+                commit("errors/setLoading", false, { root: true });
             })
         .catch((error) => {
             if (error.response.status == 422){
@@ -84,6 +89,7 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 

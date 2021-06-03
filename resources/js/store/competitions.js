@@ -41,6 +41,7 @@ const actions={
         commit("setSelectedCompetitions", competitions);
     },
     addCompetition({commit, dispatch}, competition_form){
+        commit("errors/setLoading", true, { root: true });
         let form = new FormData();
         form.append('title', competition_form.title);
         form.append('name', competition_form.name);
@@ -56,6 +57,7 @@ const actions={
         .then(response=>{
             dispatch("getCompetitions");
             commit("errors/setSuccess", "Natjecanje uspješno dodano.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -64,10 +66,12 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 
     deleteCompetition({commit, dispatch}, competition){
+        commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
         axios.post("/api/deleteCompetition", {
@@ -76,6 +80,7 @@ const actions={
         .then(response=>{
             dispatch("getCompetitions");
             commit("errors/setSuccess", "Natjecanje uspješno izbrisano.", { root: true });
+            commit("errors/setLoading", false, { root: true });
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -84,6 +89,7 @@ const actions={
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
+             commit("errors/setLoading", false, { root: true });
         })
     },
 

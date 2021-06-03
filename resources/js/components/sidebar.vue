@@ -4,18 +4,18 @@
       permanent
       left
       dark
- :expand-on-hover="$vuetify.breakpoint.smAndDown"
+ :mini-variant="$vuetify.breakpoint.smAndDown"
       id="sidebar"
     >
 
       <template v-slot:prepend>
         <v-list-item two-line>
-          <v-list-item-avatar>
+          <v-list-item-avatar id="app_logo">
             <img src="">
           </v-list-item-avatar>
 
-          <v-list-item-content>
-            <v-list-item-title id="logo">BetMaker</v-list-item-title>
+          <v-list-item-content id="logo" v-if="$vuetify.breakpoint.mdAndUp">
+            <v-list-item-title>BetMaker</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -33,15 +33,17 @@
           :to="superadmin_link"
         >
             <v-list-item-content>
+                <v-icon medium v-if="$vuetify.breakpoint.smAndDown">{{icons.mdiAccountCircle}}</v-icon>
                 <v-list-item-title class="sidebar_list">ADMIN</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-list-item
-          class="current_template_tab"
+          class="current_template_tab sidebar_tabs"
           :to="this.current_template.url"
         >
             <v-list-item-content>
-                <v-list-item-title class="sidebar_list">ODABRANI PREDLOŽAK</v-list-item-title>
+                <v-icon medium v-if="$vuetify.breakpoint.smAndDown">{{icons.mdiStarCircle}}</v-icon>
+                <v-list-item-title v-if="$vuetify.breakpoint.mdAndUp" class="sidebar_list">ODABRANI PREDLOŽAK</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-list-item
@@ -50,7 +52,8 @@
           :to="item.link"
         >
           <v-list-item-content>
-            <v-list-item-title class="sidebar_list" v-text="item.text"></v-list-item-title>
+            <v-icon medium v-if="$vuetify.breakpoint.smAndDown">{{item.icon}}</v-icon>
+            <v-list-item-title v-if="$vuetify.breakpoint.mdAndUp" class="sidebar_list" v-text="item.text"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -60,14 +63,32 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import {
+    mdiAccountCircle,
+    mdiImageMultiple,
+    mdiWallpaper,
+    mdiAccountSupervisorCircle,
+    mdiSwordCross,
+    mdiBasketball,
+    mdiStarCircle,
+  } from '@mdi/js'
   export default {
     data: () => ({
+        icons: {
+            mdiAccountCircle,
+            mdiImageMultiple,
+            mdiWallpaper,
+            mdiAccountSupervisorCircle,
+            mdiSwordCross,
+            mdiBasketball,
+            mdiStarCircle,
+        },
         items: [
-            { text: 'Predlošci', link: '/'},
-            { text: 'Pozadine', link: '/backgrounds'},
-            { text: 'Natjecanja', link: '/competitions'},
-            { text: 'Timovi/Igrači', link: '/teams'},
-            { text: 'Mečevi', link: '/matches'},
+            { text: 'Predlošci', link: '/', icon: mdiWallpaper},
+            { text: 'Pozadine', link: '/backgrounds', icon: mdiImageMultiple},
+            { text: 'Natjecanja', link: '/competitions', icon: mdiBasketball},
+            { text: 'Timovi/Igrači', link: '/teams', icon: mdiAccountSupervisorCircle},
+            { text: 'Mečevi', link: '/matches', icon: mdiSwordCross},
         ],
         superadmin_link: "/superadmin"
         }),
@@ -81,3 +102,9 @@ import { mapGetters } from 'vuex'
         },
   }
 </script>
+
+<style scoped>
+    ::v-deep .v-list-item {
+        padding:0 0 !important;
+    }
+</style>
