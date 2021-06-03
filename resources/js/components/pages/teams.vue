@@ -4,9 +4,10 @@
             dark
             height="35px"
             app
+            v-model="selected_tab"
             >
-                <v-tab class="navbar_tabs" @click="select_my_teams()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
-                <v-tab class="navbar_tabs" @click="select_other_teams()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
+                <v-tab class="navbar_tabs" @click="select_my_teams()" :key="0"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
+                <v-tab class="navbar_tabs" @click="select_other_teams()" :key="1"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
                 <v-dialog
                 transition="dialog-top-transition"
