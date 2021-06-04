@@ -103,6 +103,7 @@ const actions={
 
 };
 const getters={
+    selectedBackgroundsWatcher: state => state.selectedBackgroundsWatcher,
     selectedBackgrounds: state => state.selectedBackgrounds,
     myBackgrounds: state => state.myBackgrounds,
     otherBackgrounds: state => state.otherBackgrounds,

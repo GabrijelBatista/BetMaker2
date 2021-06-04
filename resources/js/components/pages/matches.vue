@@ -151,6 +151,9 @@
             item-key="id"
             class="elevation-1"
             :items-per-page="5"
+            :header-props="{
+            'sortByText': 'Sortiraj'
+            }"
             :footer-props="{
             showFirstLastPage: true,
             firstIcon: icons.mdiArrowCollapseLeft,
@@ -159,7 +162,7 @@
             nextIcon: icons.mdiArrowCollapsePlus,
             'items-per-page-text':'Stavki po stranici:'
             }">
-                <template v-slot:item="{ item, isSelected, select }">
+               <template v-slot:item="{ item, isSelected, select }">
                     <tr id="matches_table" :class="isSelected?'cyan':''" @click="toggle(isSelected,select,$event)">
                         <td>{{item.home_team.name}}</td>
                         <td>{{item.away_team.name}}</td>
@@ -269,7 +272,9 @@ export default{
     },
 
     created(){
-        this.matches_send=this.selected_matches;
+        if(this.selected_matches!=null) {
+            this.matches_send = this.selected_matches;
+        }
         if(this.matches_list==null) {
             this.$store.dispatch('matches/getMatches');
         }
@@ -277,7 +282,7 @@ export default{
 
     watch: {
       matches_send: function() {
-          this.$store.dispatch('matches/selectMatches', this.matches_send);
+              this.$store.dispatch('matches/selectMatches', this.matches_send);
       },
       search_home (val1) {
           this.entries_home = [];

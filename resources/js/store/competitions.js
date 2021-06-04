@@ -100,6 +100,7 @@ const getters={
     otherCompetitions: state => state.otherCompetitions,
     competitionsList: state => state.competitionsList,
     paginationDetails: state => state.paginationDetails,
+    selectedCompetitionsWatcher: state => state.selectedCompetitionsWatcher,
 };
 const mutations={
     setSelectedCompetitions(state, data) {

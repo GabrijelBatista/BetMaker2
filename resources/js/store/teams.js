@@ -96,6 +96,7 @@ const actions={
 };
 const getters={
     selectedTeams: state => state.selectedTeams,
+    selectedTeamsWatcher: state => state.selectedTeamsWatcher,
     myTeams: state => state.myTeams,
     otherTeams: state => state.otherTeams,
     teamsList: state => state.teamsList,

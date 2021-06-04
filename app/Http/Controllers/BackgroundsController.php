@@ -22,10 +22,10 @@ class BackgroundsController extends Controller
             $other_backgrounds = Background::where('user_id', 1)->orderBy('created_at', 'desc')->paginate(24);
         }
         $current_background=null;
-        if($my_backgrounds!=null){
+        if($my_backgrounds[0]){
                 $current_background=$my_backgrounds[0];
         }
-        elseif($other_backgrounds!=null){
+        elseif($other_backgrounds[0]){
             $current_background=$other_backgrounds[0];
         }
 

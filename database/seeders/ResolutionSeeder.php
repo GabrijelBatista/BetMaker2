@@ -20,5 +20,26 @@ class ResolutionSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
+        \DB::table('resolutions')->insert([
+            'width' => 1080,
+            'height' => 1080,
+            'aspect_id' => 3,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+        \DB::table('resolutions')->insert([
+            'width' => 1920,
+            'height' => 1080,
+            'aspect_id' => 2,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+        \DB::table('resolutions')->insert([
+            'width' => 1200,
+            'height' => 1200,
+            'aspect_id' => 3,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
     }
 }

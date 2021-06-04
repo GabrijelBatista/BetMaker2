@@ -140,6 +140,8 @@ const getters={
     otherTemplates: state => state.otherTemplates,
     currentTemplate: state => state.currentTemplate,
     paginationDetails: state => state.paginationDetails,
+    selectedTemplatesWatcher: state => state.selectedTemplatesWatcher,
+
 };
 const mutations={
     setSelectedTemplates(state, data) {

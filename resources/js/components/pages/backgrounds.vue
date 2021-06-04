@@ -4,7 +4,8 @@
             dark
             height="35px"
             app
-            >
+            v-model="selected_tab"
+    >
                 <v-tab class="navbar_tabs" @click="select_my_backgrounds()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
                 <v-tab  class="navbar_tabs" @click="select_other_backgrounds()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
@@ -138,6 +139,7 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        selected_tab: 0,
         overlay: false,
         background_form: {
             name: "",
@@ -165,6 +167,7 @@ export default{
             users_list: 'superadmin/usersList',
             current_template: 'templates/currentTemplate',
             pagination_details: 'backgrounds/paginationDetails',
+            selected_backgrounds_watcher: 'backgrounds/selectedBackgroundsWatcher',
         }),
     },
     methods: {
@@ -194,6 +197,11 @@ export default{
 
     created() {
         this.$store.dispatch('backgrounds/getBackgrounds');
+    },
+    mounted(){
+        if(this.selected_backgrounds_watcher=="other"){
+            this.selected_tab=1;
+        }
     }
 }
 

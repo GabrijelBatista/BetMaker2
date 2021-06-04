@@ -18,5 +18,15 @@ class AspectSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
+        \DB::table('aspects')->insert([
+            'name' => '16:9',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+        \DB::table('aspects')->insert([
+            'name' => '1:1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
     }
 }

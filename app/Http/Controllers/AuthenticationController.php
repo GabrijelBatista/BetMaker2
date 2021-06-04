@@ -27,7 +27,7 @@ class AuthenticationController extends Controller
 
         User::create([
             'email'=>$request->email,
-            'password'=>Hash::make($request->password)
+            'password'=>Hash::make($request->password),
         ]);
 
             return response()->json(Auth::user(), 200);

@@ -4,6 +4,7 @@
             dark
             height="35px"
             app
+            v-model="selected_tab"
             >
         <v-tab class="navbar_tabs" @click="select_my_templates()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
         <v-tab class="navbar_tabs" @click="select_other_templates()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
@@ -253,6 +254,8 @@ import {
 export default{
     props: ['auth_user'],
     data: () => ({
+        selected_tab: 0,
+
         dialog_template_name: null,
         dialog_template_id: null,
         icons: {
@@ -294,6 +297,7 @@ export default{
             backgrounds: 'backgrounds/backgroundsList',
             users_list: 'superadmin/usersList',
             pagination_details: 'backgrounds/paginationDetails',
+            selected_templates_watcher: 'templates/selectedTemplatesWatcher',
         }),
     },
     methods: {
@@ -334,7 +338,11 @@ export default{
         this.$store.dispatch('templates/getTemplates');
         this.$store.dispatch('backgrounds/getBackgrounds');
     },
-
+    mounted() {
+        if (this.selected_templates_watcher == "other") {
+            this.selected_tab = 1;
+        }
+    }
 }
 
 </script>

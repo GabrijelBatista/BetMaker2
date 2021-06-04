@@ -45,7 +45,7 @@ class TeamsController extends Controller
             $image->save(public_path().'/storage/teams/'.$nameStore);
 
         $user_id=null;
-        if($request->user=="null"){
+        if($request->user=="null" || $request->user==null){
             $user_id = $user->id;
         }
         else{
@@ -61,7 +61,7 @@ class TeamsController extends Controller
         ]);
 
 
-        if($request->tags!="null"){
+        if($request->tags!="null" && $request->tags!=null){
             $team = Team::where('name', $request->name)->select('id')->get()->first();
             $tags=explode(",", $request->tags);
             foreach($tags as $tag){
@@ -95,10 +95,15 @@ class TeamsController extends Controller
         return response()->json(200);
     }
     public function autocomplete_teams($team_data){
-        $data_start= Team::where('name', 'LIKE', '%'.$team_data.'%' )->get();
+        $user=Auth::user();
+        $data_start= Team::where([['name', 'LIKE', '%'.$team_data.'%'], ['user_id', $user->id]])
+                ->orWhere([['name', 'LIKE', '%'.$team_data.'%'], ['user_id', 1]])
+                ->get();
         $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->select('team_id')->get();
         foreach($tags as $tag) {
-            $team = Team::where('id', $tag->team_id)->first();
+            $team = Team::where([['id', $tag->team_id], ['user_id', $user->id]])
+                ->orWhere([['id', $tag->team_id], ['user_id', 1]])
+                ->first();
 
             $data_start->push($team);
         }

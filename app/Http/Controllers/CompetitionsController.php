@@ -85,7 +85,12 @@ class CompetitionsController extends Controller
     }
 
     public function autocomplete_competitions($competition_data){
-        $data_start= Competition::where( 'name', 'LIKE', '%'.$competition_data.'%' )->orWhere('title', 'LIKE', '%'.$competition_data.'%' )->get();
+        $user=Auth::user();
+        $data_start= Competition::where( [['name', 'LIKE', '%'.$competition_data.'%'], ['user_id', $user->id]])
+            ->orWhere([['title', 'LIKE', '%'.$competition_data.'%'], ['user_id', $user->id]])
+            ->orWhere([['title', 'LIKE', '%'.$competition_data.'%'], ['user_id', 1]])
+            ->orWhere([['title', 'LIKE', '%'.$competition_data.'%'], ['user_id', 1]])
+            ->get();
         $data=$data_start->unique();
         return response()->json($data);
     }

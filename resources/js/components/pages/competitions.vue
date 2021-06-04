@@ -4,7 +4,8 @@
             height="35px"
             dark
             app
-            >
+            v-model="selected_tab"
+    >
                 <v-tab class="navbar_tabs" @click="select_my_competitions()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
                 <v-tab class="navbar_tabs" @click="select_other_competitions()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
@@ -148,6 +149,7 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        selected_tab: 0,
         competition_form: {
             title: "",
             name: "",
@@ -173,6 +175,7 @@ export default{
             superadmin: 'currentUser/superadmin',
             users_list: 'superadmin/usersList',
             pagination_details: 'competitions/paginationDetails',
+            selected_competitions_watcher: 'competitions/selectedCompetitionsWatcher',
         }),
     },
     methods: {
@@ -199,6 +202,11 @@ export default{
 
     created(){
        this.$store.dispatch('competitions/getCompetitions');
+    },
+    mounted(){
+        if(this.selected_competitions_watcher=="other"){
+            this.selected_tab=1;
+        }
     }
 }
 

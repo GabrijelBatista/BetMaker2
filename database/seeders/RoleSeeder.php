@@ -14,7 +14,17 @@ class RoleSeeder extends Seeder
     public function run()
     {
         \DB::table('roles')->insert([
-            'name' => 'admin',
+            'name' => 'Admin',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+        \DB::table('roles')->insert([
+            'name' => 'Premium',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        ]);
+        \DB::table('roles')->insert([
+            'name' => 'User',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
         ]);

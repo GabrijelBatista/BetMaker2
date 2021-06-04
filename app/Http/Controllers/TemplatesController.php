@@ -24,10 +24,10 @@ class TemplatesController extends Controller
                 $other_templates = Template::where('user_id', 1)->orderBy('aspect_id', 'asc')->paginate(21);
             }
 
-            if($my_templates!=null){
+            if($my_templates[0]){
                 $current_template=$my_templates[0];
             }
-            elseif($other_templates!=null){
+            elseif($other_templates[0]){
                 $current_template=$other_templates[0];
             }
             else{
@@ -76,25 +76,25 @@ class TemplatesController extends Controller
 
         $template=Template::where('id', $request->id)->first();
 
-        if($request->name!="null"){
+        if($request->name!="null" && $request->name!=null){
             $template->name=$request->name;
         }
 
-        if($request->max_matches!="null"){
+        if($request->max_matches!="null" && $request->max_matches!=null){
             $template->max_matches=$request->max_matches;
         }
 
-        if($request->aspect!="null"){
+        if($request->aspect!="null" && $request->aspect!=null){
             $aspect = Aspect::select('id')->where('name', $request->aspect)->first();
             $template->aspect_id=$aspect['id'];
         }
 
-        if($request->user!="null"){
+        if($request->user!="null" && $request->user!=null){
             $user = User::select('id')->where('email', $request->user)->first();
             $template->user_id=$user['id'];
         }
 
-        if($request->default_background!="null"){
+        if($request->default_background!="null" && $request->default_background!=null){
             $background = Background::select('id')->where('name', $request->default_background)->first();
             $template->background_id=$background['id'];
         }
