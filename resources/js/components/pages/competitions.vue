@@ -1,12 +1,12 @@
 <template>
 <v-card fluid class="fill-height" id="main_content" v-if="this.selected_competitions">
     <v-tabs id="second_tabs"
-            background-color="light grey"
+            height="35px"
             dark
             app
             >
-                <v-tab @click="select_my_competitions()">Moja natjecanja</v-tab>
-                <v-tab @click="select_other_competitions()">Ostala natjecanja</v-tab>
+                <v-tab class="navbar_tabs" @click="select_my_competitions()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
+                <v-tab class="navbar_tabs" @click="select_other_competitions()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
                 <v-dialog
                 transition="dialog-top-transition"
@@ -17,25 +17,28 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
+                    class="navbar_tabs"
                         color="green"
                         v-bind="attrs"
                         v-on="on"
-                    >Dodaj natjecanje</v-btn>
+                    ><v-icon>{{ icons.mdiPlus }}</v-icon></v-btn>
                     </template>
                     <v-card id="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                        <v-card-title class="card_title justify-center">
                             Dodaj natjecanje
                         </v-card-title>
                         <v-form @submit.prevent="add_competition" ref="form">
                             <v-text-field
                             label="Prilog"
                             required
+                            dark
                             v-model="competition_form.title"
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
                             label="Naziv"
                             required
+                            dark
                             v-model="competition_form.name"
                             autocomplete="off"
                             ></v-text-field>
@@ -43,6 +46,7 @@
                                 <v-autocomplete
                                     :items="users_list"
                                     label="Odaberi korisnika"
+                                    dark
                                     v-model="competition_form.user"
                                     outlined
                                     item-text="email"
@@ -51,6 +55,7 @@
                             <v-file-input
                                 label="Dodaj sliku:"
                                 filled
+                                dark
                                 v-model="competition_form.logo"
                                 prepend-icon="mdi-camera"
                             ></v-file-input>
@@ -73,14 +78,14 @@
     <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
         <v-hover>
             <template v-slot:default="{ hover }">
-        <v-container max-width="200px" id="competition_card">
+        <v-container max-width="150px" id="competition_card">
             <v-img
               :src="competition.logo ? 'storage/competitions/'+competition.logo : ''"
               lazy-src="storage/lazy_image.jpg"
               class="competition_logo"
               contain
-              max-width="200px"
-              max-height="200px"
+              max-width="150px"
+              max-height="150px"
             >
                 <v-fade-transition>
                     <v-overlay
@@ -136,7 +141,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
-    mdiPencil,
+    mdiApps,
+    mdiStar,
+    mdiPlus,
     mdiDelete,
   } from '@mdi/js'
 export default{
@@ -148,7 +155,10 @@ export default{
             logo: null,
         },
         icons: {
-            mdiDelete
+            mdiDelete,
+            mdiApps,
+            mdiStar,
+            mdiPlus
         },
         dialog: false,
         show_icons:true,

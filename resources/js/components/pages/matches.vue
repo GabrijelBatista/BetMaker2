@@ -1,8 +1,8 @@
 <template>
 <v-card fluid class="fill-height" id="main_content">
     <v-tabs id="second_tabs"
-            background-color="light grey"
             dark
+            height="35px"
             app
             >
             <v-spacer></v-spacer>
@@ -16,17 +16,19 @@
                     <v-btn
                         color="green"
                         v-bind="attrs"
+                        class="navbar_tabs"
                         v-on="on"
                         id="add_match_tab"
-                    >Dodaj meč</v-btn>
+                    ><v-icon>{{icons.mdiPlus}}</v-icon></v-btn>
                     </template>
                     <v-card id="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                        <v-card-title class="card_title justify-center">
                             Dodaj meč
                         </v-card-title>
                         <v-form @submit.prevent="add_match" ref="form">
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-combobox
+                                dark
                                     :items="entries_home"
                                     :filter="entries_home_filter"
                                     :search-input.sync="search_home"
@@ -41,6 +43,7 @@
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-combobox
+                                dark
                                     :items="entries_away"
                                     :filter="entries_away_filter"
                                     :search-input.sync="search_away"
@@ -55,6 +58,7 @@
                             </v-col>
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-combobox
+                                dark
                                     :items="entries_competition"
                                     :filter="entries_competition_filter"
                                     :search-input.sync="search_competition"
@@ -77,15 +81,17 @@
                             >
                             <template v-slot:activator="{ on, attrs }">
                             <v-text-field
+                            dark
                                 v-model="match_form.date"
                                 label="Odaberi datum:"
                                 readonly
                                 v-bind="attrs"
                                 v-on="on"
-                                :prepend-icon="icons.mdiCalendar"
+                                :prepend-inner-icon="icons.mdiCalendar"
                             ></v-text-field>
                             </template>
                             <v-date-picker
+                            dark
                             class="calendar_clock"
                             v-model="match_form.date"
                             @input="menu2 = false"
@@ -105,7 +111,8 @@
                                 >
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        :prepend-icon="icons.mdiClock"
+                                    dark
+                                        :prepend-inner-icon="icons.mdiClock"
                                         v-model="match_form.time"
                                         label="Odaberi vrijeme:"
                                         readonly
@@ -114,6 +121,7 @@
                                     ></v-text-field>
                                     </template>
                                     <v-time-picker
+                                    dark
                                     v-if="menu3"
                                     v-model="match_form.time"
                                     @click:minute="$refs.menu.save(match_form.time)"

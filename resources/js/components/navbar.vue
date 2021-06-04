@@ -1,6 +1,6 @@
 <template>
 <nav>
-    <v-app-bar app id="navbar" dark>
+    <v-app-bar app id="navbar" dense dark>
         <v-snackbar v-model="error" transition="fade-transition" :timeout="3000" color="red">
             <div v-for="err in error" :key="err[0]"><span>{{err[0]}}</span></div>
         </v-snackbar>
@@ -8,15 +8,20 @@
             <span>{{success}}</span>
         </v-snackbar>
         <v-tabs right>
-            <v-tab :to="login" v-if="!isLoggedIn">Prijava</v-tab>
-            <v-tab :to="register" v-if="!isLoggedIn">Registracija</v-tab>
+            <v-tab :to="login" v-if="!isLoggedIn"><v-icon>{{icons.mdiLoginVariant}}</v-icon></v-tab>
+            <v-tab :to="register" v-if="!isLoggedIn"><v-icon>{{icons.mdiAccountPlus}}</v-icon></v-tab>
         </v-tabs>
-        <v-btn right @click='logout' v-if="isLoggedIn">Odjavi se</v-btn>
+        <v-btn right @click='logout' v-if="isLoggedIn"><v-icon>{{icons.mdiLogout}}</v-icon></v-btn>
     </v-app-bar>
 </nav>
 </template>
 
 <script>
+import {
+    mdiLoginVariant,
+    mdiAccountPlus,
+    mdiLogout
+  } from '@mdi/js'
 
 import { mapGetters } from 'vuex'
   export default {
@@ -24,6 +29,11 @@ import { mapGetters } from 'vuex'
      home: '/',
      login: '/login',
      register: '/register',
+     icons: {
+        mdiLoginVariant,
+        mdiAccountPlus,
+        mdiLogout
+    },
     }),
     methods: {
         logout(){

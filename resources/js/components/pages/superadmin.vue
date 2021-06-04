@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card id="main_content">
         <v-dialog
                 transition="dialog-top-transition"
                 max-width="600"

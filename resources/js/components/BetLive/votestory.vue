@@ -15,13 +15,14 @@
                     ><v-icon>{{icons.mdiCog}}</v-icon></v-btn>
                     </template>
                     <v-card id="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                        <v-card-title class="card_title justify-center">
                             Opcije
                         </v-card-title>
                         <v-form @submit.prevent="change_resolution" ref="form">
                             <v-col class="d-flex" cols="12" sm="6">
                                 <v-radio-group v-model="resolution_form">
                                     <v-radio
+                                        dark
                                         :off-icon="resolution.id==resolution_form.id ? '$radioOn' : '$radioOff'"
                                         name="resolution_form"
                                         v-for="resolution in template_resolutions"
@@ -46,6 +47,7 @@
                     </v-card>
                 </v-dialog>
     <v-btn id="screenshot" @click="download_image()"><v-icon>{{icons.mdiCamera}}</v-icon></v-btn>
+    <div style="font-family: BetLiveMedium; opacity: 0">.</div>
     <canvas ref="canvas" class="div_to_capture" id="div_to_capture916"
     width="278.4375px"
     height="495px"

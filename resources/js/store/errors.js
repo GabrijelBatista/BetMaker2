@@ -3,6 +3,7 @@
 const state={
     errors: null,
     success: null,
+    loading: false
 };
 const actions={
 
@@ -10,6 +11,7 @@ const actions={
 const getters={
     errors: state => state.errors,
     success: state => state.success,
+    loading: state => state.loading,
 };
 const mutations={
     setErrors(state, data) {
@@ -17,6 +19,9 @@ const mutations={
     },
     setSuccess(state, data) {
         state.success=data
+    },
+    setLoading(state, data) {
+        state.loading=data
     },
 };
 

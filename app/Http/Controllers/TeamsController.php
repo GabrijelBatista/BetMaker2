@@ -27,26 +27,25 @@ class TeamsController extends Controller
     }
 
     public function add_team(Request $request){
-
         $request->validate([
             'name'=>'required',
             'logo'=>'required|file|image|max:2048'
         ]);
+
         $user = Auth::user();
-        if($request->file('logo')!=null){
             $filenameWithExt = $request->file('logo')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('logo')->getClientOriginalExtension();
             $nameStore = $user['id'].$user['email'].$filename.'_'.time().'.'.$extension;
             $image = Image::make($request->file('logo')->getRealPath());
+            $image->resize(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
             $image->save(public_path().'/storage/teams/'.$nameStore);
-        }
-        else{
-            $nameStore=null;
-        }
 
         $user_id=null;
-        if($request->user===null){
+        if($request->user=="null"){
             $user_id = $user->id;
         }
         else{
@@ -61,7 +60,8 @@ class TeamsController extends Controller
             'logo'=>$nameStore,
         ]);
 
-        if($request->tags!=null){
+
+        if($request->tags!="null"){
             $team = Team::where('name', $request->name)->select('id')->get()->first();
             $tags=explode(",", $request->tags);
             foreach($tags as $tag){

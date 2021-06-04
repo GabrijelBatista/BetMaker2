@@ -1,12 +1,12 @@
 <template>
 <v-card fluid class="fill-height" id="main_content" v-if="this.selected_backgrounds">
     <v-tabs id="second_tabs"
-            background-color="light grey"
             dark
+            height="35px"
             app
             >
-                <v-tab @click="select_my_backgrounds()">Moje pozadine</v-tab>
-                <v-tab @click="select_other_backgrounds()">Ostale pozadine</v-tab>
+                <v-tab class="navbar_tabs" @click="select_my_backgrounds()"><v-icon>{{ icons.mdiStar }}</v-icon></v-tab>
+                <v-tab  class="navbar_tabs" @click="select_other_backgrounds()"><v-icon>{{ icons.mdiApps }}</v-icon></v-tab>
                 <v-spacer></v-spacer>
                 <v-dialog
                 transition="dialog-top-transition"
@@ -17,25 +17,28 @@
                 >
                     <template v-slot:activator="{ on, attrs }">
                     <v-btn
+                    class="navbar_tabs"
                         color="green"
                         v-bind="attrs"
                         v-on="on"
-                    >Dodaj pozadinu</v-btn>
+                    ><v-icon>{{ icons.mdiPlus }}</v-icon></v-btn>
                     </template>
                     <v-card id="dialog_box">
-                        <v-card-title class="headline grey lighten-2">
+                        <v-card-title class="card_title justify-center">
                             Dodaj pozadinu
                         </v-card-title>
                         <v-form @submit.prevent="add_background" ref="form">
                             <v-text-field
                             label="Naziv"
                             required
+                            dark
                             v-model="background_form.name"
                             autocomplete="off"
                             ></v-text-field>
                             <v-col v-if="superadmin" class="d-flex" cols="12" sm="6">
                                 <v-autocomplete
                                     :items="users_list"
+                                    dark
                                     label="Odaberi korisnika"
                                     v-model="background_form.user"
                                     outlined
@@ -45,6 +48,7 @@
                             </v-col>
                             <v-file-input
                                 label="Dodaj sliku:"
+                                dark
                                 filled
                                 v-model="background_form.image"
                                 prepend-icon="mdi-camera"
@@ -68,7 +72,7 @@
     <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-hover>
             <template v-slot:default="{ hover }">
-        <v-card max-width="200px" active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
+        <v-card max-width="150px" active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
             <v-fade-transition>
                 <v-overlay
                     v-if="hover"
@@ -94,7 +98,7 @@
                 :src="background.url ? 'storage/backgrounds/'+background.url : ''"
               lazy-src="storage/lazy_image.jpg"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                max-height="200px"
+                max-height="150px"
                 contain
             >
             <template v-slot:placeholder>
@@ -127,8 +131,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
-    mdiPencil,
     mdiDelete,
+    mdiApps,
+    mdiStar,
+     mdiPlus
   } from '@mdi/js'
 export default{
     data: () => ({
@@ -139,7 +145,10 @@ export default{
             image: null,
         },
         icons: {
-            mdiDelete
+            mdiDelete,
+            mdiApps,
+            mdiStar,
+            mdiPlus
         },
         dialog: false,
         show_icons:true,
