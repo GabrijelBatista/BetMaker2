@@ -47,7 +47,7 @@
                     </v-card>
                 </v-dialog>
     <v-btn id="screenshot" @click="download_image()"><v-icon>{{icons.mdiCamera}}</v-icon></v-btn>
-    <div style="font-family: BetLiveMedium; opacity: 0">.</div>
+    <v-btn style="font-family: BetLiveMedium; float:right">{{current_template.name}}</v-btn>
     <canvas ref="canvas" class="div_to_capture" id="div_to_capture916"
     width="278.4375px"
     height="495px"

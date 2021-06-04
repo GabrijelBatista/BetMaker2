@@ -25,7 +25,7 @@
                         v-if="superadmin"
                     ><v-icon>{{ icons.mdiPlus }}</v-icon></v-btn>
                     </template>
-                    <v-card id="dialog_box">
+                    <v-card id="dialog_box2">
                         <v-card-title class="card_title justify-center">
                             Dodaj predložak
                         </v-card-title>
@@ -87,9 +87,11 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap>
+        <div class="page_title">Templates</div>
     <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
         <v-hover>
             <template v-slot:default="{ hover }">
+                <v-responsive>
         <v-card active-class="selected"
         :class="current_template.id === template.id ? 'selected' : ''"
         @click="select_current_template(template)"
@@ -145,6 +147,7 @@
             </template>
             </v-img>
         </v-card>
+                </v-responsive>
             </template>
         </v-hover>
     </v-flex>
