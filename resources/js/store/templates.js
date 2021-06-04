@@ -18,7 +18,9 @@ const actions={
             commit("superadmin/setAspects", response.data.aspects_list, { root: true });
             commit("superadmin/setUsersList", response.data.users_list, { root: true });
             commit("backgrounds/setBackgroundsList", response.data.backgrounds_list, { root: true });
-            commit("setMyTemplates", response.data.my_templates);
+            if(response.data.my_templates==null){
+                state.selectedTemplatesWatcher="other";
+            }
             commit("setOtherTemplates", response.data.other_templates);
             if(state.selectedTemplatesWatcher=="my"){
                 commit("setSelectedTemplates", response.data.my_templates);
