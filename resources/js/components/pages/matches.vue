@@ -150,7 +150,7 @@
             :items="matches_list"
             item-key="id"
             class="elevation-1"
-            :items-per-page="5"
+            :items-per-page="10"
             :header-props="{
             'sortByText': 'Sortiraj'
             }"
@@ -169,8 +169,8 @@
                         <td>{{item.competition.name}}</td>
                         <td>{{item.date}}</td>
                         <td>{{item.time}}</td>
-                        <td v-show="isSelected"><v-icon class="px-1" color="green" v-show="isSelected">{{ icons.mdiCheck }}</v-icon></td>
                         <td><v-icon class="px-1" color="red" v-on:click.stop @click="delete_match(item.id)">{{ icons.mdiDelete }}</v-icon></td>
+                        <td v-show="isSelected"><v-icon class="px-1" color="green" v-show="isSelected">{{ icons.mdiCheck }}</v-icon></td>
                     </tr>
                 </template>
             </v-data-table>
