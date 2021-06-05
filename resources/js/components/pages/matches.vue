@@ -166,7 +166,7 @@
                     Niste dodali nijedan meč.
                 </template>
                <template v-slot:item="{ item, isSelected, select }">
-                    <tr id="matches_table" :class="isSelected?'cyan':''" @click="toggle(isSelected,select,$event)">
+                    <tr id="matches_table" :class="isSelected?'dodgerblue':''" @click="toggle(isSelected,select,$event)">
                         <td>{{item.home_team.name}}</td>
                         <td>{{item.away_team.name}}</td>
                         <td>{{item.competition.name}}</td>

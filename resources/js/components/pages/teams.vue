@@ -84,7 +84,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
-    <v-icon v-bind:color="overlay ? 'green' : 'dark'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
     <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
         <v-hover>

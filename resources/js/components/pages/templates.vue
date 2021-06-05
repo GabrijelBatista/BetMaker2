@@ -86,7 +86,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
-    <v-icon v-bind:color="overlay ? 'green' : 'dark'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap>
     <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
         <v-hover>

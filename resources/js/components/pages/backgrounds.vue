@@ -69,7 +69,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
-    <v-icon v-bind:color="overlay ? 'green' : 'dark'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
     <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-hover>

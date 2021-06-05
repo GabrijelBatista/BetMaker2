@@ -75,7 +75,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
-    <v-icon v-bind:color="overlay ? 'green' : 'dark'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
     <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
         <v-hover>
