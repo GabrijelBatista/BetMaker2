@@ -2,8 +2,7 @@
     width:33%;
     min-width: 210px;
     border: solid 2px black;
-    background-image:url('../storage/login.jpg');
-    background-size: cover;
+    background-color: #1a202c;
     margin: auto;
     top:10%;
     padding:8px 8px 8px 8px;

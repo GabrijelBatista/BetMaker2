@@ -11,11 +11,11 @@
       <template v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar id="app_logo">
-            <img src="">
+            <img :src="'storage/logo2.png'">
           </v-list-item-avatar>
 
           <v-list-item-content id="logo" v-if="$vuetify.breakpoint.mdAndUp">
-            <v-list-item-title>BetMaker</v-list-item-title>
+            <div>BETMAKER</div>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -42,8 +42,8 @@
           :to="this.current_template.url"
         >
             <v-list-item-content>
-                <v-icon medium v-if="$vuetify.breakpoint.smAndDown">{{icons.mdiStarCircle}}</v-icon>
-                <v-list-item-title v-if="$vuetify.breakpoint.mdAndUp" class="sidebar_list">ODABRANI PREDLOŽAK</v-list-item-title>
+                <v-icon color="black" large v-if="$vuetify.breakpoint.smAndDown">{{icons.mdiStarCircle}}</v-icon>
+                <v-list-item-title id="current_template_tab" v-if="$vuetify.breakpoint.mdAndUp" class="sidebar_list">ODABRANI PREDLOŽAK</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-list-item

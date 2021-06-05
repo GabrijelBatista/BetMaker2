@@ -17,8 +17,7 @@
 }
 #dialog_box, #dialog_box2{
     padding: 5px;
-    background-image:url('../storage/login.jpg');
-    background-size: cover;
+    background-color: #1a202c;
 }
 .selected{
     border: 2px solid white!important;
