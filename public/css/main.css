@@ -4,6 +4,11 @@ canvas {
 #main_content{
     background-color:rgba(168, 166, 166, 0);
 }
+.card_text{
+    color:white !important;
+    font-size: 16px !important;
+    margin-top: 10px
+}
 .v-card__title.card_title{
     background-color: rgba(0, 0, 0, 0.644);
     color: white;
@@ -13,7 +18,7 @@ canvas {
     background-size: cover;
 }
 html{
-    overflow-y: auto !important
+    overflow-y: auto !important;
 }
 .div_to_capture{
     border:1px white solid;

@@ -84,6 +84,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
+    <v-icon v-bind:color="overlay ? 'green' : 'dark'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
     <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
         <v-hover>
@@ -99,7 +100,7 @@
             >
                 <v-fade-transition>
                     <v-overlay
-                        v-if="hover"
+                        v-if="hover || overlay"
                         absolute
                         color="#036358"
                     >
@@ -154,10 +155,12 @@ import {
     mdiDelete,
     mdiApps,
     mdiStar,
-    mdiPlus
+    mdiPlus,
+    mdiInformation
   } from '@mdi/js'
 export default{
     data: () => ({
+        overlay:false,
         selected_tab: 0,
         team_form: {
             title: "",
@@ -170,7 +173,8 @@ export default{
             mdiDelete,
             mdiApps,
             mdiStar,
-            mdiPlus
+            mdiPlus,
+            mdiInformation
         },
         dialog: false,
         show_icons:true,

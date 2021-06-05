@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -25,3 +24,5 @@ mix.styles(['public/css/login.css',
             'public/css/matches.css',
             'public/css/BetLive/votestory.css',
 ], 'public/css/app.css');
+
+
