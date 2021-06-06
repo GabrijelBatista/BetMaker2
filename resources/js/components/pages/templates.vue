@@ -87,7 +87,6 @@
                 </v-dialog>
     </v-tabs>
     <v-layout wrap>
-        <div class="page_title">Templates</div>
     <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
         <v-hover>
             <template v-slot:default="{ hover }">

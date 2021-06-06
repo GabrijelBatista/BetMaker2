@@ -37,14 +37,6 @@ form{
     width: 80%;
     margin:auto;
 }
-.page_title{
-    margin:auto;
-    font-size: 20px;
-    background-color: green;
-    color:white;
-    padding: 5px;
-    border-radius: 15px 15px;
-}
 @media screen and (max-width: 350px) {
     #div_to_capture{
         transform: scale(0.8);

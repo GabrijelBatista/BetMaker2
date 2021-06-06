@@ -31,6 +31,7 @@ const actions={
             if(state.currentTemplate==null){
                 commit("setCurrentTemplate", response.data.current_template);
             }
+
         })
         .catch(function(error) {
             if (error.response || error.response.status === 401) {

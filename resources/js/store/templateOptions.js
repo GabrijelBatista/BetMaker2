@@ -9,6 +9,7 @@ const actions={
         })
         .then(response=>{
             commit("setTemplateResolutions", response.data.template_resolutions);
+            return true;
         })
         .catch(function(error) {
             if (error.response || error.response.status === 401) {
