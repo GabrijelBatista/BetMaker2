@@ -5,7 +5,10 @@
 .elevation-1{
     margin: auto;
     margin-top: 20px;
-    background-color: rgba(23, 24, 24, 0.116) !important;
+    background-color: rgba(255,255,255,0.65)!important;
     overflow-y: auto;
     max-height: 80%;
+}
+.dodgerblue{
+    background-color: dodgerblue;
 }

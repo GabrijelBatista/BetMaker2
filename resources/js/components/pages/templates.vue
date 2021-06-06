@@ -86,11 +86,11 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap>
     <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
         <v-hover>
             <template v-slot:default="{ hover }">
-                <v-responsive>
         <v-card active-class="selected"
         :class="current_template.id === template.id ? 'selected' : ''"
         @click="select_current_template(template)"
@@ -107,7 +107,7 @@
             >
                 <v-fade-transition>
                     <v-overlay
-                        v-if="hover"
+                        v-if="hover || overlay"
                         absolute
                         color="#036358"
                     >
@@ -146,7 +146,6 @@
             </template>
             </v-img>
         </v-card>
-                </v-responsive>
             </template>
         </v-hover>
     </v-flex>
@@ -251,13 +250,14 @@ import {
     mdiDelete,
     mdiApps,
     mdiStar,
-    mdiPlus
+    mdiPlus,
+    mdiInformation
   } from '@mdi/js'
 export default{
     props: ['auth_user'],
     data: () => ({
+        overlay: false,
         selected_tab: 0,
-
         dialog_template_name: null,
         dialog_template_id: null,
         icons: {
@@ -265,7 +265,8 @@ export default{
             mdiDelete,
             mdiApps,
             mdiStar,
-            mdiPlus
+            mdiPlus,
+            mdiInformation
         },
         template_form: {
             name: null,

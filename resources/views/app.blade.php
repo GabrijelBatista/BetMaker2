@@ -6,10 +6,7 @@
 
         <title>BetMaker</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
-
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
-
     </head>
 
     <body class="antialiased">

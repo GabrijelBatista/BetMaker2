@@ -75,6 +75,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
     <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
         <v-hover>
@@ -90,7 +91,7 @@
             >
                 <v-fade-transition>
                     <v-overlay
-                        v-if="hover"
+                        v-if="hover || overlay"
                         absolute
                         color="#036358"
                     >
@@ -146,9 +147,11 @@ import {
     mdiStar,
     mdiPlus,
     mdiDelete,
+    mdiInformation
   } from '@mdi/js'
 export default{
     data: () => ({
+        overlay: false,
         selected_tab: 0,
         competition_form: {
             title: "",
@@ -160,7 +163,8 @@ export default{
             mdiDelete,
             mdiApps,
             mdiStar,
-            mdiPlus
+            mdiPlus,
+            mdiInformation
         },
         dialog: false,
         show_icons:true,

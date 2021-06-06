@@ -36,6 +36,7 @@ const actions={
         })
         .then(response=>{
             commit("setResolution", response.data.current_resolution);
+            return response.data.current_resolution;
         })
         .catch((error) => {
             if (error.response.status == 422){

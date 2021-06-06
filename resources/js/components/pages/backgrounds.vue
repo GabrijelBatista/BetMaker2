@@ -69,6 +69,7 @@
                     </v-card>
                 </v-dialog>
     </v-tabs>
+    <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
     <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-hover>
@@ -76,7 +77,7 @@
         <v-card max-width="150px" active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
             <v-fade-transition>
                 <v-overlay
-                    v-if="hover"
+                    v-if="hover || overlay"
                     absolute
                     color="#036358"
                 >
@@ -135,7 +136,8 @@ import {
     mdiDelete,
     mdiApps,
     mdiStar,
-     mdiPlus
+     mdiPlus,
+    mdiInformation
   } from '@mdi/js'
 export default{
     data: () => ({
@@ -150,7 +152,8 @@ export default{
             mdiDelete,
             mdiApps,
             mdiStar,
-            mdiPlus
+            mdiPlus,
+            mdiInformation
         },
         dialog: false,
         show_icons:true,
