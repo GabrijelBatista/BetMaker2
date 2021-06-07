@@ -90,7 +90,7 @@ class CompetitionsController extends Controller
             ->orWhere([['title', 'LIKE', '%'.$competition_data.'%'], ['user_id', $user->id]])
             ->orWhere([['title', 'LIKE', '%'.$competition_data.'%'], ['user_id', 1]])
             ->orWhere([['title', 'LIKE', '%'.$competition_data.'%'], ['user_id', 1]])
-            ->get();
+            ->take(3)->get();
         $data=$data_start->unique();
         return response()->json($data);
     }

@@ -6,7 +6,9 @@ const state={
     loading: false
 };
 const actions={
-
+    showError({commit}){
+        commit("setErrors", "Odaberite ponuđene timove.");
+    }
 };
 const getters={
     errors: state => state.errors,
@@ -15,7 +17,16 @@ const getters={
 };
 const mutations={
     setErrors(state, data) {
-        state.errors=data
+        if(Array.isArray(data) || data==null){
+            state.errors=data
+        }
+        else{
+            var array=[];
+            var array2=[];
+            array2.push(data);
+            array.push(array2);
+            state.errors=array;
+        }
     },
     setSuccess(state, data) {
         state.success=data

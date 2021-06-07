@@ -107,7 +107,7 @@
             >
                 <v-fade-transition>
                     <v-overlay
-                        v-if="hover || overlay"
+                        v-show="hover || overlay"
                         absolute
                         color="#036358"
                     >
@@ -116,7 +116,7 @@
                         </b>
                         <br/>
                         <small>
-                            Matches: ({{template.max_matches}})
+                            Mečevi: ({{template.max_matches}})
                         </small>
                         <v-divider></v-divider>
                         <v-icon

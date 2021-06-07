@@ -1,6 +1,6 @@
 <template>
     <v-app id="main_app">
-        <v-overlay v-if="this.loading">
+        <v-overlay v-show="this.loading">
             <div class="flower-spinner">
                 <div class="dots-container">
                     <div class="bigger-dot">

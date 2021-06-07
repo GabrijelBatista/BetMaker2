@@ -246,13 +246,18 @@ export default{
             this.$store.dispatch('matches/selectMatches', this.matches);
         },
         add_match(){
-            if(this.match_form.date!=null){
-               // moment.locale('hr');
-                let new_date=moment(String(this.match_form.date)).format('DD/MM/YYYY.');
-                this.match_form.date=new_date;
+            if(this.entries_home[0]!=null && this.entries_away[0]!=null){
+                if(this.match_form.date!=null){
+                // moment.locale('hr');
+                    let new_date=moment(String(this.match_form.date)).format('DD/MM/YYYY.');
+                    this.match_form.date=new_date;
+                }
+                this.$store.dispatch('matches/addMatch', this.match_form);
+                this.$refs.form.reset();
             }
-            this.$store.dispatch('matches/addMatch', this.match_form);
-            this.$refs.form.reset();
+            else{
+                this.$store.dispatch('errors/showError');
+            }
         },
         delete_match(match){
             let response=confirm("Da li ste sigurni?");

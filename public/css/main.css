@@ -21,6 +21,7 @@ canvas {
 #main_body{
     background-image:url('../storage/cover.jpg');
     background-repeat: repeat;
+    background-size: 10%;
 }
 html{
     overflow-y: auto !important;

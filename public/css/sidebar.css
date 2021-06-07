@@ -14,13 +14,13 @@
 }
 #logo{
     font-weight: bolder;
-    font-size: 30px;
-    height:40px;
+    font-size:22px;
+    height:60px;
     margin:auto;
     margin-left: -20px;
     max-width:130px !important;
     color:dodgerblue;
-    font-family: NATS
+    font-family:Arial, Helvetica, sans-serif;
 }
 #current_template_tab{
     color: black !important;

@@ -105,10 +105,6 @@
                         color="#036358"
                     >
                         <b>
-                            {{team.title}}
-                        </b>
-                        <br/>
-                        <b>
                             {{team.name}}
                         </b>
                         <v-divider></v-divider>

@@ -96,10 +96,6 @@
                         color="#036358"
                     >
                         <b>
-                            {{competition.title}}
-                        </b>
-                        <br/>
-                        <b>
                             {{competition.name}}
                         </b>
                         <v-divider></v-divider>

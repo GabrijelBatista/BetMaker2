@@ -96,10 +96,10 @@ class TeamsController extends Controller
     }
     public function autocomplete_teams($team_data){
         $user=Auth::user();
-        $data_start= Team::where([['name', 'LIKE', '%'.$team_data.'%'], ['user_id', $user->id]])
+        $data_start= Team::where([['user_id', $user->id], ['name', 'LIKE', '%'.$team_data.'%']])
                 ->orWhere([['name', 'LIKE', '%'.$team_data.'%'], ['user_id', 1]])
-                ->get();
-        $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->select('team_id')->get();
+                ->take(3)->get();
+        $tags = Tag::where( 'name', 'LIKE', '%'.$team_data.'%' )->select('team_id')->take(3)->get();
         foreach($tags as $tag) {
             $team = Team::where([['id', $tag->team_id], ['user_id', $user->id]])
                 ->orWhere([['id', $tag->team_id], ['user_id', 1]])
