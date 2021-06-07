@@ -39,6 +39,10 @@ class CompetitionsController extends Controller
             $extension = $request->file('logo')->getClientOriginalExtension();
             $nameStore = $user['id'].$user['email'].$filename.'_'.time().'.'.$extension;
             $image = Image::make($request->file('logo')->getRealPath());
+            $image->resize(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
             $image->save(public_path().'/storage/competitions/'.$nameStore);
         }
         else{
