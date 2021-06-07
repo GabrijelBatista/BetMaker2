@@ -82,6 +82,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
+        <v-container class="empty_alert" v-if="empty==true">Niste dodali svoja natjecanja. <v-btn @click="select_other_competitions()" color="green">Pogledajte</v-btn> natjecanja koja su zajednička svim korisnicima.</v-container>
+        <v-container class="empty_alert2" v-if="empty==true && admin===true">Ili <v-btn @click="dialog=true" color="green">Dodajte</v-btn>  svoja natjecanja.</v-container>
     <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
         <v-hover>
             <template v-slot:default="{ hover }">
@@ -152,6 +154,7 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        empty: false,
         overlay: false,
         selected_tab: 0,
         competition_form: {
@@ -186,9 +189,14 @@ export default{
     methods: {
         select_my_competitions(){
             this.$store.dispatch('competitions/selectCompetitions', this.my_competitions);
+            if(this.my_competitions.data[0]==null){
+                this.empty=true;
+            }
         },
         select_other_competitions(){
             this.$store.dispatch('competitions/selectCompetitions', this.other_competitions);
+            this.empty=false;
+            this.selected_tab=1;
         },
         add_competition(){
             this.$store.dispatch('competitions/addCompetition', this.competition_form);
@@ -205,6 +213,17 @@ export default{
         }
     },
 
+    watch: {
+        selected_competitions: function () {
+            if(this.selected_competitions.data[0]!=null){
+                this.empty=false;
+            }
+            else{
+                this.empty=true;
+            }
+        },
+    },
+
     created(){
        this.$store.dispatch('competitions/getCompetitions');
     },
@@ -213,6 +232,9 @@ export default{
                 if (this.my_competitions.data[0] == null) {
                     this.select_other_competitions();
                 }
+            }
+            else{
+                this.empty=true;
             }
             if (this.selected_competitions_watcher == "other") {
                 this.selected_tab = 1;

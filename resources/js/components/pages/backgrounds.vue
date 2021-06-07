@@ -76,7 +76,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
-    <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
+        <v-container class="empty_alert" v-if="empty===true">Niste dodali svoje pozadine. <v-btn @click="select_other_backgrounds()" color="green">Pogledajte</v-btn> pozadine koje su zajedničke svim korisnicima.</v-container>
+        <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-hover>
             <template v-slot:default="{ hover }">
         <v-card max-width="150px" active-class="selected" :class="current_background.id === background.id ? 'selected' : ''" @click="select_current_background(background)" id="background_card">
@@ -146,6 +147,7 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        empty: false,
         selected_tab: 0,
         overlay: false,
         background_form: {
@@ -181,9 +183,14 @@ export default{
     methods: {
         select_my_backgrounds(){
             this.$store.dispatch('backgrounds/selectBackgrounds', this.my_backgrounds);
+            if(this.my_backgrounds.data[0]==null){
+                this.empty=true;
+            }
         },
         select_other_backgrounds(){
             this.$store.dispatch('backgrounds/selectBackgrounds', this.other_backgrounds);
+            this.empty=false;
+            this.selected_tab=1;
         },
         add_background(){
             this.$store.dispatch('backgrounds/addBackground', this.background_form);
@@ -203,6 +210,17 @@ export default{
         }
     },
 
+    watch: {
+        selected_backgrounds: function () {
+            if(this.selected_backgrounds.data[0]!=null){
+                this.empty=false;
+            }
+            else{
+                this.empty=true;
+            }
+        },
+    },
+
     created() {
         this.$store.dispatch('backgrounds/getBackgrounds');
     },
@@ -211,6 +229,9 @@ export default{
                 if (this.my_backgrounds.data[0] == null) {
                     this.select_other_backgrounds();
                 }
+        }
+        else{
+            this.empty=true;
         }
         if(this.selected_backgrounds_watcher=="other"){
             this.selected_tab=1;

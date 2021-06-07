@@ -91,7 +91,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
-    <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
+        <v-container class="empty_alert" v-if="empty===true">Niste dodali svoje timove/igrače. <v-btn @click="select_other_teams()" color="green">Pogledajte</v-btn> timove/igrače koji su zajednička svim korisnicima.</v-container>
+        <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
         <v-hover>
             <template v-slot:default="{ hover }">
         <v-container max-width="150px"  id="competition_card">
@@ -161,6 +162,7 @@ import {
   } from '@mdi/js'
 export default{
     data: () => ({
+        empty: false,
         overlay:false,
         selected_tab: 0,
         team_form: {
@@ -196,9 +198,14 @@ export default{
     methods: {
         select_my_teams(){
             this.$store.dispatch('teams/selectTeams', this.my_teams);
+            if(this.my_teams.data[0]==null){
+                this.empty=true;
+            }
         },
         select_other_teams(){
             this.$store.dispatch('teams/selectTeams', this.other_teams);
+            this.empty=false;
+            this.selected_tab=1;
         },
         add_team(){
             this.$store.dispatch('teams/addTeam', this.team_form);
@@ -215,6 +222,17 @@ export default{
         }
     },
 
+    watch: {
+        selected_teams: function () {
+            if(this.selected_teams.data[0]!=null){
+                this.empty=false;
+            }
+            else{
+                this.empty=true;
+            }
+        },
+    },
+
     created(){
        this.$store.dispatch('teams/getTeams');
     },
@@ -223,6 +241,9 @@ export default{
             if (this.my_teams.data[0] == null) {
                 this.select_other_teams();
             }
+        }
+        else{
+            this.empty=true;
         }
         if(this.selected_teams_watcher=="other"){
             this.selected_tab=1;

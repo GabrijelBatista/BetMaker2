@@ -70,6 +70,15 @@ form{
     color:white !important;
     border: white 1px solid !important;
 }
+.empty_alert{
+    position: relative !important;
+    color:white;
+    margin-top: 40%;
+}
+.empty_alert2{
+    position: relative !important;
+    color:white;
+}
 @media screen and (max-width: 350px) {
     #div_to_capture{
         transform: scale(0.8);

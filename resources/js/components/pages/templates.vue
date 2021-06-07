@@ -88,7 +88,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap>
-    <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
+        <v-container class="empty_alert" v-if="empty===true">Nemate kupljenih predložaka. <v-btn @click="select_other_templates()" color="green">Pogledajte</v-btn> besplatne predloške.</v-container>
+        <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
         <v-hover>
             <template v-slot:default="{ hover }">
         <v-card active-class="selected"
@@ -257,6 +258,7 @@ import {
 export default{
     props: ['auth_user'],
     data: () => ({
+        empty: false,
         overlay: false,
         selected_tab: 0,
         dialog_template_name: null,
@@ -307,9 +309,14 @@ export default{
     methods: {
         select_my_templates(){
            this.$store.dispatch('templates/selectTemplates', this.my_templates);
+            if(this.my_templates.data[0]==null){
+                this.empty=true;
+            }
         },
         select_other_templates(){
             this.$store.dispatch('templates/selectTemplates', this.other_templates);
+            this.empty=false;
+            this.selected_tab=1;
         },
         add_template(){
             this.$store.dispatch('templates/addTemplate', this.template_form);
@@ -338,6 +345,18 @@ export default{
             this.$store.dispatch('backgrounds/getBackgrounds');
         }
     },
+
+    watch: {
+        selected_templates: function () {
+            if(this.selected_templates.data[0]!=null){
+                this.empty=false;
+            }
+            else{
+                this.empty=true;
+            }
+        },
+    },
+
     created(){
         this.$store.dispatch('templates/getTemplates');
         this.$store.dispatch('backgrounds/getBackgrounds');
@@ -347,6 +366,9 @@ export default{
             if (this.my_templates.data[0] == null) {
                 this.select_other_templates();
             }
+        }
+        else{
+            this.empty=true;
         }
         if (this.selected_templates_watcher == "other") {
             this.selected_tab = 1;
