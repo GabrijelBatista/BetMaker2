@@ -134,6 +134,7 @@
     </v-layout>
     <v-pagination
     id="pagination_buttons"
+    v-if="selected_competitions.last_page>1"
       v-model="pagination_details.page"
       :length="pagination_details.lenght"
       :total-visible="7"

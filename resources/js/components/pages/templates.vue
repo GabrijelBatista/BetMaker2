@@ -236,9 +236,10 @@
     </v-layout>
     <v-pagination
     id="pagination_buttons"
+    v-if="selected_templates.last_page>1"
       v-model="pagination_details.page"
       :length="pagination_details.lenght"
-      :total-visible="7"
+      :total-visible="3"
       circle
       @input="pagination"
     ></v-pagination>
