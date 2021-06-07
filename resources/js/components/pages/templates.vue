@@ -88,7 +88,7 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap>
-        <v-container class="empty_alert" v-if="empty===true">Nemate kupljenih predložaka. <v-btn @click="select_other_templates()" color="green">Pogledajte</v-btn> besplatne predloške.</v-container>
+        <v-container class="empty_alert" v-if="empty===true && selected_tab==0">Nemate kupljenih predložaka. <v-btn @click="select_other_templates()" color="green">Pogledajte</v-btn> besplatne predloške.</v-container>
         <v-flex id="templates_list" v-for="template in this.selected_templates.data" :key="template.id">
         <v-hover>
             <template v-slot:default="{ hover }">

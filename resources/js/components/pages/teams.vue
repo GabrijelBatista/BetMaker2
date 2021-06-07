@@ -91,7 +91,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
-        <v-container class="empty_alert" v-if="empty===true">Niste dodali svoje timove/igrače. <v-btn @click="select_other_teams()" color="green">Pogledajte</v-btn> timove/igrače koji su zajednička svim korisnicima.</v-container>
+        <v-container class="empty_alert" v-if="empty===true && selected_tab==0">Niste dodali svoje timove/igrače. <v-btn @click="select_other_teams()" color="green">Pogledajte</v-btn> timove/igrače koji su zajednička svim korisnicima.</v-container>
+        <v-container class="empty_alert2" v-if="empty==true && admin===true && selected_tab==0">Ili <v-btn @click="dialog=true" color="green">Dodajte</v-btn> svoje timove/igrače.</v-container>
         <v-flex id="teams_list" v-for="team in this.selected_teams.data" :key="team.id">
         <v-hover>
             <template v-slot:default="{ hover }">

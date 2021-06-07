@@ -76,7 +76,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
-        <v-container class="empty_alert" v-if="empty===true">Niste dodali svoje pozadine. <v-btn @click="select_other_backgrounds()" color="green">Pogledajte</v-btn> pozadine koje su zajedničke svim korisnicima.</v-container>
+        <v-container class="empty_alert" v-if="empty===true && selected_tab==0">Niste dodali svoje pozadine. <v-btn @click="select_other_backgrounds()" color="green">Pogledajte</v-btn> pozadine koje su zajedničke svim korisnicima.</v-container>
+        <v-container class="empty_alert2" v-if="empty==true && admin===true && selected_tab==0">Ili <v-btn @click="dialog=true" color="green">Dodajte</v-btn> svoje pozadine.</v-container>
         <v-flex id="backgrounds_list" v-for="background in this.selected_backgrounds.data" :key="background.id">
         <v-hover>
             <template v-slot:default="{ hover }">

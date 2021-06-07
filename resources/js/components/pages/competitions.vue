@@ -82,8 +82,8 @@
     </v-tabs>
     <v-icon id="info_icon" v-bind:color="overlay ? 'green' : 'white'" @click="overlay=!overlay">{{ icons.mdiInformation }}</v-icon>
     <v-layout wrap >
-        <v-container class="empty_alert" v-if="empty==true">Niste dodali svoja natjecanja. <v-btn @click="select_other_competitions()" color="green">Pogledajte</v-btn> natjecanja koja su zajednička svim korisnicima.</v-container>
-        <v-container class="empty_alert2" v-if="empty==true && admin===true">Ili <v-btn @click="dialog=true" color="green">Dodajte</v-btn>  svoja natjecanja.</v-container>
+        <v-container class="empty_alert" v-if="empty==true && selected_tab==0">Niste dodali svoja natjecanja. <v-btn @click="select_other_competitions()" color="green">Pogledajte</v-btn> natjecanja koja su zajednička svim korisnicima.</v-container>
+        <v-container class="empty_alert2" v-if="empty==true && admin===true && selected_tab==0">Ili <v-btn @click="dialog=true" color="green">Dodajte</v-btn> svoja natjecanja.</v-container>
     <v-flex id="competitions_list" v-for="competition in this.selected_competitions.data" :key="competition.id">
         <v-hover>
             <template v-slot:default="{ hover }">
