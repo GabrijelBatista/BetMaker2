@@ -62,9 +62,6 @@ html{
 #div_to_capture2 {
     display:none;
 }
-#pagination_buttons{
-
-}
 form{
     margin:auto;
     padding: 10px !important;
@@ -174,6 +171,11 @@ form{
 }
 .navbar_tabs{
     min-width: 2px !important;
+}
+.help-icon{
+    position:fixed !important;
+    margin-top:10px;
+    margin-left:5px
 }
 
 #confirm_dialog_text{
