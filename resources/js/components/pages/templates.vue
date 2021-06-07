@@ -69,18 +69,18 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            class="login-button"
+                            class="mr-4"
                             type="submit"
                             @click="dialog = false"
                             >
                             POTVRDI
                             </v-btn>
-                            <v-btn
-                            class="login-button"
-                            @click="dialog = false"
-                            >
-                            Odustani
-                            </v-btn>
+                                <v-btn
+                                    class="mr-4"
+                                    @click="dialog = false"
+                                >
+                                    ODUSTANI
+                                </v-btn>
                             </v-card-actions>
                         </v-form>
                     </v-card>
@@ -110,6 +110,7 @@
                         v-show="hover || overlay"
                         absolute
                         color="#036358"
+                        class="card-overlay"
                     >
                         <b>
                             {{template.name}}
@@ -215,18 +216,18 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            class="login-button"
+                                class="mr-4"
                             type="submit"
                             @click="dialog3=false"
                             >
                             Potvrdi
                             </v-btn>
-                            <v-btn
-                            class="login-button"
-                            @click="dialog3=false"
-                            >
-                            Odustani
-                            </v-btn>
+                                <v-btn
+                                    class="mr-4"
+                                    @click="dialog3 = false"
+                                >
+                                    ODUSTANI
+                                </v-btn>
                             </v-card-actions>
                         </v-form>
                     </v-card>
@@ -341,7 +342,12 @@ export default{
         this.$store.dispatch('templates/getTemplates');
         this.$store.dispatch('backgrounds/getBackgrounds');
     },
-    mounted() {
+    mounted(){
+        if(this.my_templates!=null) {
+            if (this.my_templates.data[0] == null) {
+                this.select_other_templates();
+            }
+        }
         if (this.selected_templates_watcher == "other") {
             this.selected_tab = 1;
         }

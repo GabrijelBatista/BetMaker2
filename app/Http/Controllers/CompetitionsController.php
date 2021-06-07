@@ -28,7 +28,6 @@ class CompetitionsController extends Controller
 
     public function add_competition(Request $request){
         $request->validate([
-            'title'=>'required',
             'name'=>'required',
             'logo'=>'required|file|image|max:2048'
         ]);

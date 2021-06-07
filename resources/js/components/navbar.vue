@@ -1,10 +1,10 @@
 <template>
 <nav>
     <v-app-bar app id="navbar" dense dark>
-        <v-snackbar v-model="success" transition="fade-transition" :timeout="2000" color="green">
+        <v-snackbar class="alert_snackbar" v-model="success" transition="fade-transition" :timeout="2000" color="green">
             <span>{{success}}</span>
         </v-snackbar>
-        <v-snackbar v-model="error" transition="fade-transition" :timeout="3000" color="red">
+        <v-snackbar class="alert_snackbar" v-model="error" transition="fade-transition" :timeout="3000" color="red">
             <div v-for="err in error" :key="err[0]"><span>{{err[0]}}</span></div>
         </v-snackbar>
         <v-tabs right>

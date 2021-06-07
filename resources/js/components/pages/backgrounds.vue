@@ -30,7 +30,7 @@
                         </v-card-title>
                         <v-form @submit.prevent="add_background" ref="form">
                             <v-text-field
-                            label="Naziv"
+                            label="* Naziv"
                             required
                             dark
                             v-model="background_form.name"
@@ -48,7 +48,7 @@
                                 ></v-autocomplete>
                             </v-col>
                             <v-file-input
-                                label="Dodaj sliku:"
+                                label="* Dodaj sliku:"
                                 dark
                                 filled
                                 v-model="background_form.image"
@@ -57,13 +57,18 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
                             class="mr-4"
                             type="submit"
                             @click="dialog = false"
                             >
                             POTVRDI
                             </v-btn>
+                                <v-btn
+                                    class="mr-4"
+                                    @click="dialog = false"
+                                >
+                                    ODUSTANI
+                                </v-btn>
                             </v-card-actions>
                         </v-form>
                     </v-card>
@@ -202,6 +207,11 @@ export default{
         this.$store.dispatch('backgrounds/getBackgrounds');
     },
     mounted(){
+        if(this.my_backgrounds!=null) {
+                if (this.my_backgrounds.data[0] == null) {
+                    this.select_other_backgrounds();
+                }
+        }
         if(this.selected_backgrounds_watcher=="other"){
             this.selected_tab=1;
         }

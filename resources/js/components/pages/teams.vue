@@ -72,13 +72,18 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
                             class="mr-4"
                             type="submit"
                             @click="dialog = false"
                             >
                             POTVRDI
                             </v-btn>
+                                <v-btn
+                                    class="mr-4"
+                                    @click="dialog = false"
+                                >
+                                    ODUSTANI
+                                </v-btn>
                             </v-card-actions>
                         </v-form>
                     </v-card>
@@ -214,6 +219,11 @@ export default{
        this.$store.dispatch('teams/getTeams');
     },
     mounted(){
+        if(this.my_teams!=null) {
+            if (this.my_teams.data[0] == null) {
+                this.select_other_teams();
+            }
+        }
         if(this.selected_teams_watcher=="other"){
             this.selected_tab=1;
         }

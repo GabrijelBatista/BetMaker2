@@ -37,7 +37,7 @@
                             autocomplete="off"
                             ></v-text-field>
                             <v-text-field
-                            label="Naziv"
+                            label="* Naziv"
                             required
                             dark
                             v-model="competition_form.name"
@@ -54,7 +54,7 @@
                                 ></v-autocomplete>
                             </v-col>
                             <v-file-input
-                                label="Dodaj sliku:"
+                                label="* Logo:"
                                 filled
                                 dark
                                 v-model="competition_form.logo"
@@ -63,13 +63,18 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                             <v-btn
-                            id="login-button"
                             class="mr-4"
                             type="submit"
                             @click="dialog = false"
                             >
                             POTVRDI
                             </v-btn>
+                                <v-btn
+                                    class="mr-4"
+                                    @click="dialog = false"
+                                >
+                                    ODUSTANI
+                                </v-btn>
                             </v-card-actions>
                         </v-form>
                     </v-card>
@@ -204,9 +209,14 @@ export default{
        this.$store.dispatch('competitions/getCompetitions');
     },
     mounted(){
-        if(this.selected_competitions_watcher=="other"){
-            this.selected_tab=1;
-        }
+            if (this.my_competitions != null) {
+                if (this.my_competitions.data[0] == null) {
+                    this.select_other_competitions();
+                }
+            }
+            if (this.selected_competitions_watcher == "other") {
+                this.selected_tab = 1;
+            }
     }
 }
 

@@ -18,6 +18,9 @@ const actions={
         .then(response=>{
             commit("setMyCompetitions", response.data.my_competitions);
             commit("setOtherCompetitions", response.data.other_competitions);
+            if(response.data.my_competitions==null && response.data.other_competitions!=null){
+
+            }
             if(state.selectedCompetitionsWatcher=="my"){
                 commit("setSelectedCompetitions", response.data.my_competitions);
             }

@@ -8,12 +8,6 @@
     padding:8px 8px 8px 8px;
     filter: drop-shadow(12px 8px 6px rgb(0, 0, 0));
 }
-#login-button{
-    float:right;
-    background-color: rgba(0, 0, 0, 0.733);
-    color:white;
-    border: white 1px solid !important;
-}
 .headline.grey.lighten-2{
     font-weight: bolder;
 }
@@ -67,8 +61,14 @@ html{
     bottom:0;
 }
 form{
-    width: 80%;
     margin:auto;
+    padding: 10px !important;
+}
+.mr-4{
+    float:right !important;
+    background-color: rgba(0, 0, 0, 0.733) !important;
+    color:white !important;
+    border: white 1px solid !important;
 }
 @media screen and (max-width: 350px) {
     #div_to_capture{

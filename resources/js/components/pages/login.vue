@@ -29,7 +29,6 @@
     <v-card-title>
         <v-spacer></v-spacer>
     <v-btn
-     id="login-button"
       class="mr-4"
       type="submit"
     >
@@ -68,7 +67,7 @@ export default{
         ...mapGetters({
             failedLogin: 'errors/errors',
         }),
-    }
+    },
 }
 
 </script>
