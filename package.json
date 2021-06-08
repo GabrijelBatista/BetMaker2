@@ -29,7 +29,6 @@
         "@mdi/js": "^5.9.55",
         "date-fns": "^2.19.0",
         "moment": "^2.29.1",
-        "vue-i18n": "^9.0.0",
         "vue-router": "^3.5.1",
         "vue-simple-spinner": "^1.2.10",
         "vuetify": "^2.4.9",

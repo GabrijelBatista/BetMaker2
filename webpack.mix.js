@@ -13,16 +13,14 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js').vue({ version: 2 });
 
 mix.styles(['public/css/login.css',
-            'public/css/register.css',
-            'public/css/main.css',
-            'public/css/sidebar.css',
-            'public/css/navbar.css',
-            'public/css/templates.css',
-            'public/css/backgrounds.css',
-            'public/css/competitions.css',
-            'public/css/teams.css',
-            'public/css/matches.css',
-            'public/css/BetLive/votestory.css',
+    'public/css/register.css',
+    'public/css/main.css',
+    'public/css/sidebar.css',
+    'public/css/navbar.css',
+    'public/css/templates.css',
+    'public/css/backgrounds.css',
+    'public/css/competitions.css',
+    'public/css/teams.css',
+    'public/css/matches.css',
+    'public/css/BetLive/votestory.css',
 ], 'public/css/app.css');
-
-

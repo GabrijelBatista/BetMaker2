@@ -111,9 +111,9 @@
                         absolute
                         color="#036358"
                     >
-                        <b>
-                            {{team.name}}
-                        </b>
+                            <b>
+                                {{team.name}}
+                            </b>
                         <v-divider></v-divider>
                         <div v-if="selected_teams===my_teams">
                             <v-icon
@@ -240,8 +240,10 @@ export default{
     },
     mounted(){
         if(this.my_teams!=null) {
-            if (this.my_teams.data[0] == null) {
-                this.select_other_teams();
+            if(this.my_teams.data!=undefined) {
+                if (this.my_teams.data[0] == null) {
+                    this.select_other_teams();
+                }
             }
         }
         else{

@@ -17,6 +17,7 @@ const actions={
         axios.post("/api/loginUser", {
             email: form.email,
             password: form.password,
+            remember: form.remember,
         }))
         .then(response=>{
             commit("setUser", response.data.user);

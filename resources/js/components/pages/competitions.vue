@@ -230,8 +230,10 @@ export default{
     },
     mounted(){
             if (this.my_competitions != null) {
-                if (this.my_competitions.data[0] == null) {
-                    this.select_other_competitions();
+                if(this.my_competitions.data!=undefined) {
+                    if (this.my_competitions.data[0] == null) {
+                        this.select_other_competitions();
+                    }
                 }
             }
             else{

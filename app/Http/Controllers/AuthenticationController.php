@@ -3,16 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use App\Models\User;
-use App\Models\Template;
-use App\Models\Background;
-use App\Models\Role;
-use App\Models\Aspect;
-use App\Models\Resolution;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Mail;
 
 class AuthenticationController extends Controller
 {
@@ -54,6 +48,22 @@ class AuthenticationController extends Controller
         return back()->withErrors([
             'error' => 'Podaci nisu točni.',
         ]);
+    }
+
+    public function change_password(Request $request){
+
+        $request->validate([
+            'email'=>'required|email|unique:users',
+            'password'=>'required|min:8|confirmed',
+            'password_confirmation'=>'required'
+        ]);
+
+        $user=User::where('email', $request->email)->first();
+        $user->password=Hash::make($request->password);
+        $user->save();
+
+
+        return response()->json(Auth::user(), 200);
     }
 
 

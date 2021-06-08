@@ -25,7 +25,6 @@
       v-model="form.password"
       autocomplete="off"
     ></v-text-field>
-
     <v-card-title>
         <v-spacer></v-spacer>
     <v-btn
@@ -54,7 +53,7 @@ export default{
         },
         form: {
             email: "",
-            password: ""
+            password: "",
         }
     }),
 

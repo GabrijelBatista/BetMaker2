@@ -227,10 +227,12 @@ export default{
         this.$store.dispatch('backgrounds/getBackgrounds');
     },
     mounted(){
-        if(this.my_backgrounds!=null) {
+        if(this.my_backgrounds!=null){
+            if(this.my_backgrounds.data!=undefined) {
                 if (this.my_backgrounds.data[0] == null) {
                     this.select_other_backgrounds();
                 }
+            }
         }
         else{
             this.empty=true;
