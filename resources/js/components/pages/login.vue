@@ -1,5 +1,6 @@
 <template>
 <v-card fluid class="fill-height" id="main_content">
+<v-btn color="dodgerblue" transition="fade-transition" @click="send_verification_code" v-if="!verified">Pošalji verifikacijski kod</v-btn>
 <v-card id="login_form">
         <v-card-title class="card_title justify-center">
           PRIJAVA
@@ -25,7 +26,6 @@
       v-model="form.password"
       autocomplete="off"
     ></v-text-field>
-
     <v-card-title>
         <v-spacer></v-spacer>
     <v-btn
@@ -54,19 +54,31 @@ export default{
         },
         form: {
             email: "",
-            password: ""
+            password: "",
         }
     }),
 
     methods: {
-    login(){
+      send_verification_code(){
+        this.$store.dispatch('currentUser/sendVerificationCode', this.form.email)
+      },
+      login(){
         this.$store.dispatch('currentUser/loginUser', this.form)
-        }
+      }
     },
     computed: {
         ...mapGetters({
             failedLogin: 'errors/errors',
+            getVerified: 'currentUser/verified',
         }),
+         verified: {
+            get() {
+                return this.getVerified;
+            },
+            set(getVerified) {
+                return this.getVerified;
+            }
+        }
     },
 }
 

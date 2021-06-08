@@ -1,1 +1,247 @@
-#login_form{width:33%;min-width:210px;border:solid 2px #000;background-color:#1a202c;margin:auto;top:10%;padding:8px 8px 8px 8px;filter:drop-shadow(12px 8px 6px rgb(0, 0, 0))}.headline.grey.lighten-2{font-weight:bolder}canvas{filter:drop-shadow(12px 8px 6px rgb(0, 0, 0))}.v-pagination{margin:auto!important;padding-left:initial!important;position:absolute;bottom:0}#info_icon{margin-top:15px;margin-right:15px;float:right}#main_content{background-color:rgba(168,166,166,0)}.card_text{color:#fff!important;font-size:16px!important;margin-top:10px}.v-card__title.card_title{background-color:rgba(0,0,0,.644);color:#fff}#main_body{background-image:url('../storage/cover.jpg');background-repeat:repeat;background-size:10%}html{overflow-y:auto!important}.div_to_capture{border:1px #fff solid;padding:0;margin:auto;display:block;position:absolute;top:0;bottom:0;left:0;right:0}#div_to_capture2{display:none}form{margin:auto;padding:10px!important}.mr-4{float:right!important;background-color:rgba(0,0,0,.733)!important;color:#fff!important;border:#fff 1px solid!important}.empty_alert{position:relative!important;color:#fff;margin-top:20vh}.empty_alert2{position:relative!important;color:#fff}@media screen and (max-width:350px){#div_to_capture{transform:scale(.8);margin-left:-5px}}@media screen and (max-width:310px){#div_to_capture916{transform:scale(.7);margin-left:-15px}}@media screen and (max-width:285px){#div_to_capture916{transform:scale(.6);margin-left:-40px}}@media screen and (max-height:630px){#div_to_capture916{transform:scale(.8)}}@media screen and (max-height:535px){#div_to_capture916{transform:scale(.7)}}@media screen and (max-height:485px){#div_to_capture916{transform:scale(.6);margin-bottom:-60px}}@media screen and (max-height:430px){#div_to_capture916{transform:scale(.5);margin-bottom:-100px}}@media screen and (max-height:370px){#div_to_capture916{transform:scale(.4);margin-bottom:-130px}}#sidebar{position:fixed;background-color:#000}.v-list-item{text-align:center;background-color:rgba(33,36,34,.781)}.v-list-item-group{top:30px}#app_logo{margin:auto}#logo{font-weight:bolder;font-size:22px;height:60px;margin:auto;margin-left:-20px;max-width:130px!important;color:#1e90ff;font-family:Arial,Helvetica,sans-serif}#current_template_tab{color:#000!important}.current_template_tab{background-color:#fff}@media screen and (max-width:960px){.sidebar_list{font-size:11.7px!important}}#navbar{background-color:#000}.navbar_tabs{min-width:2px!important}.help-icon{position:fixed!important;margin-top:10px;margin-left:5px}#confirm_dialog_text{font-size:xx-large;margin-left:auto;margin-top:20px;margin-bottom:20px}#template_card{margin:auto;margin-top:10px;filter:drop-shadow(4px 3px 1px grey)}#templates_list{padding:10px}#scrollable_list{overflow:auto}#dialog_box,#dialog_box2{padding:5px;background-color:#1a202c}.selected{border:2px solid #fff!important}#background_card{margin:auto;margin-top:10px;filter:drop-shadow(4px 3px 1px grey)}.competition_logo{filter:drop-shadow(4px 3px 1px grey);margin:auto}#competition_card{margin:auto;margin-top:10px}.date_time_picker{width:90%;margin:auto!important}.elevation-1{margin:auto;margin-top:20px;background-color:rgba(255,255,255,.65)!important;overflow-y:auto;max-height:80%}.dodgerblue{background-color:#1e90ff}@font-face{src:url('/fonts/BetLive/PFDinTextCompPro-Medium_35390.ttf');font-family:BetLiveMedium}
+#login_form{
+    width:33%;
+    min-width: 210px;
+    border: solid 2px black;
+    background-color: #1a202c;
+    margin: auto;
+    top:10%;
+    padding:8px 8px 8px 8px;
+    filter: drop-shadow(12px 8px 6px rgb(0, 0, 0));
+}
+.headline.grey.lighten-2{
+    font-weight: bolder;
+}
+
+
+
+canvas {
+    filter: drop-shadow(12px 8px 6px rgb(0, 0, 0));
+}
+.v-pagination{
+    margin:auto !important;
+    padding-left: initial !important;
+    position:absolute;
+    bottom:0;
+}
+#info_icon{
+    margin-top:15px;
+    margin-right:15px;
+    float:right
+}
+#main_content{
+    background-color:rgba(168, 166, 166, 0);
+}
+.card_text{
+    color:white !important;
+    font-size: 16px !important;
+    margin-top: 10px;
+}
+.dialog_row{
+    max-width:90%;
+}
+.v-card__title.card_title{
+    background-color: rgba(0, 0, 0, 0.644);
+    color: white;
+}
+#main_body{
+    background-image:url('../storage/cover.jpg');
+    background-repeat: repeat;
+    background-size: 10%;
+}
+html{
+    overflow-y: auto !important;
+}
+.div_to_capture{
+    border:1px white solid;
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#div_to_capture2 {
+    display:none;
+}
+form{
+    margin:auto;
+    padding: 10px !important;
+}
+.mr-4{
+    float:right !important;
+    background-color: rgba(0, 0, 0, 0.733) !important;
+    color:white !important;
+    border: white 1px solid !important;
+}
+.empty_alert{
+    position: relative !important;
+    color:white;
+    margin-top: 20vh;
+}
+b{
+    margin: auto;
+}
+.empty_alert2{
+    position: relative !important;
+    color:white;
+}
+@media screen and (max-width: 350px) {
+    #div_to_capture{
+        transform: scale(0.8);
+        margin-left: -5px
+    }
+}
+@media screen and (max-width: 310px) {
+    #div_to_capture916{
+        transform: scale(0.7);
+        margin-left: -15px
+    }
+}
+@media screen and (max-width: 285px) {
+    #div_to_capture916{
+        transform: scale(0.6);
+        margin-left: -40px
+    }
+}
+@media screen and (max-height: 630px) {
+    #div_to_capture916{
+        transform: scale(0.8);
+    }
+}
+@media screen and (max-height: 535px) {
+    #div_to_capture916{
+        transform: scale(0.7);
+    }
+}
+@media screen and (max-height: 485px) {
+    #div_to_capture916{
+        transform: scale(0.6);
+        margin-bottom: -60px
+    }
+}
+@media screen and (max-height: 430px) {
+    #div_to_capture916{
+        transform: scale(0.5);
+        margin-bottom: -100px
+    }
+}
+@media screen and (max-height: 370px) {
+    #div_to_capture916{
+        transform: scale(0.4);
+        margin-bottom: -130px
+    }
+}
+
+
+#sidebar{
+    position:fixed;
+    background-color: black;
+}
+.v-list-item{
+    text-align:center;
+    background-color: rgba(33, 36, 34, 0.781);
+}
+.v-list-item-group{
+   top: 30px;
+}
+#app_logo{
+    margin:auto;
+}
+#logo{
+    font-weight: bolder;
+    font-size:22px;
+    height:60px;
+    margin:auto;
+    margin-left: -20px;
+    max-width:130px !important;
+    color:dodgerblue;
+    font-family:Arial, Helvetica, sans-serif;
+}
+#current_template_tab{
+    color: black !important;
+}
+.current_template_tab{
+    background-color: white;
+}
+@media screen and (max-width: 960px) {
+    .sidebar_list{
+        font-size: 11.7px !important;
+    }
+}
+
+
+#navbar{
+    background-color:black;
+}
+.navbar_tabs{
+    min-width: 2px !important;
+}
+.help-icon{
+    position:fixed !important;
+    margin-top:10px;
+    margin-left:5px
+}
+
+#confirm_dialog_text{
+    font-size: xx-large;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+#template_card{
+    margin:auto;
+    margin-top: 10px;
+    filter: drop-shadow(4px 3px 1px grey);
+}
+#templates_list{
+    padding:10px;
+}
+#scrollable_list{
+    overflow: auto;
+}
+#dialog_box, #dialog_box2{
+    padding: 5px;
+    background-color: #1a202c;
+}
+.selected{
+    border: 2px solid white!important;
+}
+
+#background_card{
+    margin:auto;
+    margin-top: 10px;
+    filter: drop-shadow(4px 3px 1px grey);
+}
+
+.competition_logo{
+    filter: drop-shadow(4px 3px 1px grey);
+    margin:auto
+}
+#competition_card{
+    margin:auto;
+    margin-top: 10px;
+}
+
+
+
+.date_time_picker{
+    width: 90%;
+    margin: auto !important;
+}
+.elevation-1{
+    margin: auto;
+    margin-top: 20px;
+    background-color: rgba(255,255,255,0.65)!important;
+    overflow-y: auto;
+    max-height: 80%;
+}
+.dodgerblue{
+    background-color: dodgerblue;
+}
+
+@font-face {
+    src: url('/fonts/BetLive/PFDinTextCompPro-Medium_35390.ttf');
+    font-family: BetLiveMedium;
+}

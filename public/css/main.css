@@ -18,7 +18,10 @@ canvas {
 .card_text{
     color:white !important;
     font-size: 16px !important;
-    margin-top: 10px
+    margin-top: 10px;
+}
+.dialog_row{
+    max-width:90%;
 }
 .v-card__title.card_title{
     background-color: rgba(0, 0, 0, 0.644);
@@ -60,6 +63,9 @@ form{
     position: relative !important;
     color:white;
     margin-top: 20vh;
+}
+b{
+    margin: auto;
 }
 .empty_alert2{
     position: relative !important;

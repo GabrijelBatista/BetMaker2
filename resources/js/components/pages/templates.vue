@@ -364,8 +364,10 @@ export default{
     },
     mounted(){
         if(this.my_templates!=null) {
-            if (this.my_templates.data[0] == null) {
-                this.select_other_templates();
+            if(this.my_templates.data!=undefined) {
+                if (this.my_templates.data[0] == null) {
+                    this.select_other_templates();
+                }
             }
         }
         else{

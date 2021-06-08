@@ -11,12 +11,12 @@
                         <v-card-title class="card_title justify-center">
                             Informacije
                         </v-card-title>
-                            <v-col class="d-flex" cols="12" sm="6">
+                            <v-row class="dialog_row" cols="12" sm="6" >
                             <v-card-text class="card_text">
                                 Za sve informacije možete nas kontaktirati putem e-mail adrese:
                                 <strong>neka@adresa.com</strong>
                             </v-card-text>
-                            </v-col>
+                            </v-row>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn
@@ -36,6 +36,7 @@
         </v-snackbar>
         <v-tabs right>
             <v-icon v-bind:color="help_dialog ? 'green' : 'white'" dark left @click="help_dialog=true" class="help-icon">{{icons.mdiHelpCircle}}</v-icon>
+            <v-spacer></v-spacer>
             <v-tab :to="login" v-if="!isLoggedIn"><v-icon>{{icons.mdiLoginVariant}}</v-icon></v-tab>
             <v-tab :to="register" v-if="!isLoggedIn"><v-icon>{{icons.mdiAccountPlus}}</v-icon></v-tab>
         </v-tabs>
