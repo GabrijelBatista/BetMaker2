@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('loginUser', 'App\Http\Controllers\AuthenticationController@login');
 Route::post('registerUser', 'App\Http\Controllers\AuthenticationController@register');
 Route::get('logoutUser', 'App\Http\Controllers\AuthenticationController@logout');
+Route::post('verification', 'App\Http\Controllers\AuthenticationController@verification');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     //options

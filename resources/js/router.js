@@ -7,6 +7,7 @@ Vue.use(Router)
 //authentication
 import login from './components/pages/login.vue'
 import register from './components/pages/register.vue'
+import verification from "./components/pages/verification";
 
 //basic
 import templates from './components/pages/templates.vue'
@@ -20,6 +21,7 @@ import superadmin from './components/pages/superadmin.vue'
 
 //BetLive
 import votestory from './components/BetLive/votestory.vue'
+
 
 
 
@@ -86,6 +88,13 @@ const routes =[
         meta: {
             loggedIn: true
           }
+    },
+    {
+        path: '/verification',
+        component: verification,
+        meta: {
+            loggedIn: true
+        }
     },
 
     //BetLive

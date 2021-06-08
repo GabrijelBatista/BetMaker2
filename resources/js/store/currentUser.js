@@ -5,6 +5,7 @@ const state={
     user: null,
     admin: false,
     superadmin: false,
+    verificationEmail: null,
 };
 const actions={
 
@@ -20,13 +21,13 @@ const actions={
             remember: form.remember,
         }))
         .then(response=>{
-            commit("setUser", response.data.user);
             if(response.data.user){
+                commit("setUser", response.data.user);
                 commit("errors/setErrors", null, { root: true });
                 commit("errors/setSuccess", "Uspješna prijava.", { root: true });
             }
             else{
-                commit("errors/setErrors", "Došlo je do pogreške", { root: true });
+                commit("errors/setErrors", response.data.message, { root: true });
                 commit("errors/setSuccess", false, { root: true });
             }
             if(response.data.user['role_id']==2){
@@ -55,10 +56,42 @@ const actions={
         })
     },
 
+    verification({commit}, form){
+        commit("errors/setLoading", true, { root: true });
+        commit("errors/setErrors", null, { root: true });
+        commit("errors/setSuccess", null, { root: true });
+        axios.post("/api/verification", {
+            code: form.code,
+            email: form.email,
+        })
+            .then(response=> {
+                if(response.data!=""){
+                    console.log(response);
+                    commit("errors/setSuccess", "Uspješna verifikacija.", {root: true});
+                    commit("errors/setLoading", false, {root: true});
+                    router.push({path: '/login'});
+                }
+                else{
+                    commit("errors/setErrors", "Pogrešan kod.", { root: true });
+                    commit("errors/setLoading", false, {root: true});
+                }
+            })
+            .catch((error) => {
+                if (error.response.status == 422){
+                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                }
+                else{
+                    commit("errors/setErrors", "Pogrešan kod.", { root: true });
+                }
+                commit("errors/setLoading", false, { root: true });
+            })
+    },
+
     registerUser({commit}, form){
         commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
+        commit("setVerificationEmail", form.email);
         axios.post("/api/registerUser", {
             email: form.email,
             password: form.password,
@@ -67,7 +100,7 @@ const actions={
         .then(response=>{
             commit("errors/setSuccess", "Uspješna registracija.", { root: true });
             commit("errors/setLoading", false, { root: true });
-            router.push({path: '/login'});
+            router.push({path: '/verification'});
         })
         .catch((error) => {
             if (error.response.status == 422){
@@ -122,8 +155,12 @@ const getters={
     user: state => state.user,
     admin: state => state.admin,
     superadmin: state => state.superadmin,
+    verificationEmail: state => state.verificationEmail,
 };
 const mutations={
+    setVerificationEmail(state, data) {
+        state.verificationEmail=data
+    },
     setUser(state, data) {
         state.user=data
     },
