@@ -1,6 +1,33 @@
 <template>
 <nav>
     <v-app-bar app id="navbar" dense dark>
+        <v-dialog
+                transition="dialog-top-transition"
+                max-width="600"
+                overlay-opacity="0.8"
+                v-model="help_dialog"
+                >
+                    <v-card id="dialog_box">
+                        <v-card-title class="card_title justify-center">
+                            Informacije
+                        </v-card-title>
+                            <v-col class="d-flex" cols="12" sm="6">
+                            <v-card-text class="card_text">
+                                Za sve informacije možete nas kontaktirati putem e-mail adrese:
+                                <strong>neka@adresa.com</strong>
+                            </v-card-text>
+                            </v-col>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    class="mr-4"
+                                    @click="help_dialog = false"
+                                >
+                                    ZATVORI
+                                </v-btn>
+                            </v-card-actions>
+                    </v-card>
+        </v-dialog>
         <v-snackbar class="alert_snackbar" v-model="success" transition="fade-transition" :timeout="2000" color="green">
             <span>{{success}}</span>
         </v-snackbar>
@@ -8,6 +35,7 @@
             <div v-for="err in error" :key="err[0]"><span>{{err[0]}}</span></div>
         </v-snackbar>
         <v-tabs right>
+            <v-icon v-bind:color="help_dialog ? 'green' : 'white'" dark left @click="help_dialog=true" class="help-icon">{{icons.mdiHelpCircle}}</v-icon>
             <v-tab :to="login" v-if="!isLoggedIn"><v-icon>{{icons.mdiLoginVariant}}</v-icon></v-tab>
             <v-tab :to="register" v-if="!isLoggedIn"><v-icon>{{icons.mdiAccountPlus}}</v-icon></v-tab>
         </v-tabs>
@@ -20,19 +48,22 @@
 import {
     mdiLoginVariant,
     mdiAccountPlus,
-    mdiLogout
+    mdiLogout,
+    mdiHelpCircle,
   } from '@mdi/js'
 
 import { mapGetters } from 'vuex'
   export default {
     data: () => ({
+     help_dialog: false,
      home: '/',
      login: '/login',
      register: '/register',
      icons: {
         mdiLoginVariant,
         mdiAccountPlus,
-        mdiLogout
+        mdiLogout,
+        mdiHelpCircle
     },
     }),
     methods: {

@@ -4,3 +4,8 @@
 .navbar_tabs{
     min-width: 2px !important;
 }
+.help-icon{
+    position:fixed !important;
+    margin-top:10px;
+    margin-left:5px
+}
