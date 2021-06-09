@@ -1,7 +1,9 @@
 <template>
 <v-card fluid class="fill-height" id="main_content">
-<v-btn color="dodgerblue" transition="fade-transition" @click="send_verification_code" v-if="!verified">Pošalji verifikacijski kod</v-btn>
-<v-card id="login_form">
+    <v-slide-x-transition mode="out-in">
+        <v-btn class="verification_button" transition="fade-transition" @click="send_verification_code" v-if="verified===false">Pošalji verifikacijski kod</v-btn>
+    </v-slide-x-transition>
+    <v-card id="login_form">
         <v-card-title class="card_title justify-center">
           PRIJAVA
         </v-card-title>
@@ -26,6 +28,7 @@
       v-model="form.password"
       autocomplete="off"
     ></v-text-field>
+      <a href="#" class="forget_password">Zaboravili ste lozinku?</a>
     <v-card-title>
         <v-spacer></v-spacer>
     <v-btn
@@ -36,7 +39,7 @@
     </v-btn>
     </v-card-title>
   </v-form>
-  </v-card>
+</v-card>
 </v-card>
 </template>
 

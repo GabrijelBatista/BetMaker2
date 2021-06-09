@@ -11,3 +11,10 @@
 .headline.grey.lighten-2{
     font-weight: bolder;
 }
+.verification_button{
+    background-color: green !important;
+}
+.forget_password{
+    color:skyblue;
+    text-decoration: underline;
+}

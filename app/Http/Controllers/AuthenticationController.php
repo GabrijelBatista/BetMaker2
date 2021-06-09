@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
             'random'=>random_int(100000, 999999),
         ]);
         $user=User::where('email', $request->email)->first();
-        Mail::to(['batista_gabrijel1@hotmail.com'])->send(new Verify($user));
+        Mail::to([$request->email])->send(new Verify($user));
 
             return response()->json(Auth::user(), 200);
 
@@ -43,19 +43,24 @@ class AuthenticationController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if(Auth::attempt($credentials)) {
             $is_verified=User::where('email', $request->email)->first();
-            if($is_verified->email_verified_at==null){
-                return response()->json(['message'=>'Vaša email adresa nije potvrđena.'], 200);
+            if($is_verified->email_verified_at===null){
+                return response()->json(['error'=>'Vaša email adresa nije potvrđena.'], 200);
             }
             $request->session()->regenerate();
             $user=Auth::user();
             return response()->json(['user'=>$user], 200);
         }
 
-        return back()->withErrors([
-            'error' => 'Podaci nisu točni.',
-        ]);
+        $is_verified=User::where('email', $request->email)->first();
+        if($is_verified!=null) {
+            if ($is_verified->email_verified_at === null) {
+                return response()->json(['error' => 'Vaša email adresa nije potvrđena.'], 200);
+            }
+        }
+
+        return response()->json(['error'=>'Podaci nisu točni.'], 200);
     }
 
     public function change_password(Request $request){
@@ -89,6 +94,20 @@ class AuthenticationController extends Controller
 
             return response()->json(Auth::user(), 200);
         }
+    }
+
+    public function send_verification_code(Request $request){
+        $request->validate([
+            'email'=>'required|email',
+        ]);
+
+        $user=User::where('email', $request->email)->first();
+        if($user!=null){
+            $user->random=random_int(100000, 999999);
+            $user->save();
+            Mail::to([$request->email])->send(new Verify($user));
+        }
+        return response()->json(Auth::user(), 200);
     }
 
 

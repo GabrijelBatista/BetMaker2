@@ -11,6 +11,13 @@
 .headline.grey.lighten-2{
     font-weight: bolder;
 }
+.verification_button{
+    background-color: green !important;
+}
+.forget_password{
+    color:skyblue;
+    text-decoration: underline;
+}
 
 
 
@@ -182,6 +189,9 @@ b{
     position:fixed !important;
     margin-top:10px;
     margin-left:5px
+}
+.alert_snackbar{
+    position: absolute !important;
 }
 
 #confirm_dialog_text{

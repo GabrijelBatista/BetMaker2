@@ -38,12 +38,18 @@ const actions={
                     commit("setAdmin", false);
                     commit("setSuperadmin", false);
                 }
+                commit("setVerificationEmail", null);
                 router.push({path: '/'});
             }
             else{
-                commit("setVerified", false);
-                commit("errors/setErrors", response.data.message, { root: true });
-                commit("errors/setSuccess", false, { root: true });
+                if(response.data.error==="Podaci nisu točni.") {
+                    commit("errors/setErrors", response.data.error, {root: true});
+                    commit("errors/setSuccess", false, {root: true});
+                    commit("setVerified", true);
+                }
+                else {
+                    commit("setVerified", false);
+                }
             }
             commit("errors/setLoading", false, { root: true });
         })
@@ -68,6 +74,7 @@ const actions={
         })
             .then(response=> {
                 if(response.data!=""){
+                    commit("setVerified", true);
                     commit("errors/setSuccess", "Uspješna verifikacija.", {root: true});
                     commit("errors/setLoading", false, {root: true});
                     router.push({path: '/login'});
@@ -79,8 +86,8 @@ const actions={
                  commit("errors/setLoading", false, { root: true });
             })
             .catch((error) => {
-                if (error.response.status == 422){
-                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                if (error.status == 422){
+                    commit("errors/setErrors", error.data.errors, { root: true });
                 }
                 else{
                     commit("errors/setErrors", "Pogrešan kod.", { root: true });
@@ -89,35 +96,36 @@ const actions={
             })
     },
 
-  /*  sendVerificationCode({commit}, email){
+    sendVerificationCode({commit}, email){
+        commit("setVerificationEmail", email);
         commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });
         commit("errors/setSuccess", null, { root: true });
-        axios.post("/api/verification", {
+        axios.post("/api/sendVerificationCode", {
             email: email,
         })
             .then(response=> {
                 if(response.data!=""){
-                    commit("errors/setSuccess", "Uspješna verifikacija.", {root: true});
+                    commit("errors/setSuccess", "Kod je poslan na vašu email adresu.", {root: true});
                     commit("errors/setLoading", false, {root: true});
-                    router.push({path: '/login'});
+                    router.push({path: '/verification'});
                 }
                 else{
-                    commit("errors/setErrors", "Pogrešan kod.", { root: true });
+                    commit("errors/setErrors", "Račun sa upisanom email adresom ne postoji.", { root: true });
                     commit("errors/setLoading", false, {root: true});
                 }
                  commit("errors/setLoading", false, { root: true });
             })
             .catch((error) => {
-                if (error.response.status == 422){
-                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                if (error.status == 422){
+                    commit("errors/setErrors", error.data.errors, { root: true });
                 }
                 else{
-                    commit("errors/setErrors", "Pogrešan kod.", { root: true });
+                    commit("errors/setErrors", "Račun sa upisanom email adresom ne postoji.", { root: true });
                 }
                 commit("errors/setLoading", false, { root: true });
             })
-    },*/
+    },
 
     registerUser({commit}, form){
         commit("errors/setLoading", true, { root: true });
@@ -135,8 +143,8 @@ const actions={
             router.push({path: '/verification'});
         })
         .catch((error) => {
-            if (error.response.status == 422){
-                commit("errors/setErrors", error.response.data.errors, { root: true });
+            if (error.status == 422){
+                commit("errors/setErrors", error.data.errors, { root: true });
              }
              else{
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
@@ -178,8 +186,10 @@ const actions={
             commit("errors/setSuccess", "Uspješno ste se odjavili.", { root: true });
             commit("setAdmin", false);
             commit("setSuperadmin", false);
+            commit("setVerificationEmail", null);
             commit("errors/setLoading", false, { root: true });
-            router.push({path: '/login'});
+            commit("setVerified", true);
+        router.push({path: '/login'});
     },
 };
 
