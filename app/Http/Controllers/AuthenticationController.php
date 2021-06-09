@@ -43,13 +43,20 @@ class AuthenticationController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if(Auth::attempt($credentials)) {
+        if(Auth::attempt($credentials, true)) {
             $is_verified=User::where('email', $request->email)->first();
             if($is_verified->email_verified_at===null){
                 return response()->json(['error'=>'Vaša email adresa nije potvrđena.'], 200);
             }
             $request->session()->regenerate();
             $user=Auth::user();
+            $remember_token=User::where('id', $user->id)->select('remember_token')->first();
+            if($remember_token!=null){
+                $user->remember=true;
+            }
+            else{
+                $user->remember=false;
+            }
             return response()->json(['user'=>$user], 200);
         }
 
