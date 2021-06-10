@@ -48,6 +48,7 @@ const actions={
                     commit("setVerified", true);
                 }
                 else {
+                    commit("errors/setErrors", response.data.error, {root: true});
                     commit("setVerified", false);
                 }
             }
@@ -58,6 +59,7 @@ const actions={
                 commit("errors/setErrors", error.data.errors, { root: true });
              }
              else{
+                 commit("setVerified", true);
                  commit("errors/setErrors", "Došlo je do pogreške.", { root: true });
              }
              commit("errors/setLoading", false, { root: true });
@@ -86,11 +88,76 @@ const actions={
                  commit("errors/setLoading", false, { root: true });
             })
             .catch((error) => {
+                if (error.response.status == 422){
+                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                }
+                else{
+                    commit("errors/setErrors", "Pogrešan kod.", { root: true });
+                }
+                commit("errors/setLoading", false, { root: true });
+            })
+    },
+
+    change_password({commit}, form){
+        commit("errors/setLoading", true, { root: true });
+        commit("errors/setErrors", null, { root: true });
+        commit("errors/setSuccess", null, { root: true });
+        axios.post("/api/changePassword", {
+            code: form.code,
+            email: form.email,
+            password: form.password,
+            password_confirmation: form.password_confirmation
+        })
+            .then(response=> {
+                if(response.data!=""){
+                    commit("setVerified", true);
+                    commit("errors/setSuccess", "Uspješna promjena lozinke.", {root: true});
+                    commit("errors/setLoading", false, {root: true});
+                    router.push({path: '/login'});
+                }
+                else{
+                    commit("errors/setErrors", "Pogrešni podaci.", { root: true });
+                    commit("errors/setLoading", false, {root: true});
+                }
+                commit("errors/setLoading", false, { root: true });
+            })
+            .catch((error) => {
+                if (error.response.status == 422){
+                    commit("errors/setErrors", error.response.data.errors, { root: true });
+                }
+                else{
+                    commit("errors/setErrors", "Pogrešni podaci.", { root: true });
+                }
+                commit("errors/setLoading", false, { root: true });
+            })
+    },
+
+    sendVerificationCodeForPasswordReset({commit}, email){
+        commit("setVerificationEmail", email);
+        commit("errors/setLoading", true, { root: true });
+        commit("errors/setErrors", null, { root: true });
+        commit("errors/setSuccess", null, { root: true });
+        axios.post("/api/sendVerificationCode", {
+            email: email,
+        })
+            .then(response=> {
+                if(response.data!=""){
+                    commit("errors/setSuccess", "Kod je poslan na vašu email adresu.", {root: true});
+                    commit("errors/setLoading", false, {root: true});
+                    router.push({path: '/password'});
+                }
+                else{
+                    commit("errors/setErrors", "Račun sa upisanom email adresom ne postoji.", { root: true });
+                    commit("errors/setLoading", false, {root: true});
+                }
+                commit("errors/setLoading", false, { root: true });
+            })
+            .catch((error) => {
                 if (error.status == 422){
                     commit("errors/setErrors", error.data.errors, { root: true });
                 }
                 else{
-                    commit("errors/setErrors", "Pogrešan kod.", { root: true });
+                    commit("errors/setErrors", "Račun sa upisanom email adresom ne postoji.", { root: true });
                 }
                 commit("errors/setLoading", false, { root: true });
             })

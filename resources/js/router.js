@@ -8,6 +8,7 @@ Vue.use(Router)
 import login from './components/pages/login.vue'
 import register from './components/pages/register.vue'
 import verification from "./components/pages/verification";
+import password from "./components/pages/password";
 
 //basic
 import templates from './components/pages/templates.vue'
@@ -92,6 +93,13 @@ const routes =[
     {
         path: '/verification',
         component: verification,
+        meta: {
+            loggedIn: true
+        }
+    },
+    {
+        path: '/password',
+        component: password,
         meta: {
             loggedIn: true
         }
