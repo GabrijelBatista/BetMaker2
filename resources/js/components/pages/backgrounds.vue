@@ -196,6 +196,8 @@ export default{
         },
         add_background(){
             this.$store.dispatch('backgrounds/addBackground', this.background_form);
+            this.$refs.form.reset();
+            this.selected_tab = 0;
         },
         select_current_background(background){
             background.template_url=this.current_template.url;

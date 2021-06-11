@@ -212,6 +212,7 @@ export default{
         add_team(){
             this.$store.dispatch('teams/addTeam', this.team_form);
             this.$refs.form.reset();
+            this.selected_tab = 0;
         },
         delete_team(team){
             let response=confirm("Da li ste sigurni?");
