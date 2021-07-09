@@ -202,6 +202,7 @@ export default{
         add_competition(){
             this.$store.dispatch('competitions/addCompetition', this.competition_form);
             this.$refs.form.reset();
+            this.selected_tab = 0;
         },
         delete_competition(competition){
             let response=confirm("Da li ste sigurni?");

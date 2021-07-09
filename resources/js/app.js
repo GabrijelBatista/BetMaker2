@@ -35,6 +35,7 @@ Vue.component('competitions', require('./components/pages/competitions.vue').def
 Vue.component('matches', require('./components/pages/matches.vue').default);
 Vue.component('superadmin', require('./components/pages/superadmin.vue').default);
 Vue.component('verification', require('./components/pages/verification.vue').default);
+Vue.component('password', require('./components/pages/password.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

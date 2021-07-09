@@ -41,6 +41,7 @@ const actions={
         commit("setSelectedCompetitions", competitions);
     },
     addCompetition({commit, dispatch}, competition_form){
+        commit("setSelectedCompetitionsWatcher");
         commit("errors/setLoading", true, { root: true });
         let form = new FormData();
         form.append('title', competition_form.title);
@@ -128,6 +129,9 @@ const mutations={
     },
     setCompetitionsList(state, data){
         state.competitionsList=data;
+    },
+    setSelectedCompetitionsWatcher(state){
+        state.selectedCompetitionsWatcher="my";
     }
 };
 

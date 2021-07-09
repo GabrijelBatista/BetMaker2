@@ -26,9 +26,8 @@
       dark
       :type="'password'"
       v-model="form.password"
-      autocomplete="off"
     ></v-text-field>
-      <a href="#" class="forget_password">Zaboravili ste lozinku?</a>
+      <a href="#" @click="send_verification_code_for_password_reset" class="forget_password">Zaboravili ste lozinku?</a>
     <v-card-title>
         <v-spacer></v-spacer>
     <v-btn
@@ -62,12 +61,17 @@ export default{
     }),
 
     methods: {
-      send_verification_code(){
-        this.$store.dispatch('currentUser/sendVerificationCode', this.form.email)
-      },
-      login(){
-        this.$store.dispatch('currentUser/loginUser', this.form)
-      }
+        send_verification_code(){
+            this.$store.dispatch('currentUser/sendVerificationCode', this.form.email)
+        },
+        send_verification_code_for_password_reset(){
+            let response=confirm("Ukoliko ste zaboravili lozinku, pritisnike 'OK'.");
+            if(response) {
+                this.$store.dispatch('currentUser/sendVerificationCodeForPasswordReset', this.form.email)            }
+        },
+        login(){
+            this.$store.dispatch('currentUser/loginUser', this.form)
+        }
     },
     computed: {
         ...mapGetters({

@@ -1,4 +1,3 @@
-
 const state={
     selectedTeamsWatcher: "my",
     selectedTeams: null,
@@ -41,6 +40,7 @@ const actions={
     },
     addTeam({commit, dispatch}, team_form){
         commit("errors/setLoading", true, { root: true });
+        commit("setSelectedTeamsWatcher");
         let form = new FormData();
         form.append('title', team_form.title);
         form.append('name', team_form.name);
@@ -123,13 +123,15 @@ const mutations={
     },
     setMyTeams(state, data) {
         state.myTeams=data;
-
     },
     setOtherTeams(state, data) {
         state.otherTeams=data;
     },
     setTeamsList(state, data){
         state.teamsList=data;
+    },
+    setSelectedTeamsWatcher(state){
+        state.selectedTeamsWatcher="my";
     }
 };
 

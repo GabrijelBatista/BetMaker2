@@ -46,6 +46,7 @@ const actions={
     },
     addBackground({commit, dispatch}, background_form){
         commit("errors/setLoading", true, { root: true });
+        commit("setSelectedBackgroundsWatcher");
         let form = new FormData();
         form.append('name', background_form.name);
         form.append('user', background_form.user);
@@ -142,6 +143,9 @@ const mutations={
     setCurrentBackground(state, data) {
         state.currentBackground=data;
     },
+    setSelectedBackgroundsWatcher(state){
+        state.selectedBackgroundsWatcher="my";
+    }
 };
 
 export default{

@@ -28,7 +28,6 @@
       v-model="form.password_confirmation"
       :type="'password'"
       :prepend-inner-icon="icons.mdiLockAlertOutline"
-      autocomplete="new-password"
     ></v-text-field>
     <v-card-title>
         <v-spacer></v-spacer>

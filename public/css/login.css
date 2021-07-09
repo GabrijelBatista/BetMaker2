@@ -16,5 +16,6 @@
 }
 .forget_password{
     color:skyblue;
+    font-size: smaller;
     text-decoration: underline;
 }

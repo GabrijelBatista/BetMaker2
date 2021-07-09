@@ -23,6 +23,7 @@ Route::post('registerUser', 'App\Http\Controllers\AuthenticationController@regis
 Route::get('logoutUser', 'App\Http\Controllers\AuthenticationController@logout');
 Route::post('verification', 'App\Http\Controllers\AuthenticationController@verification');
 Route::post('sendVerificationCode', 'App\Http\Controllers\AuthenticationController@send_verification_code');
+Route::post('changePassword', 'App\Http\Controllers\AuthenticationController@change_password');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     //options

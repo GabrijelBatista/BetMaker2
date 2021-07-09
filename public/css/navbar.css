@@ -9,6 +9,10 @@
     margin-top:10px;
     margin-left:5px
 }
-.alert_snackbar{
-    position: absolute !important;
+@media screen and (max-width: 600px) {
+    .v-snack__content{
+        font-size: 0.7rem !important;
+        padding:2px 2px !important;
+        line_height: 0.9rem !important;
+    }
 }

@@ -14,7 +14,7 @@
                             <v-row class="dialog_row" cols="12" sm="6" >
                             <v-card-text class="card_text">
                                 Za sve informacije možete nas kontaktirati putem e-mail adrese:
-                                <strong>batist_gabrijel1@hotmail.com</strong>
+                                <strong>gabrijel.batista1899@gmail.com</strong>
                             </v-card-text>
                             </v-row>
                             <v-card-actions>

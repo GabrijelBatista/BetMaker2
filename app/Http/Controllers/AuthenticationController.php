@@ -60,14 +60,16 @@ class AuthenticationController extends Controller
 
         $request->validate([
             'email'=>'required|email',
+            'code'=>'required',
             'password'=>'required|min:8|confirmed',
             'password_confirmation'=>'required'
         ]);
 
-        $user=User::where('email', $request->email)->first();
-        $user->password=Hash::make($request->password);
-        $user->save();
-
+        $user=User::where('email', $request->email)->where('random', $request->code)->first();
+        if($user!=null){
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
 
         return response()->json(Auth::user(), 200);
     }
