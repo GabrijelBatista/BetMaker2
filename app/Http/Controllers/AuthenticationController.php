@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Mail;
 class AuthenticationController extends Controller
 {
     public function register(Request $request){
-
-
         $request->validate([
             'email'=>'required|email|unique:users',
             'password'=>'required|min:8|confirmed',
@@ -28,14 +26,10 @@ class AuthenticationController extends Controller
         $user=User::where('email', $request->email)->first();
         Mail::to([$request->email])->send(new Verify($user));
 
-            return response()->json(Auth::user(), 200);
-
-
-
+        return response()->json(Auth::user(), 200);
     }
 
     public function login(Request $request){
-
         $request->validate([
             'email'=>'required',
             'password'=>'required'
@@ -43,20 +37,13 @@ class AuthenticationController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if(Auth::attempt($credentials, true)) {
+        if(Auth::attempt($credentials)) {
             $is_verified=User::where('email', $request->email)->first();
             if($is_verified->email_verified_at===null){
                 return response()->json(['error'=>'Vaša email adresa nije potvrđena.'], 200);
             }
             $request->session()->regenerate();
             $user=Auth::user();
-            $remember_token=User::where('id', $user->id)->select('remember_token')->first();
-            if($remember_token!=null){
-                $user->remember=true;
-            }
-            else{
-                $user->remember=false;
-            }
             return response()->json(['user'=>$user], 200);
         }
 
@@ -66,7 +53,6 @@ class AuthenticationController extends Controller
                 return response()->json(['error' => 'Vaša email adresa nije potvrđena.'], 200);
             }
         }
-
         return response()->json(['error'=>'Podaci nisu točni.'], 200);
     }
 
