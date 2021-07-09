@@ -65,7 +65,7 @@ export default{
             this.$store.dispatch('currentUser/sendVerificationCode', this.form.email)
         },
         send_verification_code_for_password_reset(){
-            let response=confirm("Ukoliko ste zaboravili lozinku, pritisnike 'OK'.");
+            let response=confirm("Ukoliko ste zaboravili lozinku, pritisnike 'Uredu'.");
             if(response) {
                 this.$store.dispatch('currentUser/sendVerificationCodeForPasswordReset', this.form.email)            }
         },
