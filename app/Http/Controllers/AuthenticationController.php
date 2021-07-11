@@ -101,8 +101,9 @@ class AuthenticationController extends Controller
             $user->random=random_int(100000, 999999);
             $user->save();
             Mail::to([$request->email])->send(new Verify($user));
+            return response()->json('Email sent!', 200);
         }
-        return response()->json(Auth::user(), 200);
+        return response()->json('Wrong email!', 200);
     }
 
 

@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => \Hash::make('forzamilan'),
             'role_id' => 1,
+            'random' => null,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
