@@ -14,8 +14,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         \DB::table('users')->insert([
-            'email' => 'admin@admin.com',
-            'password' => \Hash::make('forzamilan'),
+            'email' => '*********',
+            'password' => \Hash::make('*********'),
             'role_id' => 1,
             'random' => null,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
