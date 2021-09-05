@@ -219,6 +219,7 @@ const actions={
              commit("errors/setLoading", false, { root: true });
         })
     },
+
     logoutUser({commit}){
         commit("errors/setLoading", true, { root: true });
         commit("errors/setErrors", null, { root: true });

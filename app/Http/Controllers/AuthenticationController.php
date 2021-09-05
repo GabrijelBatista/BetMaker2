@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Mail;
 class AuthenticationController extends Controller
 {
     public function register(Request $request){
-
-
         $request->validate([
             'email'=>'required|email|unique:users',
             'password'=>'required|min:8|confirmed',
@@ -28,14 +26,10 @@ class AuthenticationController extends Controller
         $user=User::where('email', $request->email)->first();
         Mail::to([$request->email])->send(new Verify($user));
 
-            return response()->json(Auth::user(), 200);
-
-
-
+        return response()->json(Auth::user(), 200);
     }
 
     public function login(Request $request){
-
         $request->validate([
             'email'=>'required',
             'password'=>'required'
@@ -59,7 +53,6 @@ class AuthenticationController extends Controller
                 return response()->json(['error' => 'Vaša email adresa nije potvrđena.'], 200);
             }
         }
-
         return response()->json(['error'=>'Podaci nisu točni.'], 200);
     }
 
@@ -108,8 +101,9 @@ class AuthenticationController extends Controller
             $user->random=random_int(100000, 999999);
             $user->save();
             Mail::to([$request->email])->send(new Verify($user));
+            return response()->json('Email sent!', 200);
         }
-        return response()->json(Auth::user(), 200);
+        return response()->json('Wrong email!', 200);
     }
 
 
